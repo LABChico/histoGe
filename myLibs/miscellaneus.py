@@ -115,7 +115,7 @@ def WriteOutputFile(mySubsDict,myFilename,Title):
 
 def WriteOutputFileRR(myFilename,df,iEner,fEner):
     File = open(myFilename,'a+')
-    File.write('#-------------------------------------\n# This is the results of searching energies between: ' + str(iEner) + 'keV and ' + str(fEner) +' keV.\n--------------------------------------------\n\n')
+    File.write('#-------------------------------------\n# These are the results of searching energies between: ' + str(iEner) + 'keV and ' + str(fEner) +' keV.\n--------------------------------------------\n\n')
     File.write(df.to_string()+'\n')
     File.close()
 

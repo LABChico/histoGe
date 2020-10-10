@@ -42,8 +42,8 @@ def getDictFromSPE(speFile,nocalFlag=False):
     calFlag = not nocalFlag
     internDict = {}
     #myCounter=0
-    _,bCoef,_=[0.0,0.0,0.0]
-    #aCoef,bCoef,cCoef=[0.0,0.0,0.0]
+    #_,bCoef,_=[0.0,0.0,0.0]
+    aCoef,bCoef,cCoef=[0.0,0.0,0.0]
     myXvals=[]
     myYvals=[]
     #calBool=False
@@ -64,15 +64,13 @@ def getDictFromSPE(speFile,nocalFlag=False):
     myYvals=[float(yVal) for yVal in internDict["DATA"][1:]]
 
     if "ENER_FIT" in internDict and calFlag:
-        _,bCoef,_=[float(e) for e in internDict['ENER_FIT'][0].split()]
-        #aCoef,bCoef,cCoef=[float(e) for e in internDict['ENER_FIT'][0].split()]
-        #Assuming E=bCoef*bin+aCoef, as I understood aCoef is
-        #always zero (I'm reading it anyway) and I don't know
-        #what's cCoef for.
+        #_,bCoef,_=[float(e) for e in internDict['ENER_FIT'][0].split()]
+        aCoef,bCoef,cCoef=[float(e) for e in internDict['ENER_FIT'][0].split()]
+        #Assuming E=aCoef+bCoef*bin+cCoef*bin**2
 
     #Creating calibrated in Energy bins
     if bCoef != 0:
-        eBins=np.array([bCoef*xVal+bCoef for xVal in myXvals])
+        eBins=np.array([aCoef+bCoef*xVal+cCoef*xVal**2 for xVal in myXvals])
         internDict["theList"]=[eBins,myYvals]
         internDict['calBoolean']=True
     else:
@@ -309,8 +307,8 @@ def getDictFromSPEAdv(speFile, nocalFlag=False):
     calFlag = not nocalFlag
     internDict = {}
     #myCounter=0
-    _,bCoef,_=[0.0,0.0,0.0]
-    #aCoef,bCoef,cCoef=[0.0,0.0,0.0]
+    #_,bCoef,_=[0.0,0.0,0.0]
+    aCoef,bCoef,cCoef=[0.0,0.0,0.0]
     myXvals=[]
     myYvals=[]
     #calBool=False
@@ -331,15 +329,13 @@ def getDictFromSPEAdv(speFile, nocalFlag=False):
     myYvals=[float(yVal) for yVal in internDict["DATA"][1:]]
 
     if "ENER_FIT" in internDict and calFlag:
-        _,bCoef,_=[float(e) for e in internDict['ENER_FIT'][0].split()]
-        #aCoef,bCoef,cCoef=[float(e) for e in internDict['ENER_FIT'][0].split()]
-        #Assuming E=bCoef*bin+aCoef, as I understood aCoef is
-        #always zero (I'm reading it anyway) and I don't know
-        #what's cCoef for.
+        #_,bCoef,_=[float(e) for e in internDict['ENER_FIT'][0].split()]
+        aCoef,bCoef,cCoef=[float(e) for e in internDict['ENER_FIT'][0].split()]
+        #Assuming E=aCoef+bCoef*bin+cCoef*bin**2
 
     #Creating calibrated in Energy bins
     if bCoef != 0:
-        eBins=np.array([bCoef*xVal+bCoef for xVal in myXvals])
+        eBins=np.array([aCoef+bCoef*xVal+cCoef*xVal**2 for xVal in myXvals])
         internDict["theList"]=[eBins,myYvals]
         internDict['calBoolean']=True
     else:
