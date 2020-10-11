@@ -47,7 +47,7 @@ from rank_imp import rankImp
 from rank_dist import rankDist
 from rank_prob import rankProb
 
-def main(argv): 
+def main(argv):
 
     #------------------------------------------------------
     #Simple instruction parser code
@@ -57,22 +57,22 @@ def main(argv):
     #This two lines are the multiinstruction parser code
     #This code is in a testing phase and should be used with care
     #To switch to the Simple parser just comment two lines above
-    # and uncomment both lines of the Simple instructions parser code 
+    # and uncomment both lines of the Simple instructions parser code
     Commands = MultiCommandParser(argv)
-    lenCommands = len(Commands) - 1 
+    lenCommands = len(Commands) - 1
     for ps,Command in enumerate(Commands):
     #------------------------------------------------------
         if 'shorthelp' in Command:
         #if Command == 'shorthelp':
-            exitcode = helpFun(argv,['.Txt','.SPA','.mca','.info'],extBool=False)
+            exitcode = helpFun(argv,['.Txt','.SPE','.mca','.info'],extBool=False)
             if  ps == lenCommands:
                 return exitcode
-            
+
         elif Command[0] in MainOptD['help']:
-            exitcode = helpFun(argv,['.Txt','.SPA','.mca','.info'],extBool=True)  
+            exitcode = helpFun(argv,['.Txt','.SPE','.mca','.info'],extBool=True)
             if  ps == lenCommands:
                 return exitcode
-            
+
         elif Command[0] in MainOptD['autoPeak']:
             pid = TryFork()
             if pid == 0:
@@ -86,7 +86,7 @@ def main(argv):
             exitcode = QueryFun(Command)
             if  ps == lenCommands:
                 return exitcode
-            
+
         elif Command[0] in MainOptD['test']:
             pid = TryFork()
             if pid == 0:
@@ -95,12 +95,12 @@ def main(argv):
                 exitcode = 0
             if  ps == lenCommands:
                 return exitcode
-            
+
         elif Command[0] in MainOptD['isotope']:
             exitcode = isotopeFun(Command)
             if  ps == lenCommands:
                 return exitcode
-            
+
         elif Command[0] in MainOptD['sum']:
             pid = TryFork()
             if pid == 0:
@@ -109,12 +109,12 @@ def main(argv):
                 exitcode = 0
             if  ps == lenCommands:
                 return exitcode
-            
+
         elif Command[0] in MainOptD['rank']:
             #exitcode = rankFun(Command)
             exitcode = rankImp(Command)
             return exitcode
-            
+
         elif Command[0] in MainOptD['sub']:
             pid = TryFork()
             if pid == 0:
@@ -123,7 +123,7 @@ def main(argv):
                 exitcode = 0
             if  ps == lenCommands:
                 return exitcode
-            
+
         elif Command[0] in MainOptD['stats']:
             pid = TryFork()
             if pid == 0:
@@ -132,7 +132,7 @@ def main(argv):
                 exitcode = 0
             if  ps == lenCommands:
                 return exitcode
-            
+
         elif Command[0] in MainOptD['energy']:
             exitcode = energyFun(Command)
             if  ps == lenCommands:
@@ -142,7 +142,7 @@ def main(argv):
             exitcode = Parent(Command)
             if  ps == lenCommands:
                 return exitcode
-    
+
         elif Command[0] in MainOptD['normint']:
             exitcode = NormIntensity(Command)
             if  ps == lenCommands:
@@ -161,7 +161,7 @@ def main(argv):
                 exitcode = 0
             if  ps == lenCommands:
                 return exitcode
-        
+
         elif Command[0] in MainOptD['rankAdv']:
             exitcode = rankAdvFun(Command)
             return exitcode
@@ -173,7 +173,7 @@ def main(argv):
         elif Command[0] in MainOptD['halfSort']:
             exitcode = halfSortFun(Command)
             return exitcode
-        
+
         elif Command[0] in MainOptD['chainRank']:
             exitcode = ChainRankFun(Command)
             return exitcode
@@ -199,10 +199,3 @@ if __name__ == "__main__":
     argv = sys.argv
     exitcode = main(argv)
     exit(code=exitcode)
-
-
-
-
-
-
-

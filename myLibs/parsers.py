@@ -24,13 +24,15 @@ SubOptD = {'help':[],'autoPeak':['--rebin','--wof','--noPlot','--log','--noCal']
             'chainRank':['--wof','--all','--peak'],'distance':['--wof','--all'],'probability':['--wof','--all']}
 
 def isValidSpectrumFile(strVal):
-    if strVal.endswith('.Txt') or strVal.endswith('.SPE') or strVal.endswith('.mca') or strVal.endswith('.hge'):
+    if strVal.endswith('.Txt') or strVal.endswith('.SPE') or\
+       strVal.endswith('.spe') or strVal.endswith('.mca') or strVal.endswith('.hge'):
         return True
     return False
 
 def isValidSpecFile(strVal):
     if strVal.endswith('.Txt') or\
        strVal.endswith('.SPE') or\
+       strVal.endswith('.spe') or\
        strVal.endswith('.mca') or\
        strVal.endswith('.info') or\
        strVal.endswith('.hge'):
@@ -116,13 +118,13 @@ def getDictFromMCA(mcaFilename,noCalFlag=False):
             else:
                 calBool = True
             continue
-        
+
 
         if line.find(str2init) != -1:  #"<<DATA>>"
             appendBool = True
             calBool = False
             continue
-        
+
         if calBool:
             if line.find(strIgn) != -1:  #"LABEL"
                 continue
@@ -131,7 +133,7 @@ def getDictFromMCA(mcaFilename,noCalFlag=False):
                 calBool = False
             x4cal.append(float(line.split()[0]))
             y4cal.append(float(line.split()[1]))
-        
+
         if line.find(str2end) != -1: #"<<END>>"
             appendBool = False
             break #stopping here for now
@@ -139,7 +141,7 @@ def getDictFromMCA(mcaFilename,noCalFlag=False):
 
         if appendBool :
             mcaList.append(float(line))
-    
+
     if len(x4cal) > 1:
         a,b=getTentParams(x4cal,y4cal)
         popt,_ = curve_fit(myLine,x4cal, y4cal, p0=[a,b])
@@ -153,7 +155,7 @@ def getDictFromMCA(mcaFilename,noCalFlag=False):
         totalList=[range(len(mcaList)),mcaList]
 
     internDict["theList"]=totalList
-    
+
     if (noCalFlag == False) and (Calibrated == False):
             internDict["noCalFlag"] = True
 
@@ -195,7 +197,7 @@ def CommandParser(lista):
     NameList = []
     if len(argvcp) != 0:
         for MainOpt in MainOptD:
-            
+
             for arg in argvcp:
                 if arg in MainOptD[MainOpt]:
                     InstList.append([arg])
@@ -219,7 +221,7 @@ def CommandParser(lista):
         else:
             InstList = [argvcp.copy()]
     else:
-        return ['shorthelp'] 
+        return ['shorthelp']
 
     return InstList
 
@@ -239,7 +241,7 @@ def MultiCommandParser(lista):
             CommandL.append(argu[:-1])
             CommandLL.append(CommandL)
             CommandL = []
-        
+
         elif ps == len(argvcp) - 1:
             if argu not in SeparatorChars:
                 CommandL.append(argu)
@@ -281,9 +283,9 @@ def MultiCommandParser(lista):
                 InstList[-1].extend(NameList)
             else:
                 InstList = [Command.copy()]
-            InstListL.append(InstList[-1]) 
-    if InstListL == []:   
-        return ['shorthelp'] 
+            InstListL.append(InstList[-1])
+    if InstListL == []:
+        return ['shorthelp']
     else:
         return InstListL
 
@@ -382,13 +384,13 @@ def getDictFromMCAAdv(mcaFilename,noCalFlag=False):
             else:
                 calBool = True
             continue
-        
+
 
         if line.find(str2init) != -1:  #"<<DATA>>"
             appendBool = True
             calBool = False
             continue
-        
+
         if calBool:
             if line.find(strIgn) != -1:  #"LABEL"
                 continue
@@ -397,7 +399,7 @@ def getDictFromMCAAdv(mcaFilename,noCalFlag=False):
                 calBool = False
             x4cal.append(float(line.split()[0]))
             y4cal.append(float(line.split()[1]))
-        
+
         if line.find(str2end) != -1: #"<<END>>"
             appendBool = False
             break #stopping here for now
@@ -405,7 +407,7 @@ def getDictFromMCAAdv(mcaFilename,noCalFlag=False):
 
         if appendBool :
             mcaList.append(float(line))
-    
+
     if len(x4cal) > 1:
         a,b=getTentParams(x4cal,y4cal)
         popt,_ = curve_fit(myLine,x4cal, y4cal, p0=[a,b])
@@ -419,7 +421,7 @@ def getDictFromMCAAdv(mcaFilename,noCalFlag=False):
         totalList=[range(len(mcaList)),mcaList]
 
     internDict["theList"]=totalList
-    
+
     if (noCalFlag == False) and (Calibrated == False):
             internDict["noCalFlag"] = True
 
@@ -557,25 +559,25 @@ def getDictFromHGE(myFilename,calFlag=True):
     if hgeDict['REBINEDDATA']:
         hgeDict['theRebinedList'] = hgeDict['REBINEDDATA']
     hgeDict['noCalFlag'] = not hgeDict['CALIBRATION']
-    hgeDict['calBoolean'] = hgeDict['CALIBRATION'] 
+    hgeDict['calBoolean'] = hgeDict['CALIBRATION']
     hgeDict["expoTime"] = hgeDict['EXPOSURETIME']
     return hgeDict
 
-def getMyFileDictRankAdv(myArg):  #check if is a valid 
+def getMyFileDictRankAdv(myArg):  #check if is a valid
     myFileDict={}
     myFileDict['specFiles']=[]
-    for Arg in myArg:    
-        
+    for Arg in myArg:
+
         if isValidSpecFile(Arg):
             if not Arg.endswith('.info'):
                 myFileDict['specFiles'].append(Arg)
-       
+
     return myFileDict
 
-def getMyFileDict(myArg):  #check if is a valid 
+def getMyFileDict(myArg):  #check if is a valid
     myFileDict={}
     myFileDict['specFiles']=[]
-    
+
     #tmpOpt=''
     for i in range(len(myArg)):
         e=myArg[i]
@@ -585,7 +587,7 @@ def getMyFileDict(myArg):  #check if is a valid
 
         if e.endswith('.info'):
             print("\n Error: The argument is an Info File. \n --autoPeak option needs an spectrum file to generates the ranges\n")
-       
+
     return myFileDict
 
 
@@ -599,6 +601,6 @@ def findRangeInfoDict(infoDict):
             maxVal = Values['end']
     return minVal, maxVal
 
-functionDict = {"SPE": getDictFromSPE,"mca": getDictFromMCA,"Txt": getDictFromGammaVision,"info":getDictFromInfoFile}
+functionDict = {"SPE": getDictFromSPE, "spe": getDictFromSPE, "mca": getDictFromMCA,"Txt": getDictFromGammaVision,"info":getDictFromInfoFile}
 
-functionDictAdv = {"SPE": getDictFromSPEAdv,"mca": getDictFromMCAAdv,"Txt": getDictFromGammaVisionAdv,"info":getDictFromInfoFile,'hge':getDictFromHGE}
+functionDictAdv = {"SPE": getDictFromSPEAdv, "spe": getDictFromSPEAdv, "mca": getDictFromMCAAdv,"Txt": getDictFromGammaVisionAdv,"info":getDictFromInfoFile,'hge':getDictFromHGE}

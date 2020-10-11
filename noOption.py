@@ -46,7 +46,7 @@ def noOption(ListOpt):
     exitcode = 0
 
     if len(ListOpt) == 0:
-        exitcode = helpFun(['None'],['.Txt','.SPA','.mca','.info'],extBool=False)
+        exitcode = helpFun(['None'],['.Txt','.SPE','.mca','.info'],extBool=False)
         return exitcode
     else:
         for arg in List:
