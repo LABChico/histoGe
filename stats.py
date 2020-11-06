@@ -175,7 +175,11 @@ def statsFun(ListOpt):
         max_value = gilmoreDict[e][-1]
         floatMean=fittingDict[e][1]
         idxPairL.append([infoDict[e]['start'],infoDict[e]['end']])
-        AnnotateArg.append(["%s,%2.1f"%(e,floatMean),[realXVals[max_index],max_value]])
+        try:
+            AnnotateArg.append(["%s,%2.1f"%(e,floatMean),[realXVals[max_index],max_value]])
+        except:
+            pass
+        #AnnotateArg.append(["%s,%2.1f"%(e,floatMean),[realXVals[max_index],max_value]])
         count += 1
         #if None != floatMean:
         #    plt.annotate("%s,%2.1f" %(e,floatMean),xy=[realXVals[max_index],max_value])
