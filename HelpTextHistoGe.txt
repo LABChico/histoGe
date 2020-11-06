@@ -44,12 +44,6 @@ The histoGe's main option are:
 		e.g.:
 			histoGe --autoPeak File1.ext
 
-	-R|--Rank|--rank: Performs a ranking for each peak contained
-		in the .info file in order to find the most probable
-		isotopes that explain the peaks observed in the
-		spectrum, e.g:
-			histoGe -R File1.info
-
 	-e|--energyRanges: Look for all the isotopes that are in the
 		ranges specified for each peak in the .info file,
 		e.g.:
@@ -58,6 +52,23 @@ The histoGe's main option are:
 	-c|--stats: Calculate the Gilmore's statistics for each peak
 		in the .info file, e.g.:
 			histoGe -c File1.info File1.ext * 
+
+    -R|--Rank|--rank: Performs a ranking for each peak contained
+		in the .info file in order to find the most probable
+		isotopes that explain the peaks observed in the
+		spectrum, e.g:
+			histoGe -R File1.info
+
+    --halfSort|--halfRank|--halfrank: Performs ranking using the
+        half-life of the isotopes.
+
+
+
+    --fuzzy|--fuzzyRank|--fuzzyrank|-z: Performs ranking using fuzzy
+        logic. It needs to run an .info and valid spectrum, e.g.:
+            histoGe -z File1.info File1.ext *
+    
+
 
 *This option needs and .info file and the spectrum.
 
@@ -107,11 +118,6 @@ SUBOPTIONS OF MAIN OPTIONS
 			--noCal: Indicates that the file is not
 				 calibrated.
 
-	-R|--Rank|--rank: --wof: Write output file with result.
-
-			  --all: Shows all the results found in a 
-				query.
-
 	-e|--energyRanges: --all: Shows all the results found in a 
 				query. 
 
@@ -125,6 +131,28 @@ SUBOPTIONS OF MAIN OPTIONS
 				 calibrated.
 
 			--log:	Logarithmic scale in plot.
+
+    -R|--Rank|--rank: --wof: Write output file with result.
+
+			--all: Shows all the results found in a 
+				query.
+
+    
+    
+    --halfSort|--halfRank|--halfrank: --all: Displays all
+                isotopes in the list.
+            
+            --wof: Write output file with result.
+    
+    
+    --fuzzy|--fuzzyRank|--fuzzyrank|-z: --wof: Write output 
+                file with result.
+
+            --all: displays all isotopes in the list.
+
+            --filter: removes those isotopes with relative
+                emission probability smaller than 0.05.
+            
 
 VALID FILES
 
