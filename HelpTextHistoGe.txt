@@ -75,6 +75,17 @@ The histoGe's main option are:
         chains.
             histoGe -x File1.info
 
+	--distance|-d: Performs ranking fiting the peak to a Gaussian 
+		distribution in order to calculate the mean value of peaks
+		and the standard deviation, then, the difference between the 
+		energies of the γ-lines and that mean is calculated, e.g.:
+    		histoGe -b File1.info File1.ext *
+
+	--probability|-b: Performs ranking using γ-line calculating 
+		the cumulative distribution function for the Gaussian 
+		distribution. It needs an .info file and valid spectrum, e.g.:
+			histoGe -b File1.info File1.ext *
+
 *This option needs and .info file and the spectrum.
 
 SUBOPTIONS OF MAIN OPTIONS
