@@ -1,5 +1,3 @@
-
-
 ----------------------------------------------------------------------
 EXTENDED HELP OF histoGe
 ----------------------------------------------------------------------
@@ -157,6 +155,12 @@ DOWNLOADABLE FILES
 
 		https://bit.ly/38ip7c1 
 
-*Database is encrypted. To obtain password sent a message to developers.
+EXECUTION OF MULTIPLE COMMANDS
+
+histoGe can execute several commands in a single execution. 
+Commands must be separated by "!" character, for example:
+
+        histoGe Command_1 ! Command_2 ! ... ! Command_N
+
 
 
