@@ -1,0 +1,162 @@
+
+
+----------------------------------------------------------------------
+EXTENDED HELP OF histoGe
+----------------------------------------------------------------------
+
+MAIN OPTIONS
+
+If no main option are provided then histoGe performs a query to 
+database if extension of the file is .info, in other case, performs
+a multiplot with the files provided,e.g.:
+
+histoGe file1.extension [file2.extension ...]
+
+The histoGe's main option are:
+
+	-q|--query: Query the database to find isotopes that
+		radiate gammas in the range from initial energy
+		(iEner) to final energy (fEner) both in KeV, e.g.:
+			histoGe -q 100 101
+
+	-i|--isotope: Query the database to find gammas of each
+		isotopes, e.g.:
+			histoGe -i 60Co 241Am
+
+	-p|--parent: Query the database looking for the parent 
+		isotope and the child or children isotopes, e.g.:
+			histoGe -p 60Co 241Am
+
+	-r|--sub: Substraction of two sprectra, i.e., File2 is 
+		substracted to File1.ext, e.g.:
+			histoGe -r File1.ext File2.ext
+
+	-s|--sum: Sumation of spectra. The option can sum all the
+		spectra that the user need, e.g.:
+			histoGe -s File1.ext File2.ext
+
+	-t|--test: Performs a test. If histoGe was installed 
+		successfully, then, test actions are executed
+		without errors, e.g.:
+			histoGe -t
+
+	-P|--autoPeak: Look for peaks in a spectrum and generates
+		a .info file which includes the ranges of the peaks
+		found. It works better if the spectrum is rebinned,
+		e.g.:
+			histoGe --autoPeak File1.ext
+
+	-R|--Rank|--rank: Performs a ranking for each peak contained
+		in the .info file in order to find the most probable
+		isotopes that explain the peaks observed in the
+		spectrum, e.g:
+			histoGe -R File1.info
+
+	-e|--energyRanges: Look for all the isotopes that are in the
+		ranges specified for each peak in the .info file,
+		e.g.:
+			histoGe -e File1.info
+
+	-c|--stats: Calculate the Gilmore's statistics for each peak
+		in the .info file, e.g.:
+			histoGe -c File1.info File1.ext * 
+
+*This option needs and .info file and the spectrum.
+
+SUBOPTIONS OF MAIN OPTIONS
+
+	OPTIONS		SUBOPTIONS
+
+	-h|--help	None	
+	
+	-q|--query:	--all:	Shows all the results found in a 
+				query.
+
+	-i|--isotope:	None
+
+	-p|--parent:	None
+
+	-r|--sub:	--noCal: Indicates that the file is not
+				 calibrated.
+			
+			--log:	Logarithmic scale in plot.
+
+			--noPlot: No plot of the substraction.
+
+			--wof:	Write output file with result.
+
+			--rebin: Channels are rebined.
+
+	-s|--sum: 	--noCal: Indicates that the file is not
+				 calibrated.
+
+			--log:	Logarithmic scale in plot. 
+
+			--noPlot: No plot of the substraction.
+
+			--wof:	Write output file with result.
+
+	-t|--test:	None
+
+	-P|--autoPeak:	--rebin: Channels are rebined.
+
+			--wof:	Write output file with result.
+
+			--noPlot: No plot of the substraction.
+
+			--log:	Logarithmic scale in plot.
+
+			--noCal: Indicates that the file is not
+				 calibrated.
+
+	-R|--Rank|--rank: --wof: Write output file with result.
+
+			  --all: Shows all the results found in a 
+				query.
+
+	-e|--energyRanges: --all: Shows all the results found in a 
+				query. 
+
+			   --wof: Write output file with result.
+
+	-c|--stats: 	--wof:	Write output file with result.
+
+			--noPlot: No plot of the substraction.
+
+			--noCal: Indicates that the file is not
+				 calibrated.
+
+			--log:	Logarithmic scale in plot.
+
+VALID FILES
+
+Valid extensions are: .Txt, .SPA, .mca and .info
+
+	.Txt files: Format file of gammavision software.
+
+	.SPA files:  Format file developed and used in Boulby 
+			Laboratory.
+	
+	.mca files:  File format of micro-mca or px5 hardware.
+
+	.info files: File used to store the ranges of peaks. Usually,
+			is generated with --autoPeak main option.
+				
+
+DOWNLOADABLE FILES
+
+	A tutorial file can be consulted in:
+
+		https://bit.ly/2QL8FYj
+
+	Some .mca files to try histoGe can be downloaded from:
+
+		https://bit.ly/2WNS36h
+
+	Database can be downloaded from:
+
+		https://bit.ly/3duMRd5
+
+*Database is encrypted. To obtain password sent a message to developers.
+
+
