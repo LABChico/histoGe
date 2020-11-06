@@ -185,6 +185,16 @@ SUBOPTIONS OF MAIN OPTIONS
             --peak: uses relative emission probability to
                 make ranking.
 
+	--distance|-d:  --all: Shows all the results found in a 
+				query. 
+
+			   --wof: Write output file with result.
+
+	--probability|-b:  --all: Shows all the results found in a 
+				query. 
+
+			   --wof: Write output file with result.
+
 VALID FILES
 
 Valid extensions are: .Txt, .SPA, .mca and .info
