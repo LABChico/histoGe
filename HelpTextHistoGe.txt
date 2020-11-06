@@ -61,14 +61,19 @@ The histoGe's main option are:
 
     --halfSort|--halfRank|--halfrank: Performs ranking using the
         half-life of the isotopes.
+            histoGe --halfSort File1.info
 
-
+    --RA|--RankAdv|--rankAdv: Performs ranking using total net area
+        and the relative emission probability.
+            histoGe -c File1.info File1.ext * 
 
     --fuzzy|--fuzzyRank|--fuzzyrank|-z: Performs ranking using fuzzy
         logic. It needs to run an .info and valid spectrum, e.g.:
             histoGe -z File1.info File1.ext *
     
-
+    '--chainRank','--ChainRank','-x': Performs ranking using decay
+        chains.
+            histoGe -x File1.info
 
 *This option needs and .info file and the spectrum.
 
@@ -144,7 +149,14 @@ SUBOPTIONS OF MAIN OPTIONS
             
             --wof: Write output file with result.
     
-    
+    --RA|--RankAdv|--rankAdv: --wof: Write output 
+                file with result.
+
+            --all: displays all isotopes in the list.
+
+            --filter: removes those isotopes with relative
+                emission probability smaller than 0.05. 
+
     --fuzzy|--fuzzyRank|--fuzzyrank|-z: --wof: Write output 
                 file with result.
 
@@ -152,7 +164,15 @@ SUBOPTIONS OF MAIN OPTIONS
 
             --filter: removes those isotopes with relative
                 emission probability smaller than 0.05.
-            
+
+
+    --chainRank|--ChainRank|-x: --wof: Write output 
+                file with result.
+    
+            --all: displays all isotopes in the list.
+    
+            --peak: uses relative emission probability to
+                make ranking.
 
 VALID FILES
 
