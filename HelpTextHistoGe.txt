@@ -51,8 +51,15 @@ The histoGe's main option are:
 
 	-c|--stats: Calculate the Gilmore's statistics for each peak
 		in the .info file, e.g.:
-			histoGe -c File1.info File1.ext * 
+			histoGe -c File1.info File1.ext *
 
+    -f|--hge: Converts the SPE, Txt or mca files to hge format.
+            histoGe -f File1.ext
+
+    -n,--normInt: Displays relative emission probability from
+        database.
+            histoGe -n 60Co 241Am
+    
     -R|--Rank|--rank: Performs a ranking for each peak contained
 		in the .info file in order to find the most probable
 		isotopes that explain the peaks observed in the
@@ -148,12 +155,14 @@ SUBOPTIONS OF MAIN OPTIONS
 
 			--log:	Logarithmic scale in plot.
 
+    -f|--hge: None
+
+    -n,--normInt: None
+    
     -R|--Rank|--rank: --wof: Write output file with result.
 
 			--all: Shows all the results found in a 
 				query.
-
-    
     
     --halfSort|--halfRank|--halfrank: --all: Displays all
                 isotopes in the list.
