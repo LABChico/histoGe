@@ -19,7 +19,7 @@ MainOptD = {'help':['-h','--help'],'autoPeak':['-P','--autoPeak'],'query':['-q',
             'chainRank':['--chainRank','--ChainRank','-x'],'distance':['--distance','-d'],'probability':['--probability','-b']}
 
 SubOptD = {'help':[],'autoPeak':['--rebin','--wof','--noPlot','--log','--noCal'],'query':['--all'],'test':[],'isotope':[],'sum':['--noCal','--log','--noPlot','--wof'],\
-        'rank':['--wof','--all'],'sub':['--noCal','--log','--noPlot','--wof','--rebin'],'stats':['--wof','--noPlot','--noCal','--log'],'energy':['--all','--wof'],'parent':[],\
+        'rank':['--wof','--all'],'sub':['--noCal','--log','--noPlot','--wof','--rebin'],'stats':['--wof','--noPlot','--noCal','--log','--rebin'],'energy':['--all','--wof'],'parent':[],\
             'normint':[],'2file':[],'efficiency':['--Plot','--plot'],'rankAdv':['--wof','--all','--filter'],'fuzzy':['--wof','--all','--filter'],'halfSort':['--all','--wof'],\
             'chainRank':['--wof','--all','--peak'],'distance':['--wof','--all'],'probability':['--wof','--all']}
 
@@ -296,8 +296,12 @@ def getDictFromInfoFile(infoFileName,noCalFlag=None):
     infoDict=newTable.to_dict('index')
     ObjFile = open(infoFileName)
     Line = ObjFile.readline()
-    if '#SPECRANGE: ' in Line:
-        Line = Line.strip('#SPECRANGE: ')
+    if '#SPECRANGE: ' in Line or '#SPECTRUMRANGE' in Line:
+        if '#SPECRANGE: ' in Line: 
+            Line = Line.strip('#SPECRANGE: ')
+        elif '#SPECTRUMRANGE' in Line:
+            Line = Line.strip('#SPECTRUMRANGE: ')
+        
         Line = Line.strip('\n')
         RangeList = Line.split(',')
         infoDict['Range'] = {'start':float(RangeList[0]),'end':float(RangeList[1])}

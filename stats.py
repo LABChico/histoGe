@@ -29,6 +29,7 @@ from myLibs.miscellaneus import getRebinedList
 
 def statsFun(ListOpt):
     List = ListOpt.copy()
+    print(List)
     List.pop(0)
     if '--noCal' in List:
         noCalFlag = True
