@@ -72,20 +72,18 @@ The histoGe's main option are:
 
     --RA|--RankAdv|--rankAdv: Performs ranking using total net area
         and the relative emission probability.
-            histoGe -c File1.info File1.ext * 
+            histoGe  File1.info File1.ext * 
 
     --fuzzy|--fuzzyRank|--fuzzyrank|-z: Performs ranking using fuzzy
         logic. It needs to run an .info and valid spectrum, e.g.:
             histoGe -z File1.info File1.ext *
     
-    '--chainRank','--ChainRank','-x': Performs ranking using decay
+    --chainRank|--ChainRank|-x': Performs ranking using decay
         chains.
             histoGe -x File1.info
 
-	--distance|-d: Performs ranking fiting the peak to a Gaussian 
-		distribution in order to calculate the mean value of peaks
-		and the standard deviation, then, the difference between the 
-		energies of the γ-lines and that mean is calculated, e.g.:
+	--distance|-d: Performs ranking calculating the deviation between
+        the mean value of peaks and the energy of the γ-lines.
     		histoGe -b File1.info File1.ext *
 
 	--probability|-b: Performs ranking using γ-line calculating 
