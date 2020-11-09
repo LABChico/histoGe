@@ -159,16 +159,16 @@ def rankImp(ListOpt):
 
     try:
         if rankOp[0] == 1:
-            myfilename = infoFile.strip('.info') + '_rank_B.txt'
+            myfilename = infoFile.strip('.info') + '_rank_D.txt'
         
         elif rankOp[0] == 2:
-            myfilename = infoFile.strip('.info') + '_rank_C.txt'
+            myfilename = infoFile.strip('.info') + '_rank_E.txt'
         
         elif rankOp[0] == 3:
-            myfilename = infoFile.strip('.info') + '_rank_D.txt'
+            myfilename = infoFile.strip('.info') + '_rank_F.txt'
 
         else:
-            myfilename = infoFile.strip('.info') + '_rank_D.txt'
+            myfilename = infoFile.strip('.info') + '_rank_F.txt'
     except:
         myfilename = 'FileNameCouldNotBeRecovered.txt'
 

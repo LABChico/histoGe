@@ -94,7 +94,7 @@ def halfSortFun(ListOpt):
 
         if wofFlag:
             try:
-                myfilename = infoFile.strip('.info') + '_HalfSort.txt'
+                myfilename = infoFile.strip('.info') + '_rank_C.txt'
                 if allFlag:
                     WriteOutputFileRR(myfilename,df,iEner,fEner)
                 else:

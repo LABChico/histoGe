@@ -13,8 +13,9 @@ def myPlotF(myDataList):
     plt.plot(myDataList[0],myDataList[1])
     #plt.show()
     
-def simplePlot(mySubsList,logFlag,noCalFlag,Label=None,show=False,Title=None):
+def simplePlot(mySubsList,logFlag,noCalFlag,Label=None,show=False,Title=None,ExpoTime=None):
     plt.plot(mySubsList[0],mySubsList[1],label=Label)
+    plt.title('Exposure time = ' + str(ExpoTime) + ' s', fontsize='large')
     if logFlag:
         plt.yscale('log')
     if noCalFlag:
@@ -65,7 +66,7 @@ def complexPlot(mySpecialDict,idxPairL,gausdata=None,Anotation=True,logFlag=Fals
         Title += ', '
     if Label != None:
         plt.gcf().canvas.set_window_title(Label.split('.')[0])
-    plt.title(Title + 'Exposure time = ' + str(mySpecialDict["expoTime"]) + '/s', fontsize='large')
+    plt.title(Title + 'Exposure time = ' + str(mySpecialDict["expoTime"]) + ' s', fontsize='large')
     plt.plot(mySpecialList[0],mySpecialList[1],label=Label)
     plt.ylabel('Counts', fontsize='large')
 

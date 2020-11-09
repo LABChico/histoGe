@@ -244,10 +244,10 @@ def rankProb(ListOpt):
             myfilename = infoFile.strip('.info') + '_rank_C.txt'
         
         elif rankOp[0] == 3:
-            myfilename = infoFile.strip('.info') + '_rank_Prob.txt'
+            myfilename = infoFile.strip('.info') + '_rank_B.txt'
 
         else:
-            myfilename = infoFile.strip('.info') + '_rank_Prob.txt'
+            myfilename = infoFile.strip('.info') + '_rank_B.txt'
     except:
         myfilename = 'FileNameCouldNotBeRecovered.txt'
 

@@ -271,9 +271,9 @@ def rankAdvFun(ListOpt):
         if wofFlag:
             try:
                 if filterFlag:
-                    myfilename = infoFile.strip('.info') + '_RankAdv_filter.txt'
+                    myfilename = infoFile.strip('.info') + '_rank_G_filter.txt'
                 else:
-                    myfilename = infoFile.strip('.info') + '_RankAdv.txt'
+                    myfilename = infoFile.strip('.info') + '_rank_G.txt'
 
                 WriteOutputFileRR(myfilename,df,iEner,fEner)
                 print('-----------------------------------------')

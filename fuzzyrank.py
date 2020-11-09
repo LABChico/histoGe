@@ -272,9 +272,9 @@ def fuzzyrankFun(ListOpt):
         if wofFlag:
             try:
                 if filterFlag:
-                    myfilename = infoFile.strip('.info') + '_RankFuzz_filter.txt'
+                    myfilename = infoFile.strip('.info') + '_rank_H_filter.txt'
                 else:
-                    myfilename = infoFile.strip('.info') + '_RankFuzz.txt'
+                    myfilename = infoFile.strip('.info') + '_rank_H.txt'
                 
                 WriteOutputFileRR(myfilename,df,iEner,fEner)
                 print('-----------------------------------------')

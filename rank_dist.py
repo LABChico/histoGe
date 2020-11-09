@@ -245,10 +245,10 @@ def rankDist(ListOpt):
             myfilename = infoFile.strip('.info') + '_rank_C.txt'
         
         elif rankOp[0] == 3:
-            myfilename = infoFile.strip('.info') + '_rank_Dist.txt'
+            myfilename = infoFile.strip('.info') + '_rank_A.txt'
 
         else:
-            myfilename = infoFile.strip('.info') + '_rank_Dist.txt'
+            myfilename = infoFile.strip('.info') + '_rank_A.txt'
     except:
         myfilename = 'FileNameCouldNotBeRecovered.txt'
 

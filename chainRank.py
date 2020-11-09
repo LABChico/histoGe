@@ -268,9 +268,9 @@ def ChainRankFun(ListOpt):
         if wofFlag:
             try:
                 if addFlag:
-                    myfilename = infoFile.strip('.info') + '_Rank_Hdecay_Chain.txt'
+                    myfilename = infoFile.strip('.info') + '_rank_I.txt'
                 else:
-                    myfilename = infoFile.strip('.info') + '_Rank_Gdecay_Chain.txt'
+                    myfilename = infoFile.strip('.info') + '_rank_J.txt'
                 if allFlag:
                     WriteOutputFileRR(myfilename,df,iEner,fEner)
                 else:

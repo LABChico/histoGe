@@ -64,7 +64,7 @@ def noOption(ListOpt):
                     #     mySubsDict = functionDictAdv[myExtension](myFilename,noCalFlag=True)
                     mySubsList = mySubsDict["theList"]
                     plotFlag = True
-                    simplePlot(mySubsList,logFlag,mySubsDict['calBoolean'],Label=None,show=False,Title=None)
+                    simplePlot(mySubsList,logFlag,mySubsDict['calBoolean'],Label=None,show=False,Title=myFilename,ExpoTime=mySubsDict['expoTime'])
             else:
                 print('WARNING: The file ' + arg + ' is invalid. Nothing to do with it.')
                 return 90
