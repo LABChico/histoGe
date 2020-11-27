@@ -138,7 +138,7 @@ def statsFun(ListOpt):
         #a,mean,sigma,c,minIdx,maxIdx,myFWHM=fittingDict[e]
         a,mean,sigma,c=fittingDict[e][:-3]
         if a == None:
-            print("Skipping failed fit")
+            print("Skipping failed fit in peak #", e)
             continue
         gaussData4Print.append([e,a,mean,sigma,c])
         

@@ -49,17 +49,22 @@ def complexPlot(mySpecialDict,idxPairL,gausdata=None,Anotation=True,logFlag=Fals
     else:
         idxPairLAux = idxPairL
     
-    if Fill:
-        _, ax = plt.subplots()
-        for iPV in idxPairLAux:
-            if mySpecialDict['calBoolean']:
-                start = mySpecialList[0].index(iPV[0])
-                end = mySpecialList[0].index(iPV[1])
-            else:
-                start, end = iPV
-            
-            ax.fill_between(mySpecialList[0][start:end+1],mySpecialList[1][start:end+1],facecolor='red')
-    
+    try:
+        if Fill:
+            _, ax = plt.subplots()
+            for iPV in idxPairLAux:
+                if mySpecialDict['calBoolean']:
+                    start = mySpecialList[0].index(iPV[0])
+                    end = mySpecialList[0].index(iPV[1])
+                else:
+                    start, end = iPV
+                
+                ax.fill_between(mySpecialList[0][start:end+1],mySpecialList[1][start:end+1],facecolor='red')
+    except:
+        print('\n ERROR: Unexpected error during plotting. try to use --rebin option ')
+        pass
+
+
     if Title == None:
         Title = ''
     else:
@@ -110,7 +115,7 @@ def complexPlot(mySpecialDict,idxPairL,gausdata=None,Anotation=True,logFlag=Fals
             else:
                 plt.annotate(e, xy=[peakXVals,peakYVals], fontsize='large', rotation=0)
     except:
-        print('\n ERROR: Unexpected error during plotting. ')
+        print('\n ERROR: Unexpected error during plotting 2. ')
         if mySpecialDict['calBoolean'] == False:
             print('\n The File is not calibrated, remember use --noCal options in non calibrated files')
         return 300

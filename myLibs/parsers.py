@@ -341,7 +341,8 @@ def getDictFromSPEAdv(speFile, nocalFlag=False):
 
     #Creating calibrated in Energy bins
     if bCoef != 0:
-        eBins=np.array([aCoef+bCoef*xVal+cCoef*xVal**2 for xVal in myXvals])
+        #eBins=np.array([aCoef+bCoef*xVal+cCoef*xVal**2 for xVal in myXvals])
+        eBins=list([aCoef+bCoef*xVal+cCoef*xVal**2 for xVal in myXvals])
         internDict["theList"]=[eBins,myYvals]
         internDict['calBoolean']=True
     else:

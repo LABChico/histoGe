@@ -127,7 +127,7 @@ def main(argv):
         elif Command[0] in MainOptD['stats']:
             pid = TryFork()
             if pid == 0:
-                exitcode = statsFun(Command)
+              exitcode = statsFun(Command)
             else:
                 exitcode = 0
             if  ps == lenCommands:

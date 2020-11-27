@@ -22,6 +22,7 @@ from myLibs.plotting import simplePlot
 #from myLibs.QueryDB import *
 #from myLibs.plotting import *
 from Help import helpFun
+from myLibs.miscellaneus import getRebinedList
 
 def noOption(ListOpt):
     List = ListOpt.copy()
@@ -36,7 +37,21 @@ def noOption(ListOpt):
         List.remove('--noCal')
     else:
         noCalFlag = False
-    
+
+    if '--rebin' in List:
+        rebinFlag = True
+        List.remove('--rebin')
+        rebinNum = None
+        for Arg in List:
+            try:
+                rebinNum = int(Arg)
+                List.remove(Arg)
+                break
+            except:
+                continue
+    else:
+        rebinFlag = False
+
     ListAux = List
     for arg in ListAux:
         if arg[0] == '-':
@@ -53,15 +68,48 @@ def noOption(ListOpt):
             if isValidSpecFile(arg):
                 if arg.endswith('.info'):
                     exitcode = energyFun(['--energyRanges',arg])
-                else:
+                
+                try:
+                    if isValidSpecFile(arg):
+                        FileExt = arg.split('.')[-1]
+                except:
+                    print('ERROR: Unexpected error. Not a valid file used.')
+                    return 110
+
+                ######
+                if rebinFlag:
+                    FileDict = functionDictAdv[FileExt](arg)
+         
+                    if isinstance(rebinNum, int) == False:
+                        rebinNum=5
+                        print("There was no rebin integer detected, the default rebin value used was 5")
+                
+
+                    if "theRebinedList" not in FileDict:
+                        FileDict["theRebinedList"]=getRebinedList(FileDict["theList"],rebinNum)
+                        myDataList = FileDict["theRebinedList"]
+                        myDataList[0] = list(myDataList[0])
+                        myDataList[1] = list(myDataList[1])
+                               
+                    else:
+                        print("There was no rebin option detected, the rebin option is --rebin")
+                        #myDataList = FileDict['theList']
+                    
                     myFilename = arg
-                    myExtension = myFilename.split(".")[-1]
-                    mySubsDict = functionDictAdv[myExtension](myFilename)
+                    mySubsList=myDataList
+                    plotFlag = True
+                    simplePlot(mySubsList,logFlag,FileDict['calBoolean'],Label=None,show=False,Title=myFilename,ExpoTime=FileDict['expoTime'])
+                    
+                ######  
+                else:
                     # SPE no funciona con estas condiciones
                     # if not noCalFlag and mySubsDict['calBoolean']:
                     #     mySubsDict = functionDictAdv[myExtension](myFilename,noCalFlag=False)
                     # else:
                     #     mySubsDict = functionDictAdv[myExtension](myFilename,noCalFlag=True)
+                    myFilename = arg
+                    myExtension = myFilename.split(".")[-1]
+                    mySubsDict = functionDictAdv[myExtension](myFilename)
                     mySubsList = mySubsDict["theList"]
                     plotFlag = True
                     simplePlot(mySubsList,logFlag,mySubsDict['calBoolean'],Label=None,show=False,Title=myFilename,ExpoTime=mySubsDict['expoTime'])
