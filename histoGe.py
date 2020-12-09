@@ -184,7 +184,6 @@ def main(argv):
             exitcode = rankProb(Command)
             return exitcode
 
-
         else:
             pid = TryFork()
             if pid == 0:
