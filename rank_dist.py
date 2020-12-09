@@ -79,7 +79,20 @@ def rankDist(ListOpt):
         print("error: --rank option needs an argument")
         return 0
 
-    infoFile=List[0]
+    for arg in List:
+        if isValidSpecFile(arg):
+            if arg.endswith('.info'):
+                infoFile = arg
+            else:
+                FileName = arg
+    
+    try:
+        if isValidSpecFile(FileName):
+            FileExt = FileName.split('.')[-1]
+    except:
+        print('ERROR: Unexpected error. Not a valid file used.')
+        return 110
+
     if not os.path.isfile(infoFile):
         print("error: %s does not exist, are you in the right path?" %(infoFile))
         return 10000
@@ -88,21 +101,6 @@ def rankDist(ListOpt):
         return 10001
     infoDict=getDictFromInfoFile(infoFile)
     
-    for arg in List:
-        if isValidSpecFile(arg):
-            if arg.endswith('.info'):
-                pass#infoFile = arg
-            else:
-                FileName = arg
-
-    try:
-        if isValidSpecFile(FileName):
-            FileExt = FileName.split('.')[-1]
-    except:
-        print('ERROR: Unexpected error. Not a valid file used.')
-        return 110
-
-
     if noCalFlag:
         FileDict = functionDictAdv[FileExt](FileName,False)
     else:

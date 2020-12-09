@@ -55,7 +55,6 @@ def main(argv):
     #Command = Commands[0]
     #------------------------------------------------------
     #This two lines are the multiinstruction parser code
-    #This code is in a testing phase and should be used with care
     #To switch to the Simple parser just comment two lines above
     # and uncomment both lines of the Simple instructions parser code
     Commands = MultiCommandParser(argv)

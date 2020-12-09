@@ -15,7 +15,7 @@ from math import sqrt
 #import keyboard
 
 # mainPath=sys.path[0] # sources dir
-from myLibs.parsers import getDictFromInfoFile, getMyFileDictRankAdv, functionDictAdv
+from myLibs.parsers import getDictFromInfoFile, getMyFileDictRankAdv, functionDictAdv,isValidSpecFile
 from myLibs.miscellaneus import getIdxRangeVals, removeDuplicates
 #from myLibs.gilmoreStats import *
 #from myLibs.fitting import *
@@ -62,7 +62,20 @@ def fuzzyrankFun(ListOpt):
         print("error: --fuzzyRank option needs an argument")
         return 0
 
-    infoFile=List[0]
+    for arg in List:
+        if isValidSpecFile(arg):
+            if arg.endswith('.info'):
+                infoFile = arg
+            else:
+                myFilename = arg
+    
+    try:
+        if isValidSpecFile(myFilename):
+            myExtension = myFilename.split('.')[-1]
+    except:
+        print('ERROR: Unexpected error. Not a valid file used.')
+        return 120
+
     if not os.path.isfile(infoFile):
         print("error: %s does not exist, are you in the right path?" %(infoFile))
         return 10000
@@ -76,18 +89,18 @@ def fuzzyrankFun(ListOpt):
 
     myFileDict=getMyFileDictRankAdv(List)
     
-    myFilename=myFileDict['specFiles'][0]
+    # myFilename=myFileDict['specFiles'][0]
               
-    if len(myFileDict['specFiles']) > 1:
+    # if len(myFileDict['specFiles']) > 1:
        
-        print(' Error: to many files to do autopeak\n')
+    #     print(' Error: to many files to do autopeak\n')
 
-    #elif not myFilename.endswith('.info'):       
-    else:   
-        myExtension = myFilename.split(".")[-1] #verifies the file extention
-        if myExtension == 'info':
-            print('The file cannot be an info file.')
-            return 120
+    # #elif not myFilename.endswith('.info'):       
+    # else:   
+    #     myExtension = myFilename.split(".")[-1] #verifies the file extention
+    #     if myExtension == 'info':
+    #         print('The file cannot be an info file.')
+    #         return 120
 
     noCalFlag = False
     mySpecialDict = functionDictAdv[myExtension](myFilename,noCalFlag) #fill de dictionary
@@ -260,14 +273,14 @@ def fuzzyrankFun(ListOpt):
         
         if allFlag:
             pd.set_option('display.max_rows', None) #imprime todas las filas
-            df = pd.DataFrame(sorted(list(zip(Eg,Ig,Decay,Half,Parent,rank,rank2)),key=lambda x: (x[6],-x[5]),reverse=True),columns=['Eg [keV]','Ig (%)','Decay m','Half Life','Parent','Adj MSE','Membership'])#crea  la tabla
+            df = pd.DataFrame(sorted(list(zip(Eg,Ig,Decay,Half,Parent,rank,rank2)),key=lambda x: (x[6],-x[5]),reverse=True),columns=['Eg [keV]','Ig (%)','Decay m','Half Life','Parent','Adj MSE','Affinity'])#crea  la tabla
             print(df)
-            #print(df.sort_values(by=['Membership'], ascending=False))
+            #print(df.sort_values(by=['Affinity'], ascending=False))
         else:
             pd.set_option('display.max_rows', 10)
-            df = pd.DataFrame(sorted(list(zip(Eg,Ig,Decay,Half,Parent,rank,rank2)),key=lambda x: (x[6],-x[5]),reverse=True),columns=['Eg [keV]','Ig (%)','Decay mode','Half Life','Parent','Adj MSE','Membership'])#crea  la tabla
+            df = pd.DataFrame(sorted(list(zip(Eg,Ig,Decay,Half,Parent,rank,rank2)),key=lambda x: (x[6],-x[5]),reverse=True),columns=['Eg [keV]','Ig (%)','Decay mode','Half Life','Parent','Adj MSE','Affinity'])#crea  la tabla
             print(df.head(10))
-            #print(df.sort_values(by=['Membership'], ascending=False).head(10)) #print('\nOnly the first 10')
+            #print(df.sort_values(by=['Affinity'], ascending=False).head(10)) #print('\nOnly the first 10')
             
         if wofFlag:
             try:
