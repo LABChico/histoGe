@@ -15,7 +15,7 @@ from math import sqrt
 #import keyboard
 
 # mainPath=sys.path[0] # sources dir
-from myLibs.parsers import getDictFromInfoFile, getMyFileDictRankAdv, functionDictAdv, findRangeInfoDict
+from myLibs.parsers import getDictFromInfoFile, getMyFileDictRankAdv, functionDictAdv, findRangeInfoDict,isValidSpecFile
 from myLibs.miscellaneus import getIdxRangeVals, removeDuplicates
 #from myLibs.gilmoreStats import *
 #from myLibs.fitting import *
@@ -60,7 +60,21 @@ def rankAdvFun(ListOpt):
         print("error: --energyRanges option needs an argument")
         return 0
 
-    infoFile=List[0]
+    for arg in List:
+        if isValidSpecFile(arg):
+            if arg.endswith('.info'):
+                infoFile = arg
+            else:
+                myFilename = arg
+    
+    try:
+        if isValidSpecFile(myFilename):
+            myExtension = myFilename.split('.')[-1]
+    except:
+        print('ERROR: Unexpected error. Not a valid file used.')
+        return 120
+
+
     if not os.path.isfile(infoFile):
         print("error: %s does not exist, are you in the right path?" %(infoFile))
         return 10000
@@ -78,18 +92,18 @@ def rankAdvFun(ListOpt):
 
     myFileDict=getMyFileDictRankAdv(List)
     
-    myFilename=myFileDict['specFiles'][0]
+    #myFilename=myFileDict['specFiles'][0]
               
-    if len(myFileDict['specFiles']) > 1:
+    # if len(myFileDict['specFiles']) > 1:
        
-        print(' Error: to many files to do autopeak\n')
+    #     print(' Error: to many files to do autopeak\n')
 
-    #elif not myFilename.endswith('.info'):       
-    else:   
-        myExtension = myFilename.split(".")[-1] #verifies the file extention
-        if myExtension == 'info':
-            print('The file cannot be an info file.')
-            return 120
+    # #elif not myFilename.endswith('.info'):       
+    # else:   
+    #     myExtension = myFilename.split(".")[-1] #verifies the file extention
+    #     if myExtension == 'info':
+    #         print('The file cannot be an info file.')
+    #         return 120
 
     noCalFlag = False
     mySpecialDict = functionDictAdv[myExtension](myFilename,noCalFlag) #fill de dictionary

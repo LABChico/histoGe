@@ -55,7 +55,6 @@ def main(argv):
     #Command = Commands[0]
     #------------------------------------------------------
     #This two lines are the multiinstruction parser code
-    #This code is in a testing phase and should be used with care
     #To switch to the Simple parser just comment two lines above
     # and uncomment both lines of the Simple instructions parser code
     Commands = MultiCommandParser(argv)
@@ -64,12 +63,12 @@ def main(argv):
     #------------------------------------------------------
         if 'shorthelp' in Command:
         #if Command == 'shorthelp':
-            exitcode = helpFun(argv,['.Txt','.SPE','.mca','.info'],extBool=False)
+            exitcode = helpFun(argv,['.Txt','.SPE', '.spe','.mca','.info'],extBool=False)
             if  ps == lenCommands:
                 return exitcode
 
         elif Command[0] in MainOptD['help']:
-            exitcode = helpFun(argv,['.Txt','.SPE','.mca','.info'],extBool=True)
+            exitcode = helpFun(argv,['.Txt','.SPE','.spe', '.mca','.info'],extBool=True)
             if  ps == lenCommands:
                 return exitcode
 
@@ -184,7 +183,6 @@ def main(argv):
         elif Command[0] in MainOptD['probability']:
             exitcode = rankProb(Command)
             return exitcode
-
 
         else:
             pid = TryFork()

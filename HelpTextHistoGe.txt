@@ -233,7 +233,7 @@ DOWNLOADABLE FILES
 
 EXECUTION OF MULTIPLE COMMANDS
 
-histoGe can execute several commands in a single execution. 
+histoGe can execute several commands in a single run. 
 Commands must be separated by "!" character, for example:
 
         histoGe Command_1 ! Command_2 ! ... ! Command_N

@@ -5,9 +5,10 @@ probably change the repo location.
 The program accepts 3 different file formats, ("mca" the pocket
 version, "Txt" gamma view format, "SPE" Boulby format.)
 
-IT'S NECESARY PYTHON>=3.6
+IT'S NECESSARY PYTHON>=3.6, pip3 and git.
 
-For installing, simply:
+
+For installing (in Debian base systems with apt like Ubuntu), simply do:
 
 	1. Run:
 
@@ -21,13 +22,16 @@ For installing, simply:
 		
 			python3 install_su.py
 
-For update, simply:
+You can also install in manually using the instructions given at the tutorial, see the last
+link given within this file.
+
+For updating, simply do:
 
 	1. Run:
 
 			python3 update.py
 
-	2. Or run:
+	2. Or run, within the directory of the repository:
 
 			git pull
 
@@ -47,7 +51,7 @@ able to do a:
 $ histoGe
 usage: histoGe file.extension [-c data4fits.info]
 Valid extensions are:
-		SPE
+		SPE (spe)
 		mca
 		Txt
 
