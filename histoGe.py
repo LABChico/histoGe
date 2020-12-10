@@ -63,12 +63,12 @@ def main(argv):
     #------------------------------------------------------
         if 'shorthelp' in Command:
         #if Command == 'shorthelp':
-            exitcode = helpFun(argv,['.Txt','.SPE','.mca','.info'],extBool=False)
+            exitcode = helpFun(argv,['.Txt','.SPE', '.spe','.mca','.info'],extBool=False)
             if  ps == lenCommands:
                 return exitcode
 
         elif Command[0] in MainOptD['help']:
-            exitcode = helpFun(argv,['.Txt','.SPE','.mca','.info'],extBool=True)
+            exitcode = helpFun(argv,['.Txt','.SPE','.spe', '.mca','.info'],extBool=True)
             if  ps == lenCommands:
                 return exitcode
 
