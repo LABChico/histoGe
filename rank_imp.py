@@ -46,8 +46,18 @@ def rankImp(ListOpt):
 
     for Arg in List:
         try:
-            if int(Arg) > 0 and int(Arg) < 4:
-                rankOp.append(int(Arg))
+            #if int(Arg) > 0 and int(Arg) < 4:
+            if Arg == 'D':
+                #rankOp.append(int(Arg))
+                rankOp.append(1)
+            
+            elif Arg == 'E':
+               #rankOp.append(int(Arg))
+                rankOp.append(2)
+            
+            elif Arg == 'F':
+                #rankOp.append(int(Arg))
+                rankOp.append(3)
             else:
                 continue
         except:
@@ -201,7 +211,7 @@ def rankImp(ListOpt):
         if allFlag:
             pd.set_option('display.max_rows', None) #imprime todas las filas
             pd.options.display.float_format = '{:,.5f}'.format
-            df = pd.DataFrame(list(zip(Eg,Ig,Decay,Half,Parent,rank,rank2,rank3)),columns=['Eg [keV]','Ig (%)','Decay m','Half Life','Parent','Rank','Rank2','Rank3'])#crea  la tabla
+            df = pd.DataFrame(list(zip(Eg,Ig,Decay,Half,Parent,rank,rank2,rank3)),columns=['Eg [keV]','Ig (%)','Decay m','Half Life','Parent','Rank D','Rank E','Rank F'])#crea  la tabla
             print(df)
             
         else:

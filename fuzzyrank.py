@@ -260,12 +260,18 @@ def fuzzyrankFun(ListOpt):
         
         if allFlag:
             pd.set_option('display.max_rows', None) #imprime todas las filas
-            df = pd.DataFrame(sorted(list(zip(Eg,Ig,Decay,Half,Parent,rank,rank2)),key=lambda x: (x[6],-x[5]),reverse=True),columns=['Eg [keV]','Ig (%)','Decay m','Half Life','Parent','Adj MSE','Membership'])#crea  la tabla
+            if filterFlag:
+                df = pd.DataFrame(sorted(list(zip(Eg,Ig,Decay,Half,Parent,rank,rank2)),key=lambda x: (x[6],-x[5]),reverse=True),columns=['Eg [keV]','Ig (%)','Decay m','Half Life','Parent','Adj MSE','Rank H filter'])#crea  la tabla
+            else:
+                df = pd.DataFrame(sorted(list(zip(Eg,Ig,Decay,Half,Parent,rank,rank2)),key=lambda x: (x[6],-x[5]),reverse=True),columns=['Eg [keV]','Ig (%)','Decay m','Half Life','Parent','Adj MSE','Rank H'])#crea  la tabla
             print(df)
             #print(df.sort_values(by=['Membership'], ascending=False))
         else:
             pd.set_option('display.max_rows', 10)
-            df = pd.DataFrame(sorted(list(zip(Eg,Ig,Decay,Half,Parent,rank,rank2)),key=lambda x: (x[6],-x[5]),reverse=True),columns=['Eg [keV]','Ig (%)','Decay mode','Half Life','Parent','Adj MSE','Membership'])#crea  la tabla
+            if filterFlag:
+                df = pd.DataFrame(sorted(list(zip(Eg,Ig,Decay,Half,Parent,rank,rank2)),key=lambda x: (x[6],-x[5]),reverse=True),columns=['Eg [keV]','Ig (%)','Decay m','Half Life','Parent','Adj MSE','Rank H filter'])#crea  la tabla
+            else:
+                df = pd.DataFrame(sorted(list(zip(Eg,Ig,Decay,Half,Parent,rank,rank2)),key=lambda x: (x[6],-x[5]),reverse=True),columns=['Eg [keV]','Ig (%)','Decay m','Half Life','Parent','Adj MSE','Rank H'])#crea  la tabla
             print(df.head(10))
             #print(df.sort_values(by=['Membership'], ascending=False).head(10)) #print('\nOnly the first 10')
             
