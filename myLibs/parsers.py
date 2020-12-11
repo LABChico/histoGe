@@ -10,18 +10,40 @@ import numpy as np
 from scipy.optimize import curve_fit
 from myLibs.fitting import myLine,getTentParams
 from myLibs.miscellaneus import List2str
+from os import sys
 
 
-MainOptD = {'help':['-h','--help'],'autoPeak':['-P','--autoPeak'],'query':['-q','--query'],'test':['-t','--test'],\
-        'isotope':['-i','--isotope'],'sum':['-s','--sum'],'rank':['-R','--Rank','--rank'],'sub':['-r','--sub'],'stats':['-c','--stats'],'energy':['--energyRanges','-e'],\
-        'parent':['--parent','-p'],'normint':['--normInt','-n'],'2file':['--hge','-f'], 'efficiency':['--eff','-e'],'rankAdv':['-RA','--RankAdv','--rankAdv'],\
-            'fuzzy':['--fuzzy','--fuzzyRank','--fuzzyrank','-z'],'halfSort':['--halfSort','--halfRank','--halfrank'],\
-            'chainRank':['--chainRank','--ChainRank','-x'],'distance':['--distance','-d'],'probability':['--probability','-b']}
+MainOptD = {'help':['-h','--help'],'autoPeak':['-P','--autoPeak'],
+            'query':['-q','--query'],'test':['-t','--test'],
+            'isotope':['-i','--isotope'],'sum':['-s','--sum'],
+            'rank':['-R','--Rank','--rank'],'sub':['-r','--sub'],
+            'stats':['-c','--stats'],'energy':['--energyRanges','-e'],
+            'parent':['--parent','-p'],'normint':['--normInt','-n'],
+            '2file':['--hge','-f'], 'efficiency':['--eff','-e'],
+            'rankAdv':['-RA','--RankAdv','--rankAdv'],
+            'fuzzy':['--fuzzy','--fuzzyRank','--fuzzyrank','-z'],
+            'halfSort':['--halfSort','--halfRank','--halfrank'],
+            'chainRank':['--chainRank','--ChainRank','-x'],
+            'distance':['--distance','-d'],
+            'probability':['--probability','-b']}
 
-SubOptD = {'help':[],'autoPeak':['--rebin','--wof','--noPlot','--log','--noCal'],'query':['--all'],'test':[],'isotope':[],'sum':['--noCal','--log','--noPlot','--wof'],\
-        'rank':['--wof','--all'],'sub':['--noCal','--log','--noPlot','--wof','--rebin'],'stats':['--wof','--noPlot','--noCal','--log','--rebin'],'energy':['--all','--wof'],'parent':[],\
-            'normint':[],'2file':[],'efficiency':['--Plot','--plot'],'rankAdv':['--wof','--all','--filter'],'fuzzy':['--wof','--all','--filter'],'halfSort':['--all','--wof'],\
-            'chainRank':['--wof','--all','--peak'],'distance':['--wof','--all'],'probability':['--wof','--all']}
+SubOptD = {'help':[],
+           'autoPeak':['--rebin','--wof','--noPlot','--log','--noCal'],
+           'query':['--all'],
+           'test':[],'isotope':[],
+           'sum':['--noCal','--log','--noPlot','--wof'],
+           'rank':['--wof','--all'],
+           'sub':['--noCal','--log','--noPlot','--wof','--rebin'],
+           'stats':['--wof','--noPlot','--noCal','--log','--rebin'],
+           'energy':['--all','--wof'],'parent':[],
+           'normint':[],'2file':[],
+           'efficiency':['--Plot','--plot'],
+           'rankAdv':['--wof','--all','--filter'],
+           'fuzzy':['--wof','--all','--filter'],
+           'halfSort':['--all','--wof'],
+           'chainRank':['--wof','--all','--peak'],
+           'distance':['--wof','--all'],
+           'probability':['--wof','--all']}
 
 def isValidSpectrumFile(strVal):
     if strVal.endswith('.Txt') or strVal.endswith('.SPE') or\
@@ -292,21 +314,53 @@ def MultiCommandParser(lista):
 def getDictFromInfoFile(infoFileName,noCalFlag=None):
     infoDict={}
     #newTable=pd.read_table(infoFileName, delim_whitespace=True, index_col=0,comment='#',skip_blank_lines=True)
-    newTable=pd.read_table(infoFileName,sep='\s+', index_col=0,comment='#',skip_blank_lines=True)
+    try:
+        newTable=pd.read_table(infoFileName,
+                               sep='\s+',
+                               index_col=0,
+                               comment='#',
+                               skip_blank_lines=True)
+    except:
+        print("An error ocurred. info file is malformed, might be empty or commented out.")
+        sys.exit()
+
     infoDict=newTable.to_dict('index')
+    aCheck=checkInfoDict(infoDict)
+    if not aCheck:
+        print("An error ocurred, exiting program.")
+        sys.exit()
+
     ObjFile = open(infoFileName)
     Line = ObjFile.readline()
+
     if '#SPECRANGE: ' in Line or '#SPECTRUMRANGE' in Line:
-        if '#SPECRANGE: ' in Line: 
+        if '#SPECRANGE: ' in Line:
             Line = Line.strip('#SPECRANGE: ')
         elif '#SPECTRUMRANGE' in Line:
             Line = Line.strip('#SPECTRUMRANGE: ')
-        
+
         Line = Line.strip('\n')
         RangeList = Line.split(',')
         infoDict['Range'] = {'start':float(RangeList[0]),'end':float(RangeList[1])}
+
     return infoDict
 
+
+def  checkInfoDict(infoDict):
+    if len(infoDict) == 0:
+        print("error: there is no valid range data in the info file")
+        print("are the 'start' and 'end' headers present?")
+        return False
+
+    dictList=list(infoDict)
+    firstElem=infoDict[dictList[0]]
+
+    if "start" not in firstElem and "end" not in firstElem:
+        print("error: start and end headers aren't present please place them:")
+        print("\tstart\tend")
+        return False
+
+    return True
 
 def getDictFromSPEAdv(speFile, nocalFlag=False):
     """Parses the .SPE file format that is used in Boulby"""
