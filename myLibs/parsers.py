@@ -11,7 +11,7 @@ from scipy.optimize import curve_fit
 from myLibs.fitting import myLine,getTentParams
 from myLibs.miscellaneus import List2str
 from os import sys
-
+import sys
 
 MainOptD = {'help':['-h','--help'],'autoPeak':['-P','--autoPeak'],
             'query':['-q','--query'],'test':['-t','--test'],
@@ -98,7 +98,7 @@ def getDictFromSPE(speFile,nocalFlag=False):
         internDict["theList"]=[eBins,myYvals]
         internDict['calBoolean']=True
     else:
-        print("No calibration info, weird. Using normal bins.")
+        sys.stderr.write("No calibration info, weird. Using normal bins.\n")
         internDict["theList"]=[myXvals,myYvals]
 
     tStr="MEAS_TIM"
@@ -321,21 +321,22 @@ def getDictFromInfoFile(infoFileName,noCalFlag=None):
                                comment='#',
                                skip_blank_lines=True)
     except:
-        print("An error ocurred. info file is malformed, might be empty or commented out.")
+        sys.stderr.\
+            write("An error ocurred. info file is malformed, might be empty or commented out.\n")
         sys.exit()
 
     try:
         infoDict=newTable.to_dict('index')
     except:
-        print("Error: A duplicated tag has been detected in infoFile")
+        sys.stderr.write("Error: A duplicated tag has been detected in infoFile\n")
         sys.exit()
 
 
-        
+
 
     aCheck=checkInfoDict(infoDict)
     if not aCheck:
-        print("An error ocurred, exiting program.")
+        sys.stderr.write("An error ocurred, exiting program.\n")
         sys.exit()
 
     ObjFile = open(infoFileName)
@@ -356,31 +357,31 @@ def getDictFromInfoFile(infoFileName,noCalFlag=None):
 
 def  checkInfoDict(infoDict):
     if len(infoDict) == 0:
-        print("error: there is no valid range data in the info file")
-        print("are the 'start' and 'end' headers present?")
+        sys.stderr.write("error: there is no valid range data in the info file\n")
+        sys.stderr.write("are the 'start' and 'end' headers present?\n")
         return False
 
     for tag in infoDict:
         if infoDict[tag]['start'] > infoDict[tag]['end']:
-            print('Error in infoFile: the start value must be less than end value on tag '+str(tag))
+            sys.stderr.write('Error in infoFile: the start value must be less than end value on tag '+str(tag)+'\n')
             sys.exit()
         else:
             pass
-        
+
 
         # if tag['end'] > tag['start']:
-        #     print(tag['end'] - tag['start'])
+        #     sys.stderr.write(tag['end'] - tag['start'])
         #     continue
         # else:
-        #     print("Error: the start value must be less than end value")
-        #     sys.exit()            
+        #     sys.stderr.write("Error: the start value must be less than end value\n")
+        #     sys.exit()
 
     dictList=list(infoDict)
     firstElem=infoDict[dictList[0]]
 
     if "start" not in firstElem and "end" not in firstElem:
-        print("error: start and end headers aren't present please place them:")
-        print("\tstart\tend")
+        sys.stderr.write("error: start and end headers aren't present please place them:\n")
+        sys.stderr.write("\tstart\tend\n")
         return False
 
     return True
@@ -423,7 +424,7 @@ def getDictFromSPEAdv(speFile, nocalFlag=False):
         internDict["theList"]=[eBins,myYvals]
         internDict['calBoolean']=True
     else:
-        print("No calibration info, weird. Using normal bins.")
+        sys.stderr.write("No calibration info, weird. Using normal bins.\n")
         internDict["theList"]=[myXvals,myYvals]
 
     tStr="MEAS_TIM"
@@ -668,7 +669,7 @@ def getMyFileDict(myArg):  #check if is a valid
             myFileDict['specFiles'].append(e)
 
         if e.endswith('.info'):
-            print("\n Error: The argument is an Info File. \n --autoPeak option needs an spectrum file to generates the ranges\n")
+            sys.stderr.write("\n Error: The argument is an Info File. \n --autoPeak option needs an spectrum file to generates the ranges\n")
 
     return myFileDict
 
