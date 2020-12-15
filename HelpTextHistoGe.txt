@@ -29,6 +29,12 @@ The histoGe's main option are:
 		substracted to File1.ext, e.g.:
 			histoGe -r File1.ext File2.ext
 
+	--rebin: Channels of the spectrum are rebined, it is just 
+		need necessary to specify how many channels do you 
+		want to rebin. In any case if the rebin number is 
+		not specified the default rebin number is 5. e.g.:
+			histoGe File.ext --rebin 6
+
 	-s|--sum: Sumation of spectra. The option can sum all the
 		spectra that the user need, e.g.:
 			histoGe -s File1.ext File2.ext
@@ -153,11 +159,21 @@ SUBOPTIONS OF MAIN OPTIONS
 
 			--log:	Logarithmic scale in plot.
 
+			--rebin: Channels are rebined.			
+
     -f|--hge: None
 
     -n,--normInt: None
     
     -R|--Rank|--rank: --wof: Write output file with result.
+
+			C|D|E: 	The option allows you to enter the choose 
+					a rank you want to give priority, the table 
+			will display three columns of different rankings and 
+			will be ordered according to the rank that has been 
+			chosen between options C, D or E. In case no option
+			has been selected , the default ordering will be 
+			using rank E.		
 
 			--all: Shows all the results found in a 
 				query.
@@ -201,6 +217,32 @@ SUBOPTIONS OF MAIN OPTIONS
 				query. 
 
 			   --wof: Write output file with result.
+
+RANKING RESULT DISPLAY
+
+When a ranking method is chosen, a dataframe is displayed and 
+its ordering shows its best results. Notice the columns are 
+labeled with letters from A to J, this labels refer to 
+a rank method described in the manuscript titled "Contextual 
+isotope ranking criteria for peak identification in gamma 
+spectroscopy using a large database",  and the rank method 
+corresponding to each label will be show as follows. 
+
+	Label: Ranking method	
+	
+	A:	Gamma-line distance from mean
+	B:	Gamma-line coincidence probability
+	C:	Half-life sorting
+	D:	Peak Explanation Power
+	E:	Improved Peak Explanation Power
+	F:	Relative Emission Probability
+	G:	Relative Emission Probability with Gilmore's Statistics
+	H:	Ranking With a Fuzzy Inference System
+	I:	Chain using Peak Explanation criterion
+	J:	Chain using Relative Emission Probability
+
+The manuscript is in preparation now, please look for it using 
+the title.
 
 VALID FILES
 

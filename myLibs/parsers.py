@@ -324,7 +324,15 @@ def getDictFromInfoFile(infoFileName,noCalFlag=None):
         print("An error ocurred. info file is malformed, might be empty or commented out.")
         sys.exit()
 
-    infoDict=newTable.to_dict('index')
+    try:
+        infoDict=newTable.to_dict('index')
+    except:
+        print("Error: A duplicated tag has been detected in infoFile")
+        sys.exit()
+
+
+        
+
     aCheck=checkInfoDict(infoDict)
     if not aCheck:
         print("An error ocurred, exiting program.")
@@ -351,6 +359,21 @@ def  checkInfoDict(infoDict):
         print("error: there is no valid range data in the info file")
         print("are the 'start' and 'end' headers present?")
         return False
+
+    for tag in infoDict:
+        if infoDict[tag]['start'] > infoDict[tag]['end']:
+            print('Error in infoFile: the start value must be less than end value on tag '+str(tag))
+            sys.exit()
+        else:
+            pass
+        
+
+        # if tag['end'] > tag['start']:
+        #     print(tag['end'] - tag['start'])
+        #     continue
+        # else:
+        #     print("Error: the start value must be less than end value")
+        #     sys.exit()            
 
     dictList=list(infoDict)
     firstElem=infoDict[dictList[0]]
