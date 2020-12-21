@@ -1,4 +1,4 @@
-#import sys
+import sys
 import os.path
 #from os.path import basename
 #import re
@@ -64,20 +64,20 @@ def SubFun(ListOpt):
     FileName1 = List[0]
     FileName2 = List[1]
     if len(List) == 0:
-        print('ERROR: "-r" option needs 2 arguments: File1 and File2, which will be substracted to File1.')
+        sys.stderr.write('ERROR: "-r" option needs 2 arguments: File1 and File2, which will be substracted to File1.')
         return 60
 
     if not os.path.isfile(FileName1):
-        print("ERROR: %s does not exist."%(FileName1))
+        sys.stderr.write("ERROR: %s does not exist.\n"%(FileName1))
         return 61
     
     if not os.path.isfile(FileName2):
-        print("ERROR: %s does not exist."%(FileName2))
+        sys.stderr.write("ERROR: %s does not exist.\n"%(FileName2))
         return 62
     File1Ext = FileName1.split('.')[-1]
     File2Ext = FileName2.split('.')[-1]
     if  File1Ext != File2Ext:
-        print("Errror: background substraction needs the same extension as the main file. (for now)")
+        sys.stderr.write("Errror: background substraction needs the same extension as the main file. (for now)")
         return 65
 
     if noCalFlag:
@@ -97,7 +97,7 @@ def SubFun(ListOpt):
         myLen2 = len(File2Dict["theList"][1])
 
     if myLen1 != myLen2:
-        print("ERROR: histograms do not have the same length and histoGe cannot continue.")
+        sys.stderr.write("ERROR: histograms do not have the same length and histoGe cannot continue.\n")
         return 63
 
     time1=File1Dict["expoTime"]
@@ -127,7 +127,7 @@ def SubFun(ListOpt):
                 print(myOutFile)
                 print('-----------------------------------------')
             except IOError:
-                print('An unexpected error ocurred while saving the data to file.')
+                sys.stderr.write('An unexpected error ocurred while saving the data to file.\n')
                 return 66
                
     return 0

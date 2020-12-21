@@ -5,7 +5,7 @@ from scipy.optimize import curve_fit
 from myLibs.parsers import isValidSpectrumFile,getDictFromSPEAdv,getDictFromMCAAdv,getDictFromGammaVisionAdv,functionDictAdv
 from myLibs.miscellaneus import WritehgeFile
 from myLibs.fitting import Fun1, R2Fun1, LinearFun, R2LinearFun, PolyFun, R2PolyFun
-
+import sys
 
 def efficencyFun(Command):
     List = Command.copy()
@@ -24,13 +24,13 @@ def efficencyFun(Command):
             EffFile = File
 
     if EffFile == '':
-        print('An efficiency file for the detector is required.')
+        sys.stderr.write('An efficiency file for the detector is required.\n')
         return 2000
     else:
         try:
             Effdf = pd.read_csv(EffFile,header=None,names=['energy','eff'])
         except IOError:
-            print('ERROR: The .eff file could not be read.')
+            sys.stderr.write('ERROR: The .eff file could not be read.\n')
             return 2001
         else:
             Effenernp = Effdf['energy'].values

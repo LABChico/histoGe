@@ -24,6 +24,7 @@ from myLibs.QueryDB import OpenDatabase, CloseDatabase, EnergyRange, halfLifeUni
 from myLibs.fitting import doFittingStuff
 from myLibs.gilmoreStats import doGilmoreStuff
 from myLibs.fuzzylib import fuzzyinference
+import sys
 #from myLibs.plotting import *
 
 
@@ -59,7 +60,7 @@ def fuzzyrankFun(ListOpt):
         op1Flag = False
 
     if len(List) == 0:
-        print("error: --fuzzyRank option needs an argument")
+        sys.stderr.write("error: --fuzzyRank option needs an argument\n")
         return 0
 
     for arg in List:
@@ -73,14 +74,14 @@ def fuzzyrankFun(ListOpt):
         if isValidSpecFile(myFilename):
             myExtension = myFilename.split('.')[-1]
     except:
-        print('ERROR: Unexpected error. Not a valid file used.')
+        sys.stderr.write('ERROR: Unexpected error. Not a valid file used.\n')
         return 120
 
     if not os.path.isfile(infoFile):
-        print("error: %s does not exist, are you in the right path?" %(infoFile))
+        sys.stderr.write("error: %s does not exist, are you in the right path?\n" %(infoFile))
         return 10000
     if not infoFile.endswith('.info'):
-        print("error: %s needs a .info extension" % (infoFile))
+        sys.stderr.write("error: %s needs a .info extension\n" % (infoFile))
         return 10001
     infoDict=getDictFromInfoFile(infoFile)
     minRange = infoDict['Range']['start']

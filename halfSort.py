@@ -1,4 +1,4 @@
-#import sys
+import sys
 import os.path
 import pandas as pd #para imprimir en forma de tabla
 from myLibs.parsers import getDictFromInfoFile
@@ -25,16 +25,16 @@ def halfSortFun(ListOpt):
         allFlag = False
 
     if len(List) == 0:
-        print("error: --energyRanges option needs an argument")
+        sys.stderr.write("error: --energyRanges option needs an argument\n")
         return 0
 
     infoFile=List[0]
 
     if not os.path.isfile(infoFile):
-        print("error: %s does not exist, are you in the right path?" %(infoFile))
+        sys.stderr.write("error: %s does not exist, are you in the right path?\n" %(infoFile))
         return 100
     if not infoFile.endswith('.info'):
-        print("error: %s needs a .info extension" % (infoFile))
+        sys.stderr.write("error: %s needs a .info extension\n" % (infoFile))
         return 101
     infoDict=getDictFromInfoFile(infoFile)
     minRange = infoDict['Range']['start']
@@ -107,7 +107,7 @@ def halfSortFun(ListOpt):
             
 
             except IOError:
-                print('ERROR: An unexpected error ocurrs. Data could not be saved.')
+                sys.stderr.write('ERROR: An unexpected error ocurrs. Data could not be saved.\n')
                 break
     
             

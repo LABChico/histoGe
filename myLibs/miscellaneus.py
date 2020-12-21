@@ -3,6 +3,7 @@ from os import fork
 import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
+import sys
 #from myLibs.fitting import gaus
 #from myLibs.fitting import gaus
 ###### MATPLOTLIB CONF #########################
@@ -182,7 +183,7 @@ def WritehgeFile(myFilename,myDict):
     try:
         Data = myDict['theList']
     except:
-        print('ERROR while loading the data.')
+        sys.stderr.write('ERROR while loading the data.')
         FileStr += 'ERROR loading the DATA. This file was generated but it is useless.\nPlease check your original file.'
         FileObj = open(myFilename + '.bad','w+')
         FileObj.write(FileStr)

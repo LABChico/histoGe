@@ -1,4 +1,4 @@
-#import sys
+import sys
 import os.path
 #from os.path import basename
 #import re
@@ -30,9 +30,9 @@ def NormIntensity(ListOpt):
     try:
         conexion = OpenDatabase(pathfile)
     except:
-        print('------------------------------------------------------')
-        print('ERROR: Database cannot be read. Please, be sure that database is in the folder myDatabase.')
-        print('------------------------------------------------------')
+        sys.stderr.write('------------------------------------------------------')
+        sys.stderr.write('ERROR: Database cannot be read. Please, be sure that database is in the folder myDatabase.')
+        sys.stderr.write('------------------------------------------------------')
         return 20
     for element in List:
         Isotope = GetIntensities2(conexion,element,order = 'ASC')

@@ -2,6 +2,7 @@ from matplotlib import pyplot as plt
 import numpy as np
 from myLibs.miscellaneus import closest
 from myLibs.fitting import gaus,emptyFittingDict
+import sys
 
 def plotCos():
     t2 = np.arange(0.0, 5.0, 0.02)
@@ -61,7 +62,7 @@ def complexPlot(mySpecialDict,idxPairL,gausdata=None,Anotation=True,logFlag=Fals
                 
                 ax.fill_between(mySpecialList[0][start:end+1],mySpecialList[1][start:end+1],facecolor='red')
     except:
-        print('\n ERROR: Unexpected error during plotting. try to use --rebin option ')
+        sys.stderr.write('\n ERROR: Unexpected error during plotting. try to use --rebin option ')
         pass
 
 
@@ -115,9 +116,9 @@ def complexPlot(mySpecialDict,idxPairL,gausdata=None,Anotation=True,logFlag=Fals
             else:
                 plt.annotate(e, xy=[peakXVals,peakYVals], fontsize='large', rotation=0)
     except:
-        print('\n ERROR: Unexpected error during plotting 2. ')
+        sys.stderr.write('\n ERROR: Unexpected error during plotting 2. ')
         if mySpecialDict['calBoolean'] == False:
-            print('\n The File is not calibrated, remember use --noCal options in non calibrated files')
+            sys.stderr.write('\n The File is not calibrated, remember use --noCal options in non calibrated files')
         return 300
 
     if Show:

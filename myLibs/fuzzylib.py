@@ -1,5 +1,6 @@
 import numpy as np
 from scipy import integrate
+import sys
 
 def TriangularSet(x,a,b,c):
     if type(x) is list:
@@ -18,7 +19,7 @@ def TriangularSet(x,a,b,c):
                 y[count] = 0
 
     else:
-        print('ERROR: Parameters should satisfy that c>b>a.')
+        sys.stderr.write('ERROR: Parameters should satisfy that c>b>a.')
         return 21000
 
     return y
@@ -43,7 +44,7 @@ def TrapezoidalSet(x,a,b,c,d):
                 y[count] = 0
 
     else:
-        print('ERROR: Parameters should satisfy that c>b>a.')
+        sys.stderr.write('ERROR: Parameters should satisfy that c>b>a.')
         return 21001
 
     return y

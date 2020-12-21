@@ -1,4 +1,4 @@
-#import sys
+import sys
 import os.path
 #from os.path import basename
 #import re
@@ -78,15 +78,15 @@ def rankImp(ListOpt):
     rankOp2 = [x-4 for x in rankOp]
 
     if len(List) == 0:
-        print("error: --rank option needs an argument")
+        sys.stderr.write("error: --rank option needs an argument")
         return 0
 
     infoFile=List[0]
     if not os.path.isfile(infoFile):
-        print("error: %s does not exist, are you in the right path?" %(infoFile))
+        sys.stderr.write("error: %s does not exist, are you in the right path?" %(infoFile))
         return 10000
     if not infoFile.endswith('.info'):
-        print("error: %s needs a .info extension" % (infoFile))
+        sys.stderr.write("error: %s needs a .info extension" % (infoFile))
         return 10001
     infoDict=getDictFromInfoFile(infoFile)
     
@@ -228,7 +228,7 @@ def rankImp(ListOpt):
                     WriteOutputFileRR(myfilename,df.head(10),iEner,fEner)    
             
             except IOError:
-                print('ERROR: An unexpected error ocurrs. Data could not be saved.')
+                sys.stderr.write('ERROR: An unexpected error ocurrs. Data could not be saved.')
                 break
     
     if wofFlag:

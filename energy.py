@@ -20,6 +20,7 @@ from myLibs.miscellaneus import getIdxRangeVals, WriteOutputFileRR
 #from myLibs.autoPeakFunk import *
 from myLibs.QueryDB import OpenDatabase, CloseDatabase, EnergyRange, halfLifeUnit
 #from myLibs.plotting import *
+import sys
 
 def energyFun(ListOpt):
     List = ListOpt.copy()
@@ -38,15 +39,15 @@ def energyFun(ListOpt):
         allFlag = False
 
     if len(List) == 0:
-        print("error: --energyRanges option needs an argument")
+        sys.stderr.write("error: --energyRanges option needs an argument\n")
         return 0
     
     infoFile=List[0]
     if not os.path.isfile(infoFile):
-        print("error: %s does not exist, are you in the right path?" %(infoFile))
+        sys.stderr.write("error: %s does not exist, are you in the right path?\n" %(infoFile))
         return False
     if not infoFile.endswith('.info'):
-        print("error: %s needs a .info extension" % (infoFile))
+        sys.stderr.write("error: %s needs a .info extension\n" % (infoFile))
         return False
     infoDict=getDictFromInfoFile(infoFile)
     del infoDict['Range']
@@ -94,7 +95,7 @@ def energyFun(ListOpt):
                 print(myfilename)
                 print('-----------------------------------------')
             except IOError:
-                print('ERROR: An unexpected error ocurrs. Data could not be saved.')
+                sys.stderr.write('ERROR: An unexpected error ocurrs. Data could not be saved.\n')
             
 
     CloseDatabase(conexion)

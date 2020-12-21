@@ -1,4 +1,4 @@
-#import sys
+import sys
 import os.path
 #from os.path import basename
 #import re
@@ -60,15 +60,15 @@ def rankFun(ListOpt):
             continue   
 
     if len(List) == 0:
-        print("error: --Rank option needs an argument")
+        sys.stderr.write("error: --Rank option needs an argument\n")
         return 0
 
     infoFile=List[0]
     if not os.path.isfile(infoFile):
-        print("error: %s does not exist, are you in the right path?" %(infoFile))
+        sys.stderr.write("error: %s does not exist, are you in the right path?\n" %(infoFile))
         return 100
     if not infoFile.endswith('.info'):
-        print("error: %s needs a .info extension" % (infoFile))
+        sys.stderr.write("error: %s needs a .info extension" % (infoFile))
         return 101
     infoDict=getDictFromInfoFile(infoFile)
     minRange = infoDict['Range']['start']
@@ -97,7 +97,7 @@ def rankFun(ListOpt):
             
             else:
                 idxPairL.append([DictEle['start'],DictEle['end']])
-                print('theres n|o rank op {}, please try an option between 1 and 3'.format(rankOp))
+                sys.stderr.write('there is no rank op {}, please try an option between 1 and 3'.format(rankOp))
                 break
         else:
             rankSort = 'Rank3'
@@ -258,7 +258,7 @@ def rankFun(ListOpt):
             
 
             except IOError:
-                print('ERROR: An unexpected error ocurrs. Data could not be saved.')
+                sys.stderr.write('ERROR: An unexpected error ocurrs. Data could not be saved.')
                 break
     
             

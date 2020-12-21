@@ -1,4 +1,4 @@
-#import sys
+import sys
 #import os.path
 #from os.path import basename
 #import re
@@ -73,7 +73,7 @@ def noOption(ListOpt):
                     if isValidSpecFile(arg):
                         FileExt = arg.split('.')[-1]
                 except:
-                    print('ERROR: Unexpected error. Not a valid file used.')
+                    sys.stderr.write('ERROR: Unexpected error. Not a valid file used.')
                     return 110
 
                 ######
@@ -82,7 +82,7 @@ def noOption(ListOpt):
          
                     if isinstance(rebinNum, int) == False:
                         rebinNum=5
-                        print("There was no rebin integer detected, the default rebin value used was 5")
+                        sys.stderr.write("There was no rebin integer detected, the default rebin value used was 5")
                 
 
                     if "theRebinedList" not in FileDict:
@@ -92,7 +92,7 @@ def noOption(ListOpt):
                         myDataList[1] = list(myDataList[1])
                                
                     else:
-                        print("There was no rebin option detected, the rebin option is --rebin")
+                        sys.stderr.write("There was no rebin option detected, the rebin option is --rebin")
                         #myDataList = FileDict['theList']
                     
                     myFilename = arg
@@ -114,7 +114,7 @@ def noOption(ListOpt):
                     plotFlag = True
                     simplePlot(mySubsList,logFlag,mySubsDict['calBoolean'],Label=None,show=False,Title=myFilename,ExpoTime=mySubsDict['expoTime'])
             else:
-                print('WARNING: The file ' + arg + ' is invalid. Nothing to do with it.')
+                sys.stderr.write('WARNING: The file ' + arg + ' is invalid. Nothing to do with it.')
                 return 90
     if plotFlag:
         plt.show()

@@ -1,4 +1,4 @@
-#import sys
+import sys
 import os.path
 #from os.path import basename
 #import re
@@ -45,7 +45,7 @@ def QueryFun(ListOpt):
         iEner=float(iEner)
         fEner=float(fEner)
     except ValueError:
-        print('ERROR: Argument or arguments cannot be converted to float.')
+        sys.stderr.write('ERROR: Argument or arguments cannot be converted to float.')
         return 31
     if iEner > fEner:
         iEnerAux = iEner

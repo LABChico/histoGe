@@ -1,4 +1,4 @@
-#import sys
+import sys
 #import os.path
 #from os.path import basename
 #import re
@@ -49,7 +49,7 @@ def SumSpectra(Dict1,Dict2):
         return Dict1
     else:
         print('--------------------------------------------')
-        print('ERROR: All files must be calibrated or non-calibrated.')
+        sys.stderr.write('ERROR: All files must be calibrated or non-calibrated.\n')
         print('Sum cannot be performed between different types of files')
         print('--------------------------------------------')
         exit(43)
@@ -86,9 +86,7 @@ def SumFun(ListOpt):
     if len(List) == 1:
         if isValidSpecFile(List[0]):
             print('----------------------------------------------')
-            print('WARNING: At least two files are needed to make the sum between them.')
-            print('No sum was performed. If option --noPlot is disabled then plot is shown.')
-            print('Otherwise, nothing is shown.')
+            sys.stderr.write('WARNING: At least two files are needed to make the sum between them.\nNo sum was performed. If option --noPlot is disabled then plot is shown.\n Otherwise, nothing is shown.\n')
             print('----------------------------------------------')
             myFilename = List[0]
             myExtension = myFilename.split(".")[-1]
@@ -99,13 +97,12 @@ def SumFun(ListOpt):
             mySubsList = mySubsDict["theList"]
             if noPlotFlag:
                 print('----------------------------------------------')
-                print('--noPlot is activated, so there is no figure display.')
+                sys.stderr.write('--noPlot is activated, so there is no figure display.\n')
             else:
                 simplePlot(mySubsList,logFlag,noCalFlag,Label=None,show=True,Title=myFilename.split('/')[-1])
         else:
             print('----------------------------------------------')
-            print('WARNING: No .mca, .Txt or .SPE files was indicated.')
-            print('Please, introduce two or more valid files.')
+            sys.stderr.write('WARNING: No .mca, .Txt or .SPE files was indicated.\nPlease, introduce two or more valid files.')
             return 41
 
     elif len(List) > 1:
@@ -145,13 +142,13 @@ def SumFun(ListOpt):
                     print(myOutFile)
                     print('-----------------------------------------') 
                 except IOError:
-                    print('An unexpected error ocurred while saving the data to file.')
+                    sys.stderr.write('An unexpected error ocurred while saving the data to file.\n')
                     return 44
                 
                 
                 
     else:
-        print('ERROR: Not a valid argument in "Sum" function.')
+        sys.stderr.write('ERROR: Not a valid argument in "Sum" function.\n')
         return 40
 
     return 0

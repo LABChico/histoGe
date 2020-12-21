@@ -1,4 +1,4 @@
-#import sys
+import sys
 import os.path
 #from os.path import basename
 #import re
@@ -57,7 +57,7 @@ def rankAdvFun(ListOpt):
         op1Flag = False
 
     if len(List) == 0:
-        print("error: --energyRanges option needs an argument")
+        sys.stderr.write("error: --energyRanges option needs an argument\n")
         return 0
 
     for arg in List:
@@ -71,15 +71,15 @@ def rankAdvFun(ListOpt):
         if isValidSpecFile(myFilename):
             myExtension = myFilename.split('.')[-1]
     except:
-        print('ERROR: Unexpected error. Not a valid file used.')
+        sys.stderr.write('ERROR: Unexpected error. Not a valid file used.\n')
         return 120
 
 
     if not os.path.isfile(infoFile):
-        print("error: %s does not exist, are you in the right path?" %(infoFile))
+        sys.stderr.write("error: %s does not exist, are you in the right path?\n" %(infoFile))
         return 10000
     if not infoFile.endswith('.info'):
-        print("error: %s needs a .info extension" % (infoFile))
+        sys.stderr.write("error: %s needs a .info extension\n" % (infoFile))
         return 10001
     infoDict=getDictFromInfoFile(infoFile)
     try:
@@ -302,7 +302,7 @@ def rankAdvFun(ListOpt):
                 print(myfilename)
                 print('-----------------------------------------')
             except IOError:
-                print('ERROR: An unexpected error ocurrs. Data could not be saved.')
+                sys.stderr.write('ERROR: An unexpected error ocurrs. Data could not be saved.\n')
     
     return 0
     

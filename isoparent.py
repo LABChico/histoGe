@@ -1,4 +1,4 @@
-#import sys
+import sys
 import os.path
 #from os.path import basename
 #import re
@@ -26,7 +26,7 @@ def Parent(ListOpt):
     List.pop(0)  
     
     if len(List) == 0:
-        print("error: --parent option needs an argument")
+        sys.stderr.write("error: --parent option needs an argument\n")
         return 400
     
     pathfile = os.path.realpath(__file__)

@@ -5,6 +5,7 @@ from myLibs.miscellaneus import getIdxRangeVals,fwhm
 from math import sqrt, pi
 from scipy.optimize import curve_fit
 from scipy.stats import norm
+import sys
 
 def gaus(x,a,x0,sigma,c=0):
     """A gaussian bell. I added temporarly an additive constant."""
@@ -69,8 +70,9 @@ def doFittingStuff(infoDict,myDataList):
             
             #popt,pcov = curve_fit(gaus,xVals,myDataList[1],p0=[a,mean,sigma,c])
         except:
-            print("Fit failed for %s in fiting.py" %(e))
+            sys.stderr.write("Fit failed for %s in fiting.py" %(e) + "\n")
             fittingDict[e]=[None,None,None,None,None,None,None]
+            #sys.exit()
             continue
 
         a,mean,sigma,c=popt

@@ -1,4 +1,4 @@
-#import sys
+import sys
 import os.path
 #from os.path import basename
 #import re
@@ -26,10 +26,10 @@ from myLibs.fitting import doFittingStuff,gaus
 from myLibs.gilmoreStats import doGilmoreStuff,doOutputFile
 from myLibs.plotting import complexPlot
 from myLibs.miscellaneus import getRebinedList
+import sys
 
 def statsFun(ListOpt):
     List = ListOpt.copy()
-    print(List)
     List.pop(0)
     if '--noCal' in List:
         noCalFlag = True
@@ -86,14 +86,14 @@ def statsFun(ListOpt):
         if isValidSpecFile(FileName):
             FileExt = FileName.split('.')[-1]
     except:
-        print('ERROR: Unexpected error. Not a valid file used.')
+        sys.stderr.write('\nERROR: Unexpected error. Not a valid file used.\n')
         return 110
 
     if not os.path.isfile(infoFile):
-        print("ERROR: %s does not exist, are you in the right path?" %(infoFile))
+        sys.stderr.write("\nERROR: %s does not exist, are you in the right path?" %(infoFile)+"\n")
         return 111
     if not infoFile.endswith('.info'):
-        print("ERROR: %s needs a .info extension" % (infoFile))
+        sys.stderr.write("\nERROR: %s needs a .info extension" % (infoFile)+"\n")
         return 112   
     
     infoDict=getDictFromInfoFile(infoFile)
@@ -113,7 +113,7 @@ def statsFun(ListOpt):
             
             if isinstance(rebinNum, int) == False:
                 rebinNum=5
-                print("There was no rebin integer detected, the default rebin value used was 5")
+                sys.stderr.write("\nThere was no rebin integer detected, the default rebin value used was 5\n")
                 
 
             if "theRebinedList" not in FileDict:
@@ -123,7 +123,7 @@ def statsFun(ListOpt):
                 myDataList[1] = list(myDataList[1])
                                
     else:
-        print("There was no rebin option detected, the rebin option is --rebin")
+        sys.stderr.write("\nThere was no rebin option detected, the rebin option is --rebin\n")
         myDataList = FileDict['theList']
     
     #####
@@ -138,7 +138,7 @@ def statsFun(ListOpt):
         #a,mean,sigma,c,minIdx,maxIdx,myFWHM=fittingDict[e]
         a,mean,sigma,c=fittingDict[e][:-3]
         if a == None:
-            print("Skipping failed fit in peak #", e)
+            sys.stderr.write("Fit failed for "+e+" in fiting.py"+"\n")
             continue
         gaussData4Print.append([e,a,mean,sigma,c])
         

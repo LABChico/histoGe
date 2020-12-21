@@ -138,13 +138,13 @@ def autoPeakFun(Command):
               
     if len(myFileDict['specFiles']) > 1:
        
-        print(' Error: to many files to do autopeak\n')
+        sys.stderr.write(' Error: to many files to do autopeak\n')
 
     #elif not myFilename.endswith('.info'):       
     else:   
         myExtension = myFilename.split(".")[-1] #verifies the file extention
         if myExtension == 'info':
-            print('The file cannot be an info file.')
+            sys.stderr.write('The file cannot be an info file.\n')
             return 120
 
         
@@ -153,13 +153,13 @@ def autoPeakFun(Command):
         
         if (noCalFlag == False) and (mySpecialDict["calBoolean"] == False):
             noCalFlag = True
-            print("Note: the file " + myFilename + " is not calibrated, please don't forget use --noCal option")
+            sys.stderr.write("Note: the file " + myFilename + " is not calibrated, please don't forget use --noCal option\n")
 
         if rebinFlag:
             
             if isinstance(rebinNum, int) == False:
                 rebinNum=5
-                print("There was no rebin integer detected, the default rebin value used was 5")
+                sys.stderr.write("There was no rebin integer detected, the default rebin value used was 5\n")
                 
 
             if "theRebinedList" not in mySpecialDict:
@@ -185,7 +185,7 @@ def autoPeakFun(Command):
                 #     Ranges = idxPairL
                 
         else:
-            print("There was no rebin option detected, the rebin option is --rebin")
+            sys.stderr.write("There was no rebin option detected, the rebin option is --rebin\n")
             myDataList = mySpecialDict["theList"]
                 
             idxPairL = peakRangeFinder(myDataList)
