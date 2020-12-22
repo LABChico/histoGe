@@ -1,26 +1,10 @@
 import sys
-#import os.path
-#from os.path import basename
-#import re
-import pandas as pd #para imprimir en forma de tabla
+import pandas as pd
 from matplotlib import pyplot as plt
 import numpy as np
-#from scipy.optimize import curve_fit
-#from scipy import asarray as ar,exp
-#from math import sqrt, pi
-#import time
-#import signal
-#import keyboard
-
-# mainPath=sys.path[0] # sources dir
 from myLibs.parsers import getDictFromSPE,getDictFromMCA,getDictFromGammaVision,isValidSpecFile,getDictFromInfoFile,functionDict
 from myLibs.miscellaneus import WriteOutputFile, WritehgeFile
 from myLibs.plotting import simplePlot
-#from myLibs.gilmoreStats import *
-#from myLibs.fitting import *
-#from myLibs.autoPeakFunk import *
-#from myLibs.QueryDB import *
-#from myLibs.plotting import *
 
 def SumSpectra(Dict1,Dict2):
     if not(Dict1['calBoolean'] != Dict2['calBoolean']):
@@ -58,7 +42,6 @@ def SumSpectra(Dict1,Dict2):
 def SumFun(ListOpt):
     List = ListOpt.copy()
     List.pop(0)
-    #functionDict = {"SPE": getDictFromSPE,"mca": getDictFromMCA,"Txt": getDictFromGammaVision,"info":getDictFromInfoFile}
     if '--noCal' in List:
         noCalFlag = True
         List.remove('--noCal')

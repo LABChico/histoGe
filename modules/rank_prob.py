@@ -1,30 +1,14 @@
 import sys
 import os.path
-#from os.path import basename
-#import re
-import pandas as pd #para imprimir en forma de tabla
+import pandas as pd 
 from myLibs.miscellaneus import WriteOutputFileRR
 from math import sqrt
-#from matplotlib import pyplot as plt
-#import numpy as np
-#from scipy.optimize import curve_fit
-#from scipy import asarray as ar,exp
-#from math import sqrt, pi
-#import time
-#import signal
-#import keyboard
-
-# mainPath=sys.path[0] # sources dir
 from myLibs.parsers import getDictFromInfoFile, getMyFileDictRankAdv, functionDictAdv, findRangeInfoDict, isValidSpecFile
 from myLibs.miscellaneus import getIdxRangeVals, removeDuplicates
-#from myLibs.gilmoreStats import *
-#from myLibs.fitting import *
-#from myLibs.autoPeakFunk import *
 from myLibs.QueryDB import OpenDatabase, CloseDatabase, EnergyRange, halfLifeUnit, GetIntensities
 from myLibs.fitting import doFittingStuff,MeanDistance
 from myLibs.gilmoreStats import doGilmoreStuff
 from operator import itemgetter
-#from myLibs.plotting import *
 
 def rankProb(ListOpt):
     List = ListOpt.copy()
@@ -72,7 +56,6 @@ def rankProb(ListOpt):
             rankOp.append(3)
 
     rankOp = removeDuplicates(rankOp)    
-    #rankOp2 = [x-4 for x in rankOp]
     rankOp2 = [-2,-3]
     if len(List) == 0:
         sys.stderr.write("error: --rank option needs an argument\n")
@@ -119,7 +102,7 @@ def rankProb(ListOpt):
 
     DBInfoL = []
     pathfile = os.path.realpath(__file__)
-    pathfile = pathfile.rstrip('rank_prob.py')
+    pathfile = pathfile.replace('/modules/rank_prob.py','')
     conexion = OpenDatabase(pathfile)
 
     memoLenDict={}
@@ -144,48 +127,17 @@ def rankProb(ListOpt):
         tMaxE = maxRange
 
     myDataList = FileDict['theList']
-    #print("")
-    #print("Gilmore statistics\n[variables in counts]")
+    
     fittingDict=doFittingStuff(infoDict,myDataList)
-    #gaussData4Print=[]
-    #fig, ax = plt.subplots()
-    #for e in fittingDict:
-        #a,mean,sigma,c,minIdx,maxIdx,myFWHM=fittingDict[e]
-    #    a,mean,sigma,c=fittingDict[e][:-3]
-    #    if a == None:
-    #        print("Skipping failed fit")
-    #        continue
-    #    gaussData4Print.append([e,a,mean,sigma,c])
-        
-        #plt.annotate(e, xy=[mean,a])
-    #myGaussRows=['#tags','a','mean','sigma','c']
-    #pd.set_option('display.max_rows', None)
-    #dfG = pd.DataFrame(gaussData4Print, columns = myGaussRows)
-
-    #gilmoreDict=doGilmoreStuff(infoDict,myDataList)
-    #data4print=[]
-    #for e in gilmoreDict:
-    #    gL=gilmoreDict[e]
-    #    data4print.append(gL[0:6])
-    #realXVals=myDataList[0]
-
-    #myHStr4=['Tags','NetArea','Area+ExtBkgd','GrossInt','Background','Sigma_A']
-    #pd.set_option('display.max_rows', len(data4print))#imprime todas las filas
-    #df = pd.DataFrame([data for data in data4print], columns = myHStr4)
-    #print(df)
-    #print('\nGauss Parameters')
-    #print(dfG)
     fittingDictKeys = list(fittingDict.keys())
 
     PeakNum = -1
     IdxRemove=[]
-    #idxPairL_copy=idxPairL.copy()
+    
     for idxR in idxPairL:
         PeakNum += 1
         iEner = idxR[0]
         fEner = idxR[1]
-        # DBInfoL.append(GetIntensities(conexion,iEner,fEner))
-        # DBInfo = DBInfoL[-1]
         DBInfo = GetIntensities(conexion,iEner,fEner)
         DiffL, ProbL = MeanDistance(DBInfo,fittingDict[fittingDictKeys[PeakNum]])
         if DiffL == None or ProbL == None:
@@ -256,7 +208,6 @@ def rankProb(ListOpt):
         Ranges.append([iEner,fEner])
         Eg , Ig , Decay, Half , Parent, rank, rank2, rank3, ProbRank, DiffRank  = [],[],[],[],[],[],[],[],[],[]
         for Key in DBInfoD:
-            #Ele = DBInfoD[Key]
             for Ele,DiffEle,ProbEle in zip(DBInfoD[Key],DiffDL[Key],ProbDL[Key]):
                 Eg.append(Ele[1])
                 Ig.append(round(Ele[3],2))
@@ -279,7 +230,7 @@ def rankProb(ListOpt):
         print('\nThe energy range consulted is between %.2f keV and %.2f keV.\n' % (iEner,fEner))
         
         if allFlag:
-            pd.set_option('display.max_rows', None) #imprime todas las filas
+            pd.set_option('display.max_rows', None)
             pd.options.display.float_format = '{:,.5f}'.format
             df = pd.DataFrame(list(zip(Eg,Ig,Decay,Half,Parent,rank3,ProbRank,DiffRank)),columns=['Eg [keV]','Ig (%)','Decay m','Half Life','Parent','Rank3','Probability','Distance'])#crea  la tabla
             print(df)

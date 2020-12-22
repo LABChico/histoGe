@@ -1,27 +1,9 @@
 import sys
-#import os.path
-#from os.path import basename
-#import re
-#import pandas as pd #para imprimir en forma de tabla
 from matplotlib import pyplot as plt
-#import numpy as np
-#from scipy.optimize import curve_fit
-#from scipy import asarray as ar,exp
-#from math import sqrt, pi
-#import time
-#import signal
-#import keyboard
-
-# mainPath=sys.path[0] # sources dir
-from energy import energyFun
+from modules.energy import energyFun
 from myLibs.parsers import isValidSpecFile, functionDictAdv, getDictFromGammaVision,getDictFromMCA,getDictFromSPE
 from myLibs.plotting import simplePlot
-#from myLibs.gilmoreStats import *
-#from myLibs.fitting import *
-#from myLibs.autoPeakFunk import *
-#from myLibs.QueryDB import *
-#from myLibs.plotting import *
-from Help import helpFun
+from modules.Help import helpFun
 from myLibs.miscellaneus import getRebinedList
 
 def noOption(ListOpt):
@@ -93,7 +75,6 @@ def noOption(ListOpt):
                                
                     else:
                         sys.stderr.write("There was no rebin option detected, the rebin option is --rebin")
-                        #myDataList = FileDict['theList']
                     
                     myFilename = arg
                     mySubsList=myDataList
@@ -102,11 +83,6 @@ def noOption(ListOpt):
                     
                 ######  
                 else:
-                    # SPE no funciona con estas condiciones
-                    # if not noCalFlag and mySubsDict['calBoolean']:
-                    #     mySubsDict = functionDictAdv[myExtension](myFilename,noCalFlag=False)
-                    # else:
-                    #     mySubsDict = functionDictAdv[myExtension](myFilename,noCalFlag=True)
                     myFilename = arg
                     myExtension = myFilename.split(".")[-1]
                     mySubsDict = functionDictAdv[myExtension](myFilename)

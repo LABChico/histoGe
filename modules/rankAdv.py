@@ -1,29 +1,13 @@
 import sys
 import os.path
-#from os.path import basename
-#import re
-import pandas as pd #para imprimir en forma de tabla
+import pandas as pd
 from myLibs.miscellaneus import WriteOutputFileRR
 from math import sqrt
-#from matplotlib import pyplot as plt
-#import numpy as np
-#from scipy.optimize import curve_fit
-#from scipy import asarray as ar,exp
-#from math import sqrt, pi
-#import time
-#import signal
-#import keyboard
-
-# mainPath=sys.path[0] # sources dir
 from myLibs.parsers import getDictFromInfoFile, getMyFileDictRankAdv, functionDictAdv, findRangeInfoDict,isValidSpecFile
 from myLibs.miscellaneus import getIdxRangeVals, removeDuplicates
-#from myLibs.gilmoreStats import *
-#from myLibs.fitting import *
-#from myLibs.autoPeakFunk import *
 from myLibs.QueryDB import OpenDatabase, CloseDatabase, EnergyRange, halfLifeUnit, GetIntensities
 from myLibs.fitting import doFittingStuff
 from myLibs.gilmoreStats import doGilmoreStuff
-#from myLibs.plotting import *
 
 def rankAdvFun(ListOpt):
     List = ListOpt.copy()
@@ -89,27 +73,12 @@ def rankAdvFun(ListOpt):
     except:
         minRange, maxRange = findRangeInfoDict(infoDict)
     
-
     myFileDict=getMyFileDictRankAdv(List)
-    
-    #myFilename=myFileDict['specFiles'][0]
-              
-    # if len(myFileDict['specFiles']) > 1:
-       
-    #     print(' Error: to many files to do autopeak\n')
-
-    # #elif not myFilename.endswith('.info'):       
-    # else:   
-    #     myExtension = myFilename.split(".")[-1] #verifies the file extention
-    #     if myExtension == 'info':
-    #         print('The file cannot be an info file.')
-    #         return 120
 
     noCalFlag = False
-    mySpecialDict = functionDictAdv[myExtension](myFilename,noCalFlag) #fill de dictionary
-                                                                #from data file
+    mySpecialDict = functionDictAdv[myExtension](myFilename,noCalFlag) 
     myDataList = mySpecialDict['theList']
-    #fittingDict = doFittingStuff(infoDict,myDataList)
+    
     gilmoreDict = doGilmoreStuff(infoDict,myDataList)
     gilmoreDictKeys = list(gilmoreDict.keys())
 
@@ -117,7 +86,7 @@ def rankAdvFun(ListOpt):
     for DictEle in infoDict.values():
         ####
         if op1Flag:
-            deltaEle = (DictEle['end']-DictEle['start'])*.1 #peak +/- % of the infoFile range
+            deltaEle = (DictEle['end']-DictEle['start'])*.1 
             meanEle = (DictEle['start']+DictEle['end'])/2
             DictEle['start'] = meanEle - deltaEle
             DictEle['end'] = meanEle + deltaEle
@@ -129,7 +98,7 @@ def rankAdvFun(ListOpt):
     
     DBInfoL = []
     pathfile = os.path.realpath(__file__)
-    pathfile = pathfile.rstrip('rankAdv.py')
+    pathfile = pathfile.replace('/modules/rankAdv.py','')
     conexion = OpenDatabase(pathfile)
 
     memoLenDict={}
@@ -137,7 +106,6 @@ def rankAdvFun(ListOpt):
     isoCountD = {}
     DBInfoL = []
     DBInfoDL = []
-    #tMinE,tMaxE = infoDict['theList'][0],infoDict['theList'][-1]
     tMinEL = []
     tMaxEL = []
     
@@ -156,7 +124,6 @@ def rankAdvFun(ListOpt):
         PeakNum += 1
         iEner = idxR[0]
         fEner = idxR[1]
-        #DBInfoL.append(EnergyRange(conexion,iEner,fEner))
         DBInfoL.append(GetIntensities(conexion,iEner,fEner))
         DBInfo = DBInfoL[-1]
         DBInfoD = {}
@@ -220,7 +187,7 @@ def rankAdvFun(ListOpt):
                 if KeyDB not in memoLenDictKeys:
                     del DBInfoD[KeyDB]
             DBInfoDLshort.append(DBInfoD)
-        #DBInfoDLshortKeys = list(DBInfoDLshort.keys())
+
     else:
         DBInfoDLshort = DBInfoDL.copy()
     
@@ -245,7 +212,7 @@ def rankAdvFun(ListOpt):
                 for MultiPeak in DBInfoDLshort[Peak][Key]:
                     MultiPeakIntensity += MultiPeak[10]
                 ECM += ((MultiPeakIntensity/NormPeakIntensity)-(gilmoreDict[gilmoreDictKeys[Peak]][1]/NetAreaTot))**2
-                #ECM += ((NormPeakIntensity/MultiPeakIntensity)-(gilmoreDict[gilmoreDictKeys[Peak]][1]/NetAreaTot))**2 
+    
             DevRankD[Key] = (memoLenDict[Key][0]/memoLenDict[Key][1])*sqrt(ECM/len(memoLenDict[Key][3]))
 
     Ranges = []
@@ -255,7 +222,6 @@ def rankAdvFun(ListOpt):
         Ranges.append([iEner,fEner])
         Eg , Ig , Decay, Half , Parent, rank = [],[],[],[],[],[]
         for Key in DBInfoD:
-            #Ele = DBInfoD[Key]
             for Ele in DBInfoD[Key]:
                 Eg.append(Ele[1])
                 Ig.append(round(Ele[3],2))
@@ -265,7 +231,7 @@ def rankAdvFun(ListOpt):
                     y = str(x)
                 else:
                     y = str('{0:.2e}'.format(x))
-                Half.append(y+ ' [s] ')# + str(Ele[6]) +' ' +str(Ele[7]) + ' ('+str(Ele[8])+')')
+                Half.append(y+ ' [s] ')
                 Parent.append(Ele[-1])
                 rank.append(DevRankD[Key])
 
@@ -273,13 +239,13 @@ def rankAdvFun(ListOpt):
         print('\nThe energy range consulted is between %.2f keV and %.2f keV.\n' % (iEner,fEner))
         
         if allFlag:
-            pd.set_option('display.max_rows', None) #imprime todas las filas
+            pd.set_option('display.max_rows', None)
             if filterFlag:
                 df = pd.DataFrame(sorted(list(zip(Eg,Ig,Decay,Half,Parent,rank)), key=lambda x:x[5] ),index = None,columns=['Eg [keV]','Ig (%)','Decay m','Half Life','Parent','Rank G Filter'])#crea  la tabla
             else: 
                 df = pd.DataFrame(sorted(list(zip(Eg,Ig,Decay,Half,Parent,rank)), key=lambda x:x[5] ),index = None,columns=['Eg [keV]','Ig (%)','Decay m','Half Life','Parent','Rank G'])#crea  la tabla
             
-            print(df)#.sort_values(by=['Adj MSE'], ascending=True))
+            print(df)
         else:
             pd.set_option('display.max_rows', 10)
             if filterFlag:
@@ -287,7 +253,6 @@ def rankAdvFun(ListOpt):
             else:
                 df = pd.DataFrame(sorted(list(zip(Eg,Ig,Decay,Half,Parent,rank)), key=lambda x:x[5] ),index = None ,columns=['Eg [keV]','Ig (%)','Decay mode','Half Life','Parent','Rank G'])#crea  la tabla
             print(df.head(10))
-            #print(df.sort_values(by=['Adj MSE'], ascending=True).head(10)) #print('\nOnly the first 10')
             
         if wofFlag:
             try:

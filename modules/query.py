@@ -1,33 +1,14 @@
 import sys
 import os.path
-#from os.path import basename
-#import re
-import pandas as pd #para imprimir en forma de tabla
-#from matplotlib import pyplot as plt
-#import numpy as np
-#from scipy.optimize import curve_fit
-#from scipy import asarray as ar,exp
-#from math import sqrt, pi
-#import time
-#import signal
-#import keyboard
-
-# mainPath=sys.path[0] # sources dir
-#from myLibs.parsers import *
-#from myLibs.gilmoreStats import *
-#from myLibs.fitting import *
-#from myLibs.autoPeakFunk import *
-#from myLibs.QueryDB import *
-#from myLibs.plotting import *
+import pandas as pd
 from myLibs.QueryDB import OpenDatabase, EnergyRange, CloseDatabase
 
 
 def QueryFun(ListOpt):
-    #print(String)
     List = ListOpt.copy()
     List.pop(0)
     pathfile = os.path.realpath(__file__)
-    pathfile = pathfile.strip('query.py')
+    pathfile = pathfile.replace('/modules/query.py','')
     conexion = OpenDatabase(pathfile)
     if '--all' in List:
         allflag = True
@@ -63,15 +44,15 @@ def QueryFun(ListOpt):
             Decay.append(Ele[5])
             Half.append(str(Ele[6]) +' ' +str(Ele[7]) + ' ('+str(Ele[8])+')')
             Parent.append(Ele[10])
-        pd.set_option('display.max_rows', 30)#imprime todas las filas
+        pd.set_option('display.max_rows', 30)
 
         if allflag:
-            pd.set_option('display.max_rows', None)#imprime todas las filas
+            pd.set_option('display.max_rows', None)
         else:
             pd.set_option('display.max_rows', len(Ele))
 
         df = pd.DataFrame(list(zip(Eg,Ig,Decay,Half,Parent)),columns=['Eg [keV]','Ig (%)','Decay mode','Half Life','Parent'])#crea  la tabla
-        print(df) #imprime la tabla
+        print(df)
 
     print("\n%d results were found" %(len(DBInfo)))
     CloseDatabase(conexion)

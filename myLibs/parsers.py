@@ -65,21 +65,16 @@ def getDictFromSPE(speFile,nocalFlag=False):
     """Parses the .SPE file format that is used in Boulby"""
     calFlag = not nocalFlag
     internDict = {}
-    #myCounter=0
-    #_,bCoef,_=[0.0,0.0,0.0]
     aCoef,bCoef,cCoef=[0.0,0.0,0.0]
     myXvals=[]
     myYvals=[]
-    #calBool=False
     internDict['calBoolean']=False
-    #appendBool=False
 
-    #str2init = "DATA"
     for line in open(speFile):
         iFound = line.find("$")
-        if iFound != -1: #iFound == 0
+        if iFound != -1: 
             fFound=line.find(":")
-            newEntry=line[iFound+1:fFound] #Avoiding the :
+            newEntry=line[iFound+1:fFound] 
             internDict[newEntry]=[]
             continue
         internDict[newEntry].append(line)
@@ -88,9 +83,7 @@ def getDictFromSPE(speFile,nocalFlag=False):
     myYvals=[float(yVal) for yVal in internDict["DATA"][1:]]
 
     if "ENER_FIT" in internDict and calFlag:
-        #_,bCoef,_=[float(e) for e in internDict['ENER_FIT'][0].split()]
         aCoef,bCoef,cCoef=[float(e) for e in internDict['ENER_FIT'][0].split()]
-        #Assuming E=aCoef+bCoef*bin+cCoef*bin**2
 
     #Creating calibrated in Energy bins
     if bCoef != 0:
@@ -109,7 +102,6 @@ def getDictFromSPE(speFile,nocalFlag=False):
     return internDict
 
 def getDictFromMCA(mcaFilename,noCalFlag=False):
-    #"""Parses the .mca file format comming from either the micro mca or the px5."""
     internDict={}
     mcaList=[]
     str2init = "<<DATA>>"
@@ -127,7 +119,6 @@ def getDictFromMCA(mcaFilename,noCalFlag=False):
     x4cal=[]
     y4cal=[]
 
-    #Ignoring errors for now, however bins are not skipped
     for line in open(mcaFilename, errors='ignore'):
         if line.find(strExpTime) != -1:  #"REAL_TIME"
             tempList = line.split("-")
@@ -167,9 +158,7 @@ def getDictFromMCA(mcaFilename,noCalFlag=False):
     if len(x4cal) > 1:
         a,b=getTentParams(x4cal,y4cal)
         popt,_ = curve_fit(myLine,x4cal, y4cal, p0=[a,b])
-        #popt,pcov = curve_fit(myLine,x4cal, y4cal, p0=[a,b])
         a,b=popt
-        #Do the calibration etc
         xCalibrated = [a*ch+b for ch in range(len(mcaList))]
         totalList = [xCalibrated, mcaList]
         internDict['calBoolean']=True
@@ -313,7 +302,6 @@ def MultiCommandParser(lista):
 
 def getDictFromInfoFile(infoFileName,noCalFlag=None):
     infoDict={}
-    #newTable=pd.read_table(infoFileName, delim_whitespace=True, index_col=0,comment='#',skip_blank_lines=True)
     try:
         newTable=pd.read_table(infoFileName,
                                sep='\s+',
@@ -330,9 +318,6 @@ def getDictFromInfoFile(infoFileName,noCalFlag=None):
     except:
         sys.stderr.write("Error: A duplicated tag has been detected in infoFile\n")
         sys.exit()
-
-
-
 
     aCheck=checkInfoDict(infoDict)
     if not aCheck:
@@ -354,7 +339,6 @@ def getDictFromInfoFile(infoFileName,noCalFlag=None):
 
     return infoDict
 
-
 def  checkInfoDict(infoDict):
     if len(infoDict) == 0:
         sys.stderr.write("error: there is no valid range data in the info file\n")
@@ -368,13 +352,6 @@ def  checkInfoDict(infoDict):
         else:
             pass
 
-
-        # if tag['end'] > tag['start']:
-        #     sys.stderr.write(tag['end'] - tag['start'])
-        #     continue
-        # else:
-        #     sys.stderr.write("Error: the start value must be less than end value\n")
-        #     sys.exit()
 
     dictList=list(infoDict)
     firstElem=infoDict[dictList[0]]
@@ -390,21 +367,16 @@ def getDictFromSPEAdv(speFile, nocalFlag=False):
     """Parses the .SPE file format that is used in Boulby"""
     calFlag = not nocalFlag
     internDict = {}
-    #myCounter=0
-    #_,bCoef,_=[0.0,0.0,0.0]
     aCoef,bCoef,cCoef=[0.0,0.0,0.0]
     myXvals=[]
     myYvals=[]
-    #calBool=False
     internDict['calBoolean']=False
-    #appendBool=False
 
-    #str2init = "DATA"
     for line in open(speFile):
         iFound = line.find("$")
-        if iFound != -1: #iFound == 0
+        if iFound != -1: 
             fFound=line.find(":")
-            newEntry=line[iFound+1:fFound] #Avoiding the :
+            newEntry=line[iFound+1:fFound]
             internDict[newEntry]=[]
             continue
         internDict[newEntry].append(line)
@@ -413,13 +385,11 @@ def getDictFromSPEAdv(speFile, nocalFlag=False):
     myYvals=[float(yVal) for yVal in internDict["DATA"][1:]]
 
     if "ENER_FIT" in internDict and calFlag:
-        #_,bCoef,_=[float(e) for e in internDict['ENER_FIT'][0].split()]
         aCoef,bCoef,cCoef=[float(e) for e in internDict['ENER_FIT'][0].split()]
-        #Assuming E=aCoef+bCoef*bin+cCoef*bin**2
+
 
     #Creating calibrated in Energy bins
     if bCoef != 0:
-        #eBins=np.array([aCoef+bCoef*xVal+cCoef*xVal**2 for xVal in myXvals])
         eBins=list([aCoef+bCoef*xVal+cCoef*xVal**2 for xVal in myXvals])
         internDict["theList"]=[eBins,myYvals]
         internDict['calBoolean']=True
@@ -494,9 +464,7 @@ def getDictFromMCAAdv(mcaFilename,noCalFlag=False):
     if len(x4cal) > 1:
         a,b=getTentParams(x4cal,y4cal)
         popt,_ = curve_fit(myLine,x4cal, y4cal, p0=[a,b])
-        #popt,pcov = curve_fit(myLine,x4cal, y4cal, p0=[a,b])
         a,b=popt
-        #Do the calibration etc
         xCalibrated = [a*ch+b for ch in range(len(mcaList))]
         totalList = [xCalibrated, mcaList]
         internDict['calBoolean']=True
@@ -646,7 +614,7 @@ def getDictFromHGE(myFilename,calFlag=True):
     hgeDict["expoTime"] = hgeDict['EXPOSURETIME']
     return hgeDict
 
-def getMyFileDictRankAdv(myArg):  #check if is a valid
+def getMyFileDictRankAdv(myArg):
     myFileDict={}
     myFileDict['specFiles']=[]
     for Arg in myArg:
@@ -657,14 +625,12 @@ def getMyFileDictRankAdv(myArg):  #check if is a valid
 
     return myFileDict
 
-def getMyFileDict(myArg):  #check if is a valid
+def getMyFileDict(myArg):
     myFileDict={}
     myFileDict['specFiles']=[]
 
-    #tmpOpt=''
     for i in range(len(myArg)):
         e=myArg[i]
-        # if e.endswith('.Txt') or e.endswith('.SPE') or e.endswith('.mca'):
         if isValidSpecFile(e):
             myFileDict['specFiles'].append(e)
 

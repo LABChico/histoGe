@@ -9,7 +9,6 @@ from scipy import sparse
 from scipy.sparse.linalg import spsolve
 from scipy.signal import savgol_filter
 
-#This still needs to be improved!!
 def peakRangeFinder(theList):
     energy,counts=theList
     maxIdx=len(energy)
@@ -32,7 +31,6 @@ def peakRangeFinder(theList):
 
     i=0
 
-    #Maybe implement some ranges criteria here...
     for i in range(0,len(counts),1):
         data[i]=float(counts[i])
         filtered[i]=float(sg[i])
@@ -42,13 +40,11 @@ def peakRangeFinder(theList):
         else:
             std[i] = 0
         if sub[i] > 3*std[i]  and not overT:
-            # peakheight.append(data[i])
             start=i
             overT = True
         elif sub[i] < 3*std[i] and overT:
             overT = False
             end = i-1
-            # ind.append((start+end)//2)
 
             #making sure the rebining doesn't affect
             #negatively the start the range
@@ -61,7 +57,6 @@ def peakRangeFinder(theList):
     return indRange
 
 def peakFinder(theList):
-    #put some conditional in case the list is empty
     idxRList=peakRangeFinder(theList)
     indList=[]
     my_list = theList[1]

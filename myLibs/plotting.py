@@ -12,7 +12,6 @@ def plotCos():
 
 def myPlotF(myDataList):
     plt.plot(myDataList[0],myDataList[1])
-    #plt.show()
     
 def simplePlot(mySubsList,logFlag,noCalFlag,Label=None,show=False,Title=None,ExpoTime=None):
     plt.plot(mySubsList[0],mySubsList[1],label=Label)
@@ -92,7 +91,9 @@ def complexPlot(mySpecialDict,idxPairL,gausdata=None,Anotation=True,logFlag=Fals
                 start = mySpecialList[0].index(iPV[0])
                 end = mySpecialList[0].index(iPV[1])
             else:
-                start, end = indexiPV
+                #start, end = indexiPV/
+                start = mySpecialList[0].index(iPV[0])
+                end = mySpecialList[0].index(iPV[1])
             xVals = mySpecialList[0][start:end+1]    
             yVals = mySpecialList[1][start:end+1]    
             NoneFlag = all([ps != None for ps in gd])

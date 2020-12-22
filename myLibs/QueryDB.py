@@ -7,7 +7,6 @@ def OpenDatabase(pathfile):
     return conexion
 
 def EnergyRange(conexion,min,max,element = None,order = None):
-    #Command = 'SELECT * FROM Isotopes WHERE Energy >= ' + str(min) + ' and Energy < ' + str(max)
     Command = 'SELECT ID,Energy,ExEnergy,IgA,ExIntensity,DecayMode,HalfLife,HalfLifeUnit,ExHalfLife,Address,Element FROM Isotopes WHERE Energy >= ' + str(min) + ' and Energy < ' + str(max)
     if element != None:
         Command += ' and Element = ' + "'" + element + "'" 
@@ -32,8 +31,6 @@ def LookForElement(conexion,element,Field = None,order = None):
         cursor.execute(Command)
         Isotopes = cursor.fetchall()
         return Isotopes
-        #IsotopesDict = {element:Isotopes}
-        #return IsotopesDict
 
     if (order == 'ASC' or order == 'DESC') and Field == None:
         cursor = conexion.cursor()
@@ -83,11 +80,8 @@ def halfLifeUnit(Ele):
     
     return halfLifeInSecs 
 
-#df = pd.DataFrame(list(zip(Eg,Ig,Decay,Half,Parent)),columns=['Eg [keV]','Ig (%)','Decay mode','Half Life','Parent'])#crea  la tabla
-
 def stripList(ListDB):
     ListRC = ['*','<','~']
-    #ListRC = '~'
     index = 3
     
     for Element,i in zip(ListDB,range(len(ListDB))):    
@@ -103,8 +97,6 @@ def getNormalizedEmissionList(IsoList):
 
 
 def GetIntensities(conexion,min,max,element= None,order= None):
-    #Command = 'SELECT * FROM Isotopes WHERE Energy >= ' + str(min) + ' and Energy < ' + str(max)
-    #ID,Energy,ExEnergy,Intensity,ExIntensity,DecayMode,HalfLife,HalfLifeUnit,ExHalfLife,Address,Element
     Command = 'SELECT ID,Energy,ExEnergy,IgA,ExIntensity,DecayMode,HalfLife,HalfLifeUnit,ExHalfLife,Address,IgR,Element FROM Isotopes WHERE Energy >= '+ str(min) + ' and Energy < '+ str(max)
     if  element != None:
         Command += ' and Element = '+ "'"+ element + "'"
@@ -119,7 +111,6 @@ def GetIntensities(conexion,min,max,element= None,order= None):
         Command += ' ORDER BY Energy '+ order
         cursor.execute(Command)
         Isotopes = cursor.fetchall()
-
         return  Isotopes
 
 def GetChainAndChild(conexion,Isotope):
@@ -142,8 +133,6 @@ def GetMainChain(conexion,MainChainIso):
     return MainChain
 
 def GetIntensities2(conexion,element,order= None):
-    #Command = 'SELECT * FROM Isotopes WHERE Energy >= ' + str(min) + ' and Energy < ' + str(max)
-    #ID,Energy,ExEnergy,Intensity,ExIntensity,DecayMode,HalfLife,HalfLifeUnit,ExHalfLife,Address,Element
     Command = 'SELECT ID,Energy,ExEnergy,IgA,ExIntensity,IgR,Element FROM Isotopes WHERE Element = '+ "'"+ element + "'"
 
     if  order == None:

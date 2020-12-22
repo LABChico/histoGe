@@ -4,8 +4,7 @@ import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
 import sys
-#from myLibs.fitting import gaus
-#from myLibs.fitting import gaus
+
 ###### MATPLOTLIB CONF #########################
 SMALL_SIZE = 15
 MEDIUM_SIZE = 22
@@ -18,8 +17,6 @@ plt.rc('xtick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
 plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
 plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
 plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
-
-
 
 #################################################
 
@@ -49,7 +46,7 @@ def getIdxRangeVals(myDataList,xMin,xMax):
             xMinIdx = i
             MinFlag = False
             break
-    #This needs to be optimized!
+
     for i,x in enumerate(xVals):
         if xMax <= x:
             xMaxIdx = i
@@ -81,9 +78,8 @@ def getRebinedList(myDataList,rebInt):
     xVals,yVals=myDataList
     assert (len(xVals) == len(yVals)), "Can't continue if arrays are not the same size!!"
     newYVals = np.add.reduceat(yVals, np.arange(0, len(yVals), rebInt))
-    newXVals = xVals[rebInt//2::rebInt] #numpy slice.
+    newXVals = xVals[rebInt//2::rebInt]
     if len(newYVals) != len(newXVals):
-        #If here then only 1 xValue was truncated.
         res=len(xVals)%rebInt
         theIdx=(len(xVals)//rebInt)*rebInt+res//2
         newXVals=np.append(newXVals,[xVals[theIdx]])
@@ -121,8 +117,6 @@ def WriteOutputFileRR(myFilename,df,iEner,fEner):
     File.close()
 
 def WritehgeFile(myFilename,myDict):
-    #CategoryList = ['DATE','EQUIPMENT','EXPOSURETIME','CALIBRATION','CHANNELS','GAIN','DATA']
-
     #------------------------------------------------------------
     #Write header of .hge file
     #------------------------------------------------------------

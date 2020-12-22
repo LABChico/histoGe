@@ -1,6 +1,5 @@
-#NOTE: this program remove all the histoGe directory and it's content
+#This program remove all the histoGe directory and its content
 #Please BACKUP whatever you want on another directory before you run it
-#
 
 import os
 

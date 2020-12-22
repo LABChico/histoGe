@@ -8,15 +8,10 @@ from scipy.stats import norm
 import sys
 
 def gaus(x,a,x0,sigma,c=0):
-    """A gaussian bell. I added temporarly an additive constant."""
     return a*np.exp(-(x-x0)**2/(2*sigma**2)) + c
 
 def lorentzian(x,x0,w,c):
-    """I added temporarly an additive constant here too."""
-    # w is the width. Still need to test this one
     return 1/np.pi*(w/2)/((x-x0)**2+(w/2)**2)
-
-# def lineGaus(x,a,x0,sigma,c,lineCoef): # for later
 
 def myLine(x,a,b):
     return a*x+b
@@ -42,10 +37,9 @@ def doInfoFile(Ranges, myFilename):
 def doFittingStuff(infoDict,myDataList):
     """Need 2 put this in fitting.py but for some reason fitting fails there"""
     fittingDict={}
-    if infoDict == {}: #minor optimization
+    if infoDict == {}: 
         return fittingDict
     for e in infoDict:
-        #xMin,xMax=infoDict[e]
         for i in infoDict[e]:               
             if i == 'start':
                 xMin=infoDict[e][i]
@@ -56,30 +50,21 @@ def doFittingStuff(infoDict,myDataList):
         minIdx,maxIdx=getIdxRangeVals(myDataList,xMin,xMax)
        
         xVals=myDataList[0]
-        sigma=1.0 #need to automate this!!
-        # a=150
+        sigma=1.0 
         yVals=myDataList[1]
         a=max(yVals[minIdx:maxIdx])
         c=(yVals[minIdx]+yVals[maxIdx])/2
-        #need to handle cases where fit fails
         try:
             popt,_ = curve_fit(gaus,xVals[minIdx:maxIdx],myDataList[1][minIdx:maxIdx],p0=[a,mean,sigma,c])
-            # popt,_ = curve_fit(gaus,xVals,myDataList[1],p0=[a,mean,sigma,c])
-            # if popt[1] > xMax or popt[1] < xMin:
-            #     popt,_ = curve_fit(gaus,xVals[minIdx:maxIdx],myDataList[1][minIdx:maxIdx],p0=[a,mean,sigma,c])
-            
-            #popt,pcov = curve_fit(gaus,xVals,myDataList[1],p0=[a,mean,sigma,c])
+
         except:
             sys.stderr.write("Fit failed for %s in fiting.py" %(e) + "\n")
             fittingDict[e]=[None,None,None,None,None,None,None]
-            #sys.exit()
             continue
 
         a,mean,sigma,c=popt
-        #myIntegral=a*sigma*sqrt(2*pi)
         myFWHM=fwhm(sigma)
         fittingDict[e]=[a,mean,sigma,c,minIdx,maxIdx,myFWHM]
-        # return fittingDict
     return fittingDict
 
 def emptyFittingDict(num):
@@ -155,52 +140,3 @@ def MeanDistance(DBInfo,FittingVector):
             Prob.append([Iso[-1],2*norm.cdf(diffVal,scale=abs(FittingVector[2]))])    
     
     return Diff,Prob
-
-
-
-###Fitting fails often here... don't know why... see histoGe.py where
-###it is really called ####
-
-# def doFittingStuff(infoDict,myDataList):
-#     fittingDict={}
-#     if infoDict == {}: #minor optimization
-#         return fittingDict
-#     for e in infoDict:
-#         xMin,xMax=infoDict[e]
-#         mean=(xMin+xMax)*0.5
-#         print("calculated mean = ",mean)
-
-#         # mean=1460.68
-#         print("xMin,xMax = ",xMin,xMax)
-#         minIdx,maxIdx=getIdxRangeVals(myDataList,\
-#                                       xMin,xMax)
-#         xVals=myDataList[0]
-#         print("minIdx,maxIdx = ",minIdx,maxIdx)
-#         print("xVals[minIdx],xVals[maxIdx] = ",\
-#               xVals[minIdx],xVals[maxIdx])
-#         sigma=1.0 #need to automate this!!
-#         # a=150
-#         yVals=myDataList[1]
-#         a=max(yVals[minIdx:maxIdx])
-#         print("a = ",a)
-#         c=(yVals[minIdx]+yVals[maxIdx])/2
-#         print("c= ",c)
-#         #need to handle cases where fit fails
-#         try:
-#             popt,pcov = curve_fit(gaus,myDataList[0],\
-#                                   myDataList[1],\
-#                                   p0=[a,mean,sigma,c])
-#         except:
-#             print("Fit failed for %s" %(e))
-#             fittingDict[e]=[None,None,None,None,None,None,None]
-#             continue
-
-#         print("popt,pcov = ",popt,pcov)
-#         a,mean,sigma,c=popt
-#         print("a,mean,sigma,c = ",a,mean,sigma,c)
-#         myIntegral=a*sigma*sqrt(2*pi)
-#         myFWHM=fwhm(sigma)
-#         fittingDict[e]=[a,mean,sigma,c,minIdx,maxIdx,myFWHM]
-#         print("myIntegral = ", myIntegral)
-#         # return fittingDict
-#     return fittingDict

@@ -167,13 +167,15 @@ SUBOPTIONS OF MAIN OPTIONS
     
     -R|--Rank|--rank: --wof: Write output file with result.
 
-			C|D|E: 	The option allows you to enter the choose 
-					a rank you want to give priority, the table 
-			will display three columns of different rankings and 
-			will be ordered according to the rank that has been 
-			chosen between options C, D or E. In case no option
-			has been selected , the default ordering will be 
-			using rank E.		
+			C|D|E: 	These options allow the user to choose
+					a rank to sort the output isotope list giving
+                    priority. The output table will display three
+                    columns of different rankings and they will be
+                    ordered according to the rank that has been 
+                    chosen between options C, D or E. In case no 
+                    option has been selected, the default ordering
+                    used in the case that it does not be indicated
+                    is rank E.		
 
 			--all: Shows all the results found in a 
 				query.
@@ -221,11 +223,11 @@ SUBOPTIONS OF MAIN OPTIONS
 RANKING RESULT DISPLAY
 
 When a ranking method is chosen, a dataframe is displayed and 
-its ordering shows its best results. Notice the columns are 
-labeled with letters from A to J, this labels refer to 
+its ordering shows its best results. Notice that the columns 
+are labeled with letters from A to J, this labels refer to 
 a rank method described in the manuscript titled "Contextual 
 isotope ranking criteria for peak identification in gamma 
-spectroscopy using a large database",  and the rank method 
+spectroscopy using a large database", and the rank method 
 corresponding to each label will be show as follows. 
 
 	Label: Ranking method	
@@ -241,8 +243,8 @@ corresponding to each label will be show as follows.
 	I:	Chain using Peak Explanation criterion
 	J:	Chain using Relative Emission Probability
 
-The manuscript is in preparation now, please look for it using 
-the title.
+The manuscript is in preparation now, once it is published, 
+please look for it using the title.
 
 VALID FILES
 

@@ -1,23 +1,8 @@
 import sys
-#import os.path
-#from os.path import basename
-#import re
 import pandas as pd #para imprimir en forma de tabla
 from matplotlib import pyplot as plt
-#import numpy as np
-#from scipy.optimize import curve_fit
-#from scipy import asarray as ar,exp
 import math
-#import time
-#import signal
-#import keyboard
-
-# mainPath=sys.path[0] # sources dir
 from myLibs.parsers import functionDictAdv, getDictFromSPE, getDictFromMCA, getDictFromGammaVision,isValidSpecFile, getMyFileDict
-#from myLibs.gilmoreStats import *
-#from myLibs.fitting import *
-#from myLibs.autoPeakFunk import *
-#from myLibs.QueryDB import *
 from myLibs.plotting import complexPlot
 from myLibs.miscellaneus import getRebinedList,findminPos
 from scipy.signal import savgol_filter
@@ -42,17 +27,12 @@ def peakRangeFinder(theList):
     std = [0]*len(counts)
     sub = [0]*len(counts)
 
-    # peakheight=[]
-    # peakindex=[]
-
     overT=False
-
     start=0
     end=0
-
+    
     i=0
 
-    #Maybe implement some ranges criteria here...
     for i in range(0,len(counts),1):
         data[i]=float(counts[i])
         filtered[i]=float(sg[i])
@@ -62,16 +42,12 @@ def peakRangeFinder(theList):
         else:
             std[i] = 0
         if sub[i] > 3*std[i]  and not overT:
-            # peakheight.append(data[i])
             start=i
             overT = True
         elif sub[i] < 3*std[i] and overT:
             overT = False
             end = i-1
-            # ind.append((start+end)//2)
 
-            #making sure the rebining doesn't affect
-            #negatively the start the range
             if start != 0:
                 start-=1
             if end < maxIdx:
@@ -98,11 +74,7 @@ def autoPeakFun(Command):
         List.remove('--noPlot')
     else:
         noPlotFlag = False
-    # if '--wof' in List:
-    #     wofFlag = True
-    #     List.remove('--wof')
-    # else:
-    #     wofFlag = False
+
     if '--wof' in List:
         wofFlag = True
         List.remove('--wof')
@@ -125,9 +97,6 @@ def autoPeakFun(Command):
             except:
                 continue
 
-        # if rebinNum == None and :
-        #     return 120
-
     else:
         rebinFlag = False
 
@@ -139,8 +108,7 @@ def autoPeakFun(Command):
     if len(myFileDict['specFiles']) > 1:
        
         sys.stderr.write(' Error: to many files to do autopeak\n')
-
-    #elif not myFilename.endswith('.info'):       
+       
     else:   
         myExtension = myFilename.split(".")[-1] #verifies the file extention
         if myExtension == 'info':
@@ -174,16 +142,7 @@ def autoPeakFun(Command):
                     iEner = energyArr[start]
                     fEner = energyArr[end]
                     Ranges.append([iEner,fEner])
-                    
-                # if noCalFlag == False:
-                #     for idxR in idxPairL:
-                #         start,end = idxR
-                #         iEner = energyArr[start]
-                #         fEner = energyArr[end]
-                #         Ranges.append([iEner,fEner])
-                # else:
-                #     Ranges = idxPairL
-                
+                                    
         else:
             sys.stderr.write("There was no rebin option detected, the rebin option is --rebin\n")
             myDataList = mySpecialDict["theList"]
@@ -218,8 +177,5 @@ def autoPeakFun(Command):
 
         if noPlotFlag == False: 
             complexPlot(mySpecialDict,Ranges,logFlag=logFlag,noCalFlag=noCalFlag,Label=PlotLabel,Title=PlotTitle,FitCurve=False,rebinFlag=rebinFlag)
-        
-        # plt.plot(myDatalist[0],myDatalist[1]) #plot the spectrum
-        # plt.show()
-        
+               
         return 0

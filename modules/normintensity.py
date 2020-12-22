@@ -1,29 +1,12 @@
 import sys
 import os.path
-#from os.path import basename
-#import re
-import pandas as pd #para imprimir en forma de tabla
-#from matplotlib import pyplot as plt
-#import numpy as np
-#from scipy.optimize import curve_fit
-#from scipy import asarray as ar,exp
-#from math import sqrt, pi
-#import time
-#import signal
-#import keyboard
-
-# mainPath=sys.path[0] # sources dir
-#from myLibs.parsers import *
-#from myLibs.gilmoreStats import *
-#from myLibs.fitting import *
-#from myLibs.autoPeakFunk import *
+import pandas as pd 
 from myLibs.QueryDB import OpenDatabase, GetIntensities2, CloseDatabase
-#from myLibs.plotting import *
 
 def NormIntensity(ListOpt):
     
     pathfile = os.path.realpath(__file__)
-    pathfile = pathfile.strip('normintensity.py')
+    pathfile = pathfile.replace('/modules/normintensity.py','')
     List = ListOpt.copy()
     List.pop(0)
     
@@ -46,10 +29,10 @@ def NormIntensity(ListOpt):
                 Ig.append(str(Ele[3])+' ('+str(Ele[4])+')')
                 IgR.append(str(Ele[5]))
                 Parent.append(Ele[6])
-            pd.set_option('display.max_rows', None)#imprime todas las filas
+            pd.set_option('display.max_rows', None)
             df = pd.DataFrame(list(zip(Eg,Ig,IgR,Parent)),columns=['Eg [keV]','Ig (%)','Normalized Intensities','Parent'])#crea  la tabla
             print('For the isotope ' + element + ' the gamma decays found are: \n')
-            print(df) #imprime la tabla
+            print(df) 
             print('\n')
 
     CloseDatabase(conexion)

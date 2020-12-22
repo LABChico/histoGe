@@ -100,7 +100,7 @@ def fuzzyinference(PeakRatio,IgR,ECM,numPoints=1e3):
         ECM = 0
 
 #-------------------------------------------------------------
-#Conjuntos difusos de entrada
+#Input Fuzzy sets
 #-------------------------------------------------------------    
     
     PeakRatioLow = SigmoidalSet(PeakRatio,-50.0,0.55)
@@ -116,7 +116,7 @@ def fuzzyinference(PeakRatio,IgR,ECM,numPoints=1e3):
     ECMHigh = SigmoidalSet(ECM,100.0,0.3)
 
 #-------------------------------------------------------------
-#Conjuntos difusos de salida
+#Output fuzzy sets
 #-------------------------------------------------------------    
     minval = 0
     maxval = 1
@@ -129,7 +129,7 @@ def fuzzyinference(PeakRatio,IgR,ECM,numPoints=1e3):
     ProbVHigh = SigmoidalSet(Range,100.0,0.8)
 
 #-------------------------------------------------------------
-#Reglas difusas
+#Fuzzy rules
 #-------------------------------------------------------------    
 
     A1 = min(ECMLow,IgrHigh,PeakRatioHigh)
@@ -163,7 +163,7 @@ def fuzzyinference(PeakRatio,IgR,ECM,numPoints=1e3):
     A27 = min(ECMHigh,IgRLow,PeakRatioLow)
     
 #-----------------------------------------------------
-#Se calculan los consecuentes
+#Consecuent calculations
 #-----------------------------------------------------
     
     C1 = np.fmin(A1,ProbVHigh)
@@ -202,7 +202,7 @@ def fuzzyinference(PeakRatio,IgR,ECM,numPoints=1e3):
         Ctot = np.fmax(Ctot,Carg)
 
     #---------------------------------------------
-    #Se hace la desdifusión
+    #crisp value calculation
     #---------------------------------------------
 
     IntNum = integrate.simps(Range * Ctot, Range)

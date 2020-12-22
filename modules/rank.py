@@ -1,26 +1,10 @@
 import sys
 import os.path
-#from os.path import basename
-#import re
-import pandas as pd #para imprimir en forma de tabla
+import pandas as pd
 from myLibs.miscellaneus import WriteOutputFileRR
-#from matplotlib import pyplot as plt
-#import numpy as np
-#from scipy.optimize import curve_fit
-#from scipy import asarray as ar,exp
-#from math import sqrt, pi
-#import time
-#import signal
-#import keyboard
-
-# mainPath=sys.path[0] # sources dir
 from myLibs.parsers import getDictFromInfoFile
 from myLibs.miscellaneus import getIdxRangeVals
-#from myLibs.gilmoreStats import *
-#from myLibs.fitting import *
-#from myLibs.autoPeakFunk import *
 from myLibs.QueryDB import OpenDatabase, CloseDatabase, EnergyRange, halfLifeUnit, GetIntensities
-#from myLibs.plotting import *
 
 def rankFun(ListOpt):
     List = ListOpt.copy()
@@ -54,7 +38,6 @@ def rankFun(ListOpt):
                 if type(rankOp[i]) == int:
                     i += 1
             
-            #break
         except:
             rankOp.append(3)
             continue   
@@ -107,7 +90,7 @@ def rankFun(ListOpt):
     
     DBInfoL = []
     pathfile = os.path.realpath(__file__)
-    pathfile = pathfile.rstrip('rank.py')
+    pathfile = pathfile.replace('/modules/rank.py','')
     conexion = OpenDatabase(pathfile)
 
     memoLenDict={}
@@ -115,7 +98,6 @@ def rankFun(ListOpt):
     isoCountD = {}
     DBInfoL = []
     DBInfoDL = []
-    #tMinE,tMaxE = infoDict['theList'][0],infoDict['theList'][-1]
     tMinEL = []
     tMaxEL = []
     
@@ -133,7 +115,6 @@ def rankFun(ListOpt):
     for idxR in idxPairL:
         iEner = idxR[0]
         fEner = idxR[1]
-        #DBInfoL.append(EnergyRange(conexion,iEner,fEner))
         DBInfoL.append(GetIntensities(conexion,iEner,fEner))
         DBInfo = DBInfoL[-1]
         DBInfoD = {}
@@ -148,7 +129,6 @@ def rankFun(ListOpt):
                 isoPeakL.append([iso,1,0,Ele[10]]) #So that there is only one count of each isotope per peak
                 if iso not in isoCountD: #Considering the number of entries in the energy range of the histogram
                     if iso not in memoLenDict:
-                        #memoLenDict[iso]=len(EnergyRange(conexion,tMinE,tMaxE,iso))
                         memoLenDict[iso]=len(GetIntensities(conexion,tMinE,tMaxE,iso))
                     nInRange=memoLenDict[iso]
                     isoCountD[iso] = [0,nInRange,0]
@@ -194,35 +174,34 @@ def rankFun(ListOpt):
             iso = pInfo[0]
             Ele = DBInfoD[iso]
             Eg.append(str(Ele[1])+' ('+str(Ele[2])+')')
-            Ig.append(round(Ele[3],2))#+' ('+str(Ele[4])+')') #Normalized Intensity
+            Ig.append(round(Ele[3],2))#Normalized Intensity
             Decay.append(Ele[5])
-            #Half.append(str(Ele[6])+' '+Ele[7]+' ('+str(Ele[8])+')')
             x=halfLifeUnit(Ele)
             if x == 0:
                 y = str(x)
             else:
                 y = str('{0:.2e}'.format(x))
-            Half.append(y+ ' [s] ')# + str(Ele[6]) +' ' +str(Ele[7]) + ' ('+str(Ele[8])+')')
+            Half.append(y+ ' [s] ')
             Parent.append(Ele[-1])
             rank.append(pInfo[1])
             rank2.append(round(pInfo[2],3))
             rank3.append(round(pInfo[-1],3))
 
         if allFlag:
-            pd.set_option('display.max_rows', None) #imprime todas las filas
+            pd.set_option('display.max_rows', None) 
             pd.options.display.float_format = '{:,.5f}'.format
             df = pd.DataFrame(list(zip(Eg,Ig,Decay,Half,Parent,rank,rank2,rank3)),columns=['Eg [keV]','Ig (%)','Decay m','Half Life','Parent','Rank','Rank2','Rank3'])#crea  la tabla
             if addFlag:
                 print(df.sort_values(by=[rankSort], ascending=False))
             else:
-                print(df)#.sort_values(by=['Rank2'], ascending=False))
+                print(df)
         else:
             pd.set_option('display.max_rows', len(Ele))
             df = pd.DataFrame(list(zip(Eg,Ig,Decay,Half,Parent,rank,rank2,rank3)),columns=['Eg [keV]','Ig (%)','Decay mode','Half Life','Parent','Rank','Rank2','Rank3'])#crea  la tabla
             if addFlag:
-                print(df.head(10).sort_values(by=[rankSort], ascending=False)) #print('\nOnly the first 10')
+                print(df.head(10).sort_values(by=[rankSort], ascending=False))
             else:
-                print(df.head(10))#.sort_values(by=[rankSort], ascending=False)) #print('\nOnly the first 10')
+                print(df.head(10))
             
             
 

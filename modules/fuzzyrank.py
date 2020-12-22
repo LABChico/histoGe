@@ -1,31 +1,15 @@
-#import sys
 import os.path
-#from os.path import basename
-#import re
-import pandas as pd #para imprimir en forma de tabla
+import pandas as pd 
 from myLibs.miscellaneus import WriteOutputFileRR
 from math import sqrt
-#from matplotlib import pyplot as plt
-#import numpy as np
-#from scipy.optimize import curve_fit
-#from scipy import asarray as ar,exp
-#from math import sqrt, pi
-#import time
-#import signal
-#import keyboard
 
-# mainPath=sys.path[0] # sources dir
 from myLibs.parsers import getDictFromInfoFile, getMyFileDictRankAdv, functionDictAdv,isValidSpecFile
 from myLibs.miscellaneus import getIdxRangeVals, removeDuplicates
-#from myLibs.gilmoreStats import *
-#from myLibs.fitting import *
-#from myLibs.autoPeakFunk import *
 from myLibs.QueryDB import OpenDatabase, CloseDatabase, EnergyRange, halfLifeUnit, GetIntensities
 from myLibs.fitting import doFittingStuff
 from myLibs.gilmoreStats import doGilmoreStuff
 from myLibs.fuzzylib import fuzzyinference
 import sys
-#from myLibs.plotting import *
 
 
 def fuzzyrankFun(ListOpt):
@@ -89,25 +73,11 @@ def fuzzyrankFun(ListOpt):
     del infoDict['Range']
 
     myFileDict=getMyFileDictRankAdv(List)
-    
-    # myFilename=myFileDict['specFiles'][0]
-              
-    # if len(myFileDict['specFiles']) > 1:
-       
-    #     print(' Error: to many files to do autopeak\n')
-
-    # #elif not myFilename.endswith('.info'):       
-    # else:   
-    #     myExtension = myFilename.split(".")[-1] #verifies the file extention
-    #     if myExtension == 'info':
-    #         print('The file cannot be an info file.')
-    #         return 120
 
     noCalFlag = False
     mySpecialDict = functionDictAdv[myExtension](myFilename,noCalFlag) #fill de dictionary
                                                                 #from data file
     myDataList = mySpecialDict['theList']
-    #fittingDict = doFittingStuff(infoDict,myDataList)
     gilmoreDict = doGilmoreStuff(infoDict,myDataList)
     gilmoreDictKeys = list(gilmoreDict.keys())
 
@@ -127,7 +97,7 @@ def fuzzyrankFun(ListOpt):
     
     DBInfoL = []
     pathfile = os.path.realpath(__file__)
-    pathfile = pathfile.rstrip('fuzzyrank.py')
+    pathfile = pathfile.replace('/modules/fuzzyrank.py','')
     conexion = OpenDatabase(pathfile)
 
     memoLenDict={}
@@ -135,7 +105,6 @@ def fuzzyrankFun(ListOpt):
     isoCountD = {}
     DBInfoL = []
     DBInfoDL = []
-    #tMinE,tMaxE = infoDict['theList'][0],infoDict['theList'][-1]
     tMinEL = []
     tMaxEL = []
     
@@ -154,7 +123,6 @@ def fuzzyrankFun(ListOpt):
         PeakNum += 1
         iEner = idxR[0]
         fEner = idxR[1]
-        #DBInfoL.append(EnergyRange(conexion,iEner,fEner))
         DBInfoL.append(GetIntensities(conexion,iEner,fEner))
         DBInfo = DBInfoL[-1]
         DBInfoD = {}
@@ -218,7 +186,7 @@ def fuzzyrankFun(ListOpt):
                 if KeyDB not in memoLenDictKeys:
                     del DBInfoD[KeyDB]
             DBInfoDLshort.append(DBInfoD)
-        #DBInfoDLshortKeys = list(DBInfoDLshort.keys())
+        
     else:
         DBInfoDLshort = DBInfoDL.copy()
     fuzzyMax = fuzzyinference(1,1,0)
@@ -244,7 +212,7 @@ def fuzzyrankFun(ListOpt):
                 for MultiPeak in DBInfoDLshort[Peak][Key]:
                     MultiPeakIntensity += MultiPeak[10]
                 ECM += ((MultiPeakIntensity/NormPeakIntensity)-(gilmoreDict[gilmoreDictKeys[Peak]][1]/NetAreaTot))**2
-                #ECM += ((NormPeakIntensity/MultiPeakIntensity)-(gilmoreDict[gilmoreDictKeys[Peak]][1]/NetAreaTot))**2 
+            
             DevRankD[Key] = (memoLenDict[Key][0]/memoLenDict[Key][1])*sqrt(ECM/len(memoLenDict[Key][3]))
             fuzzyRank[Key] = fuzzyinference(memoLenDict[Key][1]/memoLenDict[Key][0],memoLenDict[Key][2],DevRankD[Key])/fuzzyMax
 
@@ -255,7 +223,6 @@ def fuzzyrankFun(ListOpt):
         Ranges.append([iEner,fEner])
         Eg , Ig , Decay, Half , Parent, rank, rank2 = [],[],[],[],[],[],[]
         for Key in DBInfoD:
-            #Ele = DBInfoD[Key]
             for Ele in DBInfoD[Key]:
                 Eg.append(Ele[1])
                 Ig.append(round(Ele[3],2))
@@ -265,7 +232,7 @@ def fuzzyrankFun(ListOpt):
                     y = str(x)
                 else:
                     y = str('{0:.2e}'.format(x))
-                Half.append(y+ ' [s] ')# + str(Ele[6]) +' ' +str(Ele[7]) + ' ('+str(Ele[8])+')')
+                Half.append(y+ ' [s] ')
                 Parent.append(Ele[-1])
                 rank.append(DevRankD[Key])
                 rank2.append(fuzzyRank[Key])
@@ -273,13 +240,13 @@ def fuzzyrankFun(ListOpt):
         print('\nThe energy range consulted is between %.2f keV and %.2f keV.\n' % (iEner,fEner))
         
         if allFlag:
-            pd.set_option('display.max_rows', None) #imprime todas las filas
+            pd.set_option('display.max_rows', None) 
             if filterFlag:
                 df = pd.DataFrame(sorted(list(zip(Eg,Ig,Decay,Half,Parent,rank,rank2)),key=lambda x: (x[6],-x[5]),reverse=True),columns=['Eg [keV]','Ig (%)','Decay m','Half Life','Parent','Adj MSE','Rank H filter'])#crea  la tabla
             else:
                 df = pd.DataFrame(sorted(list(zip(Eg,Ig,Decay,Half,Parent,rank,rank2)),key=lambda x: (x[6],-x[5]),reverse=True),columns=['Eg [keV]','Ig (%)','Decay m','Half Life','Parent','Adj MSE','Rank H'])#crea  la tabla
             print(df)
-            #print(df.sort_values(by=['Affinity'], ascending=False))
+            
         else:
             pd.set_option('display.max_rows', 10)
             if filterFlag:
@@ -287,7 +254,6 @@ def fuzzyrankFun(ListOpt):
             else:
                 df = pd.DataFrame(sorted(list(zip(Eg,Ig,Decay,Half,Parent,rank,rank2)),key=lambda x: (x[6],-x[5]),reverse=True),columns=['Eg [keV]','Ig (%)','Decay m','Half Life','Parent','Adj MSE','Rank H'])#crea  la tabla
             print(df.head(10))
-            #print(df.sort_values(by=['Affinity'], ascending=False).head(10)) #print('\nOnly the first 10')
             
         if wofFlag:
             try:

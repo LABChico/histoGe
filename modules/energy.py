@@ -1,25 +1,8 @@
-#import sys
 import os.path
-#from os.path import basename
-#import re
 import pandas as pd #para imprimir en forma de tabla
-#from matplotlib import pyplot as plt
-#import numpy as np
-#from scipy.optimize import curve_fit
-#from scipy import asarray as ar,exp
-#from math import sqrt, pi
-#import time
-#import signal
-#import keyboard
-
-# mainPath=sys.path[0] # sources dir
 from myLibs.parsers import getDictFromInfoFile
 from myLibs.miscellaneus import getIdxRangeVals, WriteOutputFileRR
-#from myLibs.gilmoreStats import *
-#from myLibs.fitting import *
-#from myLibs.autoPeakFunk import *
 from myLibs.QueryDB import OpenDatabase, CloseDatabase, EnergyRange, halfLifeUnit
-#from myLibs.plotting import *
 import sys
 
 def energyFun(ListOpt):
@@ -58,7 +41,7 @@ def energyFun(ListOpt):
     
     DBInfoL = []
     pathfile = os.path.realpath(__file__)
-    pathfile = pathfile.strip('energy.py')
+    pathfile = pathfile.replace('/modules/energy.py','')
     conexion = OpenDatabase(pathfile)
     for idxR in idxPairL:
         iEner = idxR[0]

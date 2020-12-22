@@ -1,4 +1,4 @@
-from rank import rankFun
+from modules.rank import rankFun
 
 def printRankFun(listOp):
     rankFun(listOp)

@@ -1,25 +1,7 @@
 import sys
 import os.path
-#from os.path import basename
-#import re
-import pandas as pd #para imprimir en forma de tabla
-#from matplotlib import pyplot as plt
-#import numpy as np
-#from scipy.optimize import curve_fit
-#from scipy import asarray as ar,exp
-#from math import sqrt, pi
-#import time
-#import signal
-#import keyboard
-
-# mainPath=sys.path[0] # sources dir
-#from myLibs.parsers import getDictFromInfoFile
-#from myLibs.miscellaneus import getIdxRangeVals, WriteOutputFileRR
-#from myLibs.gilmoreStats import *
-#from myLibs.fitting import *
-#from myLibs.autoPeakFunk import *
+import pandas as pd 
 from myLibs.QueryDB import OpenDatabase, CloseDatabase, GetChainAndChild, GetMainChain
-#from myLibs.plotting import *
 
 def Parent(ListOpt):
     List = ListOpt.copy()
@@ -30,7 +12,7 @@ def Parent(ListOpt):
         return 400
     
     pathfile = os.path.realpath(__file__)
-    pathfile = pathfile.strip('isoparent.py')
+    pathfile = pathfile.replace('/modules/isoparent.py','')
     conexion = OpenDatabase(pathfile)
 
     for Isotope in List:
