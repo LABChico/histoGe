@@ -1,6 +1,5 @@
 This is a simple program (still in alpha) for making spectra analysis
-from germanium detectors. The name is still tentative and we'll
-probably change the repo location.
+from germanium detectors.
 
 The program accepts 3 different file formats, ("mca" the pocket
 version, "Txt" gamma view format, "SPE" ("spe") Boulby ("Snolab") format.)
