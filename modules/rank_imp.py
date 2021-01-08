@@ -51,15 +51,22 @@ def rankImp(ListOpt):
     
     if len(rankOp) == 0:
         rankOp.append(3)
-        rankOp.append(2) 
+        rankOp.append(2)
+        rankOp.append(1)
     elif len(rankOp) == 1:
         if rankOp[0] == 3:
             rankOp.append(2)
-        else:
+            rankOp.append(1)
+        elif rankOp[0] == 2:
             rankOp.append(3)
+            rankOp.append(1)
+        elif rankOp[0] == 1:
+            rankOp.append(3)
+            rankOp.append(2) 
 
     rankOp = removeDuplicates(rankOp)    
     rankOp2 = [x-4 for x in rankOp]
+    rankOp2.append(1)
 
     if len(List) == 0:
         sys.stderr.write("error: --rank option needs an argument")
@@ -199,7 +206,7 @@ def rankImp(ListOpt):
             
         else:
             pd.set_option('display.max_rows', len(Ele))
-            df = pd.DataFrame(list(zip(Eg,Ig,Decay,Half,Parent,rank,rank2,rank3)),columns=['Eg [keV]','Ig (%)','Decay mode','Half Life','Parent','Rank','Rank2','Rank3'])#crea  la tabla
+            df = pd.DataFrame(list(zip(Eg,Ig,Decay,Half,Parent,rank,rank2,rank3)),columns=['Eg [keV]','Ig (%)','Decay mode','Half Life','Parent','Rank D','Rank E','Rank F'])#crea  la tabla
             print(df)
             
         if wofFlag:

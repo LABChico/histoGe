@@ -233,14 +233,14 @@ def rankDist(ListOpt):
         if allFlag:
             pd.set_option('display.max_rows', None) #imprime todas las filas
             pd.options.display.float_format = '{:,.5f}'.format
-            df = pd.DataFrame(list(zip(Eg,Ig,Decay,Half,Parent,rank3,ProbRank,DiffRank)),columns=['Eg [keV]','Ig (%)','Decay m','Half Life','Parent','Rank3','Probability','Distance'])#crea  la tabla
-            df = df.sort_values(by=['Distance','Rank3'],ascending=[True,False],ignore_index=True)
+            df = pd.DataFrame(list(zip(Eg,Ig,Decay,Half,Parent,rank3,ProbRank,DiffRank)),columns=['Eg [keV]','Ig (%)','Decay m','Half Life','Parent','Rank F','Probability','Distance'])#crea  la tabla
+            df = df.sort_values(by=['Distance','Rank F','Ig (%)'],ascending=[True,False,False],ignore_index=True)
             print(df)
             
         else:
             pd.set_option('display.max_rows', len(Ele))
-            df = pd.DataFrame(list(zip(Eg,Ig,Decay,Half,Parent,rank3,ProbRank,DiffRank)),columns=['Eg [keV]','Ig (%)','Decay mode','Half Life','Parent','Rank3','Probability','Distance'])#crea  la tabla
-            df = df.sort_values(by=['Distance','Rank3'],ascending=[True,False],ignore_index=True)
+            df = pd.DataFrame(list(zip(Eg,Ig,Decay,Half,Parent,rank3,ProbRank,DiffRank)),columns=['Eg [keV]','Ig (%)','Decay mode','Half Life','Parent','Rank F','Probability','Distance'])#crea  la tabla
+            df = df.sort_values(by=['Distance','Rank F','Ig (%)'],ascending=[True,False,False],ignore_index=True)
             print(df.head(n=10))
             
         if wofFlag:

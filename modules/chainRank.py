@@ -1,36 +1,19 @@
-#import sys
+import sys
 import os.path
-#from os.path import basename
-#import re
-import pandas as pd #para imprimir en forma de tabla
-#from matplotlib import pyplot as plt
-#import numpy as np
-#from scipy.optimize import curve_fit
-#from scipy import asarray as ar,exp
-#from math import sqrt, pi
-#import time
-#import signal
-#import keyboard
+import pandas as pd
 
-# mainPath=sys.path[0] # sources dir
 from myLibs.parsers import getDictFromInfoFile
-#from myLibs.miscellaneus import getIdxRangeVals, WriteOutputFileRR
-#from myLibs.gilmoreStats import *
-#from myLibs.fitting import *
-#from myLibs.autoPeakFunk import *
 from myLibs.QueryDB import OpenDatabase, CloseDatabase, GetChainAndChild, GetMainChain, EnergyRange, halfLifeUnit, GetIntensities, chaintoList
-#from myLibs.plotting import *
 from myLibs.miscellaneus import WriteOutputFileRR
 from myLibs.parsers import getDictFromInfoFile
 from myLibs.miscellaneus import getIdxRangeVals
 from myLibs.QueryDB import OpenDatabase, CloseDatabase, EnergyRange, halfLifeUnit, GetIntensities
-import sys
+
 def ChainRankFun(ListOpt):
     List = ListOpt.copy()
     List.pop(0)  
-    i = 0 #for rank op
-    #rankOp = []
-    
+    i = 0 
+
     if '--wof' in List:
         wofFlag = True
         List.remove('--wof')
@@ -101,7 +84,6 @@ def ChainRankFun(ListOpt):
     for idxR in idxPairL:
         iEner = idxR[0]
         fEner = idxR[1]
-        #DBInfoL.append(EnergyRange(conexion,iEner,fEner))
         DBInfoL.append(GetIntensities(conexion,iEner,fEner))
         DBInfo = DBInfoL[-1]
         DBInfoD = {}
@@ -194,22 +176,22 @@ def ChainRankFun(ListOpt):
             
             Ele = DBInfoD[iso]
             Eg.append(str(Ele[1])+' ('+str(Ele[2])+')')
-            Ig.append(round(Ele[3],2)) #Normalized Intensity
+            Ig.append(round(Ele[3],2)) 
             Decay.append(Ele[5])
             x=halfLifeUnit(Ele)
             if x == 0:
                 y = str(x)
             else:
                 y = str('{0:.2e}'.format(x))
-            Half.append(y+ ' [s] ')# + str(Ele[6]) +' ' +str(Ele[7]) + ' ('+str(Ele[8])+')')
+            Half.append(y+ ' [s] ')
             Parent.append(Ele[-1])
             rank.append(pInfo[1])
             rank2.append(round(pInfo[2],3))
             rank3.append(round(pInfo[-1],3))
 
-            pd.set_option('display.max_rows', None) #imprime todas las filas
+            pd.set_option('display.max_rows', None) 
             pd.options.display.float_format = '{:,.5f}'.format
-            df = pd.DataFrame(sorted(list(zip(Eg,Ig,Decay,Half,Parent,rank,rank2,rank3,CR2,CR3)), key=lambda x:x[xId], reverse= True),columns=['Eg [keV]','Ig (%)','Decay m','Half Life','Parent','Rank C','Rank D','Rank E','Rank I','Rank J'])#crea  la tabla
+            df = pd.DataFrame(sorted(list(zip(Eg,Ig,Decay,Half,Parent,rank,rank2,rank3,CR2,CR3)), key=lambda x: (x[xId],x[1]), reverse= True),columns=['Eg [keV]','Ig (%)','Decay m','Half Life','Parent','Rank C','Rank D','Rank E','Rank I','Rank J'])#crea  la tabla
         
         if allFlag:
             print(df)

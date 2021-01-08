@@ -241,17 +241,17 @@ def rankAdvFun(ListOpt):
         if allFlag:
             pd.set_option('display.max_rows', None)
             if filterFlag:
-                df = pd.DataFrame(sorted(list(zip(Eg,Ig,Decay,Half,Parent,rank)), key=lambda x:x[5] ),index = None,columns=['Eg [keV]','Ig (%)','Decay m','Half Life','Parent','Rank G Filter'])#crea  la tabla
+                df = pd.DataFrame(sorted(list(zip(Eg,Ig,Decay,Half,Parent,rank)), key=lambda x:(x[5],-x[1]) ),index = None,columns=['Eg [keV]','Ig (%)','Decay m','Half Life','Parent','Rank G Filter'])#crea  la tabla
             else: 
-                df = pd.DataFrame(sorted(list(zip(Eg,Ig,Decay,Half,Parent,rank)), key=lambda x:x[5] ),index = None,columns=['Eg [keV]','Ig (%)','Decay m','Half Life','Parent','Rank G'])#crea  la tabla
+                df = pd.DataFrame(sorted(list(zip(Eg,Ig,Decay,Half,Parent,rank)), key=lambda x:(x[5],-x[1]) ),index = None,columns=['Eg [keV]','Ig (%)','Decay m','Half Life','Parent','Rank G'])#crea  la tabla
             
             print(df)
         else:
             pd.set_option('display.max_rows', 10)
             if filterFlag:
-                df = pd.DataFrame(sorted(list(zip(Eg,Ig,Decay,Half,Parent,rank)), key=lambda x:x[5] ),index = None,columns=['Eg [keV]','Ig (%)','Decay m','Half Life','Parent','Rank G Filter'])#crea  la tabla
+                df = pd.DataFrame(sorted(list(zip(Eg,Ig,Decay,Half,Parent,rank)), key=lambda x:(x[5],-x[1]) ),index = None,columns=['Eg [keV]','Ig (%)','Decay m','Half Life','Parent','Rank G Filter'])#crea  la tabla
             else:
-                df = pd.DataFrame(sorted(list(zip(Eg,Ig,Decay,Half,Parent,rank)), key=lambda x:x[5] ),index = None ,columns=['Eg [keV]','Ig (%)','Decay mode','Half Life','Parent','Rank G'])#crea  la tabla
+                df = pd.DataFrame(sorted(list(zip(Eg,Ig,Decay,Half,Parent,rank)), key=lambda x:(x[5],-x[1]) ),index = None ,columns=['Eg [keV]','Ig (%)','Decay mode','Half Life','Parent','Rank G'])#crea  la tabla
             print(df.head(10))
             
         if wofFlag:

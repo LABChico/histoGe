@@ -2,30 +2,12 @@
 
 import sys
 from os import fork
-#import os.path
-#from os.path import basename
-#import re
-import pandas as pd #para imprimir en forma de tabla
-from matplotlib import pyplot as plt
-#import numpy as np
-#from scipy.optimize import curve_fit
-#from scipy import asarray as ar,exp
-#from math import sqrt, pi
-#import time
-#import signal
-#import keyboard
 
-# mainPath=sys.path[0] # sources dir
 from myLibs.parsers import MultiCommandParser,MainOptD
 from myLibs.miscellaneus import TryFork
-#from myLibs.gilmoreStats import *
-#from myLibs.fitting import *
-#from myLibs.autoPeakFunk import *
-#from myLibs.QueryDB import *
-#from myLibs.plotting import *
+
 from modules.autoPeak import autoPeakFun
 from modules.Help import helpFun
-#frommodules. shortHelp import shortHelpFun
 from modules.query import QueryFun
 from modules.test import TestFun
 from modules.isotope import isotopeFun
@@ -124,13 +106,13 @@ def main(argv):
                 return exitcode
 
         elif Command[0] in MainOptD['stats']:
-            # pid = TryFork()
-            # if pid == 0:
-            exitcode = statsFun(Command)
-            # else:
-            #     exitcode = 0
-            # if  ps == lenCommands:
-            #     return exitcode
+            pid = TryFork()
+            if pid == 0:
+                exitcode = statsFun(Command)
+            else:
+                exitcode = 0
+            if  ps == lenCommands:
+                return exitcode
 
         elif Command[0] in MainOptD['energy']:
             exitcode = energyFun(Command)

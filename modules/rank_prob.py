@@ -56,7 +56,7 @@ def rankProb(ListOpt):
             rankOp.append(3)
 
     rankOp = removeDuplicates(rankOp)    
-    rankOp2 = [-2,-3]
+    rankOp2 = [-2,-3,1]
     if len(List) == 0:
         sys.stderr.write("error: --rank option needs an argument\n")
         return 0
@@ -232,12 +232,12 @@ def rankProb(ListOpt):
         if allFlag:
             pd.set_option('display.max_rows', None)
             pd.options.display.float_format = '{:,.5f}'.format
-            df = pd.DataFrame(list(zip(Eg,Ig,Decay,Half,Parent,rank3,ProbRank,DiffRank)),columns=['Eg [keV]','Ig (%)','Decay m','Half Life','Parent','Rank3','Probability','Distance'])#crea  la tabla
+            df = pd.DataFrame(list(zip(Eg,Ig,Decay,Half,Parent,rank3,ProbRank,DiffRank)),columns=['Eg [keV]','Ig (%)','Decay m','Half Life','Parent','Rank F','Probability','Distance'])#crea  la tabla
             print(df)
             
         else:
             pd.set_option('display.max_rows', len(Ele))
-            df = pd.DataFrame(list(zip(Eg,Ig,Decay,Half,Parent,rank3,ProbRank,DiffRank)),columns=['Eg [keV]','Ig (%)','Decay mode','Half Life','Parent','Rank3','Probability','Distance'])#crea  la tabla
+            df = pd.DataFrame(list(zip(Eg,Ig,Decay,Half,Parent,rank3,ProbRank,DiffRank)),columns=['Eg [keV]','Ig (%)','Decay mode','Half Life','Parent','Rank F','Probability','Distance'])#crea  la tabla
             print(df)
             
         if wofFlag:
