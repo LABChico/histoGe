@@ -337,6 +337,10 @@ def getDictFromInfoFile(infoFileName,noCalFlag=None):
         RangeList = Line.split(',')
         infoDict['Range'] = {'start':float(RangeList[0]),'end':float(RangeList[1])}
 
+    else:
+        xmin,xmax = findRangeInfoDict(infoDict)
+        infoDict['Range'] = {'start':xmin,'end':xmax}
+
     return infoDict
 
 def  checkInfoDict(infoDict):
@@ -649,6 +653,8 @@ def findRangeInfoDict(infoDict):
         if Values['end'] > maxVal:
             maxVal = Values['end']
     return minVal, maxVal
+
+
 
 functionDict = {"SPE": getDictFromSPE, "spe": getDictFromSPE, "mca": getDictFromMCA,"Txt": getDictFromGammaVision,"info":getDictFromInfoFile}
 
