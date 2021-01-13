@@ -40,7 +40,7 @@ For updating, simply do:
 
 Download the database from this link:
 
-https://bit.ly/2VOzuO1
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4437341.svg)](https://doi.org/10.5281/zenodo.4437341)
 
 Save it under the "Path/to/histoGe/myDatabase/" folder.
 
