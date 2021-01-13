@@ -62,3 +62,7 @@ this is still alpha!!
 You can find the tutorial in the following link
 
 https://docs.google.com/document/d/1uJFUylDsRrZgDNq3LurjP1XlhqiJvKm606XkQqTPGvI/edit?usp=sharing
+
+Use the following for citing the code:
+
+[![DOI](https://zenodo.org/badge/294481746.svg)](https://zenodo.org/badge/latestdoi/294481746)
