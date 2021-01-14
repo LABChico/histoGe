@@ -1,6 +1,11 @@
 This is a simple program (still in alpha) for making spectra analysis
 from germanium detectors.
 
+For cloning (if not done already):
+
+git clone https://github.com/LABChico/histoGe.git
+
+
 The program accepts 3 different file formats, ("mca" the pocket
 version, "Txt" gamma view format, "SPE" ("spe") Boulby ("Snolab") format.)
 
@@ -12,13 +17,13 @@ For installing (in Debian base systems with apt like Ubuntu), simply do:
 	1. Run:
 
 			sudo python3 install_sudo.py
-	
+
 	2. Or as 'su', run:
 
 			apt upgrade python3-pip && pip3 install -r requirements.txt
 
 	   and run out of root:
-		
+
 			python3 install_su.py
 
 You can also install in manually using the instructions given at the tutorial, see the last
@@ -35,7 +40,7 @@ For updating, simply do:
 			git pull
 
 	   and run as 'su':
-		
+
 			pip3 install -r requirements.txt
 
 Download the database from this link:
