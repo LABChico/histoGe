@@ -2,8 +2,7 @@ import sys
 import os.path
 import pandas as pd 
 from myLibs.parsers import getDictFromInfoFile
-from myLibs.miscellaneus import getIdxRangeVals
-from myLibs.miscellaneus import WriteOutputFileRR
+from myLibs.miscellaneus import getIdxRangeVals, WriteOutputFileRR, operatingSystem
 
 from myLibs.QueryDB import OpenDatabase, CloseDatabase, EnergyRange, halfLifeUnit, GetIntensities
 
@@ -48,7 +47,11 @@ def halfSortFun(ListOpt):
     DBInfoL = []
     DBInfoDL = []
     pathfile = os.path.realpath(__file__)
-    pathfile = pathfile.replace('/modules/halfSort.py','')
+    if operatingSystem == 'Linux' or operatingSystem == 'Darwin':
+        pathfile = pathfile.replace('/modules/halfSort.py','')
+    elif operatingSystem == 'Windows':
+        pathfile = pathfile.replace('\\modules\\halfSort.py','')
+
     conexion = OpenDatabase(pathfile)
 
     for idxR in idxPairL:

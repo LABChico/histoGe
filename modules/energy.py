@@ -1,7 +1,7 @@
 import os.path
 import pandas as pd #para imprimir en forma de tabla
 from myLibs.parsers import getDictFromInfoFile
-from myLibs.miscellaneus import getIdxRangeVals, WriteOutputFileRR
+from myLibs.miscellaneus import getIdxRangeVals, WriteOutputFileRR, operatingSystem
 from myLibs.QueryDB import OpenDatabase, CloseDatabase, EnergyRange, halfLifeUnit
 import sys
 
@@ -41,7 +41,11 @@ def energyFun(ListOpt):
     
     DBInfoL = []
     pathfile = os.path.realpath(__file__)
-    pathfile = pathfile.replace('/modules/energy.py','')
+    if operatingSystem == 'Linux' or operatingSystem == 'Darwin':
+        pathfile = pathfile.replace('/modules/energy.py','')
+    elif operatingSystem == 'Windows':
+        pathfile = pathfile.replace('\\modules\\energy.py','')
+
     conexion = OpenDatabase(pathfile)
     for idxR in idxPairL:
         iEner = idxR[0]

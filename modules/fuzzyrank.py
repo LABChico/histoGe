@@ -4,7 +4,7 @@ from myLibs.miscellaneus import WriteOutputFileRR
 from math import sqrt
 
 from myLibs.parsers import getDictFromInfoFile, getMyFileDictRankAdv, functionDictAdv,isValidSpecFile
-from myLibs.miscellaneus import getIdxRangeVals, removeDuplicates
+from myLibs.miscellaneus import getIdxRangeVals, removeDuplicates, operatingSystem
 from myLibs.QueryDB import OpenDatabase, CloseDatabase, EnergyRange, halfLifeUnit, GetIntensities
 from myLibs.fitting import doFittingStuff
 from myLibs.gilmoreStats import doGilmoreStuff
@@ -97,7 +97,11 @@ def fuzzyrankFun(ListOpt):
     
     DBInfoL = []
     pathfile = os.path.realpath(__file__)
-    pathfile = pathfile.replace('/modules/fuzzyrank.py','')
+    if operatingSystem == 'Linux' or operatingSystem == 'Darwin':
+        pathfile = pathfile.replace('/modules/fuzzyrank.py','')
+    elif operatingSystem == 'Windows':
+        pathfile = pathfile.replace('\\modules\\fuzzyrank.py','')
+
     conexion = OpenDatabase(pathfile)
 
     memoLenDict={}

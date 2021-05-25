@@ -6,8 +6,8 @@ from myLibs.parsers import getDictFromInfoFile
 from myLibs.QueryDB import OpenDatabase, CloseDatabase, GetChainAndChild, GetMainChain, EnergyRange, halfLifeUnit, GetIntensities, chaintoList
 from myLibs.miscellaneus import WriteOutputFileRR
 from myLibs.parsers import getDictFromInfoFile
-from myLibs.miscellaneus import getIdxRangeVals
-from myLibs.QueryDB import OpenDatabase, CloseDatabase, EnergyRange, halfLifeUnit, GetIntensities
+from myLibs.miscellaneus import getIdxRangeVals, operatingSystem
+#from myLibs.QueryDB import OpenDatabase, CloseDatabase, EnergyRange, halfLifeUnit, GetIntensities
 
 def ChainRankFun(ListOpt):
     List = ListOpt.copy()
@@ -57,7 +57,12 @@ def ChainRankFun(ListOpt):
     
     DBInfoL = []
     pathfile = os.path.realpath(__file__)
-    pathfile = pathfile.replace('/modules/chainRank.py','')
+    
+    if operatingSystem == 'Linux' or operatingSystem == 'Darwin':
+        pathfile = pathfile.replace('/modules/chainRank.py','')
+    elif operatingSystem == 'Windows':
+        pathfile = pathfile.replace('\\modules\\chainRank.py','')
+    
     conexion = OpenDatabase(pathfile)
     
     ChainDict = {}

@@ -2,13 +2,17 @@ import sys
 import os.path
 import pandas as pd
 from myLibs.QueryDB import OpenDatabase, EnergyRange, CloseDatabase
-
+from myLibs.miscellaneus import operatingSystem
 
 def QueryFun(ListOpt):
     List = ListOpt.copy()
     List.pop(0)
     pathfile = os.path.realpath(__file__)
-    pathfile = pathfile.replace('/modules/query.py','')
+    if operatingSystem == 'Linux' or operatingSystem == 'Darwin':
+        pathfile = pathfile.replace('/modules/query.py','')
+    elif operatingSystem == 'Windows':
+        pathfile = pathfile.replace('\\modules\\query.py','')
+        
     conexion = OpenDatabase(pathfile)
     if '--all' in List:
         allflag = True

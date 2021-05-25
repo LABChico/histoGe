@@ -3,7 +3,7 @@ import os.path
 import pandas as pd
 from myLibs.miscellaneus import WriteOutputFileRR
 from myLibs.parsers import getDictFromInfoFile
-from myLibs.miscellaneus import getIdxRangeVals
+from myLibs.miscellaneus import getIdxRangeVals, operatingSystem
 from myLibs.QueryDB import OpenDatabase, CloseDatabase, EnergyRange, halfLifeUnit, GetIntensities
 
 def rankFun(ListOpt):
@@ -90,7 +90,11 @@ def rankFun(ListOpt):
     
     DBInfoL = []
     pathfile = os.path.realpath(__file__)
-    pathfile = pathfile.replace('/modules/rank.py','')
+    if operatingSystem == 'Linux' or operatingSystem == 'Darwin':
+        pathfile = pathfile.replace('/modules/rank.py','')
+    elif operatingSystem == 'Windows':
+        pathfile = pathfile.replace('\\modules\\rank.py','')
+
     conexion = OpenDatabase(pathfile)
 
     memoLenDict={}

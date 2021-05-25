@@ -2,11 +2,16 @@ import sys
 import os.path
 import pandas as pd 
 from myLibs.QueryDB import OpenDatabase, GetIntensities2, CloseDatabase
+from myLibs.miscellaneus import operatingSystem
 
 def NormIntensity(ListOpt):
     
     pathfile = os.path.realpath(__file__)
-    pathfile = pathfile.replace('/modules/normintensity.py','')
+    if operatingSystem == 'Linux' or operatingSystem == 'Darwin':
+        pathfile = pathfile.replace('/modules/normintensity.py','')
+    elif operatingSystem == 'Windows':
+        pathfile = pathfile.replace('\\modules\\normintensity.py','')
+
     List = ListOpt.copy()
     List.pop(0)
     

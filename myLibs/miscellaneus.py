@@ -3,9 +3,9 @@ import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
 import sys
-import platform
+from platform import system
 
-operatingSystem = platform.system()
+operatingSystem = system()
 
 if operatingSystem == 'Linux' or operatingSystem == 'Darwin':
     from os import fork
