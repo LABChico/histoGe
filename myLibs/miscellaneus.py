@@ -1,9 +1,16 @@
 """Just a set of useful functions"""
-from os import fork
 import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
 import sys
+import platform
+
+operatingSystem = platform.system()
+
+if operatingSystem == 'Linux' or operatingSystem == 'Darwin':
+    from os import fork
+
+
 
 ###### MATPLOTLIB CONF #########################
 SMALL_SIZE = 15
@@ -19,13 +26,16 @@ plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
 plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 
 #################################################
-
-def TryFork():
-    try:
-        pid = fork()
-    except:
-        pid = 0
-    return pid
+if operatingSystem == 'Linux' or operatingSystem == 'Darwin':
+    def TryFork():
+        try:
+            pid = fork()
+        except:
+            pid = 0
+        return pid
+else: 
+    def TryFork():
+        return 0
 
 def is_float(n):
     try:

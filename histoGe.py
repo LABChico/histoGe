@@ -1,9 +1,6 @@
 #!/usr/bin/python3
 
 import sys
-import platform
-
-from os import fork
 
 from myLibs.parsers import MultiCommandParser,MainOptD
 from myLibs.miscellaneus import TryFork
@@ -41,7 +38,6 @@ def main(argv):
     #This two lines are the multiinstruction parser code
     #To switch to the Simple parser just comment two lines above
     # and uncomment both lines of the Simple instructions parser code
-    operativeSystem = platform.system()
     Commands = MultiCommandParser(argv)
     lenCommands = len(Commands) - 1
     for ps,Command in enumerate(Commands):
@@ -58,11 +54,7 @@ def main(argv):
                 return exitcode
 
         elif Command[0] in MainOptD['autoPeak']:
-            if operativeSystem == 'Linux' or operativeSystem == 'Darwin':
-                pid = TryFork()
-            else:
-                pid = 0
-
+            pid = TryFork()
             if pid == 0:
                 exitcode = autoPeakFun(Command)
             else:
@@ -90,10 +82,7 @@ def main(argv):
                 return exitcode
 
         elif Command[0] in MainOptD['sum']:
-            if operativeSystem == 'Linux' or operativeSystem == 'Darwin':
-                pid = TryFork()
-            else:
-                pid = 0
+            pid = TryFork()
             if pid == 0:
                 exitcode = SumFun(Command)
             else:
@@ -107,10 +96,7 @@ def main(argv):
             return exitcode
 
         elif Command[0] in MainOptD['sub']:
-            if operativeSystem == 'Linux' or operativeSystem == 'Darwin':
-                pid = TryFork()
-            else:
-                pid = 0
+            pid = TryFork()
             if pid == 0:
                 exitcode = SubFun(Command)
             else:
@@ -119,10 +105,7 @@ def main(argv):
                 return exitcode
 
         elif Command[0] in MainOptD['stats']:
-            if operativeSystem == 'Linux' or operativeSystem == 'Darwin':
-                pid = TryFork()
-            else:
-                pid = 0
+            pid = TryFork()
             if pid == 0:
                 exitcode = statsFun(Command)
             else:
@@ -151,10 +134,7 @@ def main(argv):
                 return exitcode
 
         elif Command[0] in MainOptD['efficiency']:
-            if operativeSystem == 'Linux' or operativeSystem == 'Darwin':
-                pid = TryFork()
-            else:
-                pid = 0
+            pid = TryFork()
             if pid == 0:
                 exitcode = efficencyFun(Command)
             else:
@@ -186,10 +166,7 @@ def main(argv):
             return exitcode
 
         else:
-            if operativeSystem == 'Linux' or operativeSystem == 'Darwin':
-                pid = TryFork()
-            else:
-                pid = 0
+            pid = TryFork()
             if pid == 0:
                 exitcode = noOption(Command)
             else:
