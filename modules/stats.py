@@ -80,9 +80,9 @@ def statsFun(ListOpt):
    
     
     if noCalFlag:
-        FileDict = functionDictAdv[FileExt](FileName,False)
+        FileDict = functionDictAdv[FileExt](FileName,True)
     else:
-        FileDict = functionDictAdv[FileExt](FileName)
+        FileDict = functionDictAdv[FileExt](FileName,False)
 
     #####
     if rebinFlag:
@@ -111,7 +111,7 @@ def statsFun(ListOpt):
     for e in fittingDict:
         a,mean,sigma,c=fittingDict[e][:-3]
         if a == None:
-            sys.stderr.write("Fit failed for "+e+" in fiting.py"+"\n")
+            sys.stderr.write("Fit failed for "+str(e)+" in fiting.py"+"\n")
             continue
         gaussData4Print.append([e,a,mean,sigma,c])
         
@@ -151,7 +151,9 @@ def statsFun(ListOpt):
             pass
     
         count += 1
-    
-    complexPlot(FileDict,idxPairL,fittingDict,AnnotateArg,logFlag=logFlag,noCalFlag=noCalFlag,Show=not(noPlotFlag),FitCurve=True, rebinFlag=rebinFlag)
+
+    Title = FileName.split('/')[-1].rstrip('.' + FileExt)
+
+    complexPlot(FileDict,idxPairL,fittingDict,AnnotateArg,logFlag=logFlag,noCalFlag=noCalFlag,Show=not(noPlotFlag),FitCurve=True, rebinFlag=rebinFlag,Label=Title,figTitle=str(Title+"_stats"))
 
     return 0

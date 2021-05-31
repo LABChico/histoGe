@@ -5,8 +5,10 @@ from myLibs.parsers import isValidSpecFile, functionDictAdv, getDictFromGammaVis
 from myLibs.plotting import simplePlot
 from modules.Help import helpFun
 from myLibs.miscellaneus import getRebinedList
+import os
 
 def noOption(ListOpt):
+    labels=[]
     List = ListOpt.copy()
     if '--log' in List:
         logFlag = True
@@ -59,9 +61,15 @@ def noOption(ListOpt):
                     return 110
 
                 ######
-                if rebinFlag:
-                    FileDict = functionDictAdv[FileExt](arg)
+                fileName = arg
+
+                if noCalFlag:
+                    FileDict = functionDictAdv[FileExt](fileName,True)
+                else:
+                    FileDict = functionDictAdv[FileExt](fileName)
          
+                if rebinFlag:
+                    
                     if isinstance(rebinNum, int) == False:
                         rebinNum=5
                         sys.stderr.write("There was no rebin integer detected, the default rebin value used was 5")
@@ -76,20 +84,22 @@ def noOption(ListOpt):
                     else:
                         sys.stderr.write("There was no rebin option detected, the rebin option is --rebin")
                     
-                    myFilename = arg
+                    
+                    figName=os.path.splitext(arg)[0].split('/')[-1]
                     mySubsList=myDataList
                     plotFlag = True
-                    simplePlot(mySubsList,logFlag,FileDict['calBoolean'],Label=None,show=False,Title=myFilename,ExpoTime=FileDict['expoTime'])
+                    labels.append(figName)
+                    simplePlot(mySubsList,logFlag,FileDict['calBoolean'],Label=labels,show=False,Title=fileName,ExpoTime=FileDict['expoTime'],figTitle=figName)
                     
                 ######  
                 else:
-                    myFilename = arg
-                    myExtension = myFilename.split(".")[-1]
-                    mySubsDict = functionDictAdv[myExtension](myFilename)
+                    figName = os.path.splitext(arg)[0].split('/')[-1]
+                    labels.append(figName)
+                    myExtension = fileName.split(".")[-1]
                     if myExtension != 'info':
-                        mySubsList = mySubsDict["theList"]
+                        mySubsList = FileDict["theList"]
                         plotFlag = True
-                        simplePlot(mySubsList,logFlag,mySubsDict['calBoolean'],Label=None,show=False,Title=myFilename,ExpoTime=mySubsDict['expoTime'])
+                        simplePlot(mySubsList,logFlag,FileDict['calBoolean'],Label=labels,show=False,Title=fileName,ExpoTime=FileDict['expoTime'],figTitle=figName)
             else:
                 sys.stderr.write('WARNING: The file ' + arg + ' is invalid. Nothing to do with it.')
                 return 90

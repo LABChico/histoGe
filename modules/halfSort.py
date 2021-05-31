@@ -63,7 +63,7 @@ def halfSortFun(ListOpt):
     
         Eg , Ig , Decay, Half , Parent= [],[],[],[],[]
         for Element in DBInfoD:
-            Eg.append(str(DBInfoD[Element][1])+' ('+str(DBInfoD[Element][2])+')')
+            Eg.append(str(DBInfoD[Element][1]))#+' ('+str(DBInfoD[Element][2])+')')
             Ig.append(round(DBInfoD[Element][3],2))
             Decay.append(DBInfoD[Element][5])
             x=halfLifeUnit(DBInfoD[Element])
@@ -85,7 +85,7 @@ def halfSortFun(ListOpt):
             print(df)
         else:
             pd.set_option('display.max_rows', None)
-            df = pd.DataFrame(sorted(list(zip(Eg,Ig,Decay,Half,Parent)), key = lambda x: float(x[3][-4]), reverse=True),columns=['Eg [keV]','Ig (%)','Decay m','Half Life','Parent'])#crea  la tabla
+            df = pd.DataFrame(sorted(list(zip(Eg,Ig,Decay,Half,Parent)), key = lambda x: float(x[3][:-4]), reverse=True),columns=['Eg [keV]','Ig (%)','Decay m','Half Life','Parent'])#crea  la tabla
             print(df.head(10))
             
             

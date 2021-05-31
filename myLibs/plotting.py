@@ -3,6 +3,7 @@ import numpy as np
 from myLibs.miscellaneus import closest
 from myLibs.fitting import gaus,emptyFittingDict
 import sys
+import os
 
 def plotCos():
     t2 = np.arange(0.0, 5.0, 0.02)
@@ -13,9 +14,15 @@ def plotCos():
 def myPlotF(myDataList):
     plt.plot(myDataList[0],myDataList[1])
     
-def simplePlot(mySubsList,logFlag,noCalFlag,Label=None,show=False,Title=None,ExpoTime=None):
-    plt.plot(mySubsList[0],mySubsList[1],label=Label)
+def simplePlot(mySubsList,logFlag,noCalFlag,Label=None,show=False,Title=None,ExpoTime=None,figTitle='histoGe Figure'): #Add the flag of subtracted and background data. As well the lists of those data
+    for i in range(len(mySubsList)):
+        try:
+            plt.plot(mySubsList[0],mySubsList[i+1],label=Label.pop())
+        except:
+            continue
     plt.title('Exposure time = ' + str(ExpoTime) + ' s', fontsize='large')
+    plt.gcf().canvas.set_window_title(figTitle)
+    plt.legend()
     if logFlag:
         plt.yscale('log')
     if noCalFlag:
@@ -27,7 +34,7 @@ def simplePlot(mySubsList,logFlag,noCalFlag,Label=None,show=False,Title=None,Exp
         plt.title(Title, fontsize='large')
         plt.show()
 
-def complexPlot(mySpecialDict,idxPairL,gausdata=None,Anotation=True,logFlag=False,noCalFlag=False,Label=None,Show=True,Title = None,Fill=True,showPeaks=True,FitCurve=True,rebinFlag=False):
+def complexPlot(mySpecialDict,idxPairL,gausdata=None,Anotation=True,logFlag=False,noCalFlag=False,Label=None,Show=True,Title = None,Fill=True,showPeaks=True,FitCurve=True,rebinFlag=False,figTitle='histoGe Figure'):
     
     if rebinFlag:
         mySpecialList = []
@@ -70,7 +77,7 @@ def complexPlot(mySpecialDict,idxPairL,gausdata=None,Anotation=True,logFlag=Fals
     else:
         Title += ', '
     if Label != None:
-        plt.gcf().canvas.set_window_title(Label.split('.')[0])
+        plt.gcf().canvas.set_window_title(figTitle) #checar figTitle
     plt.title(Title + 'Exposure time = ' + str(mySpecialDict["expoTime"]) + ' s', fontsize='large')
     plt.plot(mySpecialList[0],mySpecialList[1],label=Label)
     plt.ylabel('Counts', fontsize='large')

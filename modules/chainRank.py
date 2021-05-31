@@ -175,7 +175,7 @@ def ChainRankFun(ListOpt):
 
             
             Ele = DBInfoD[iso]
-            Eg.append(str(Ele[1])+' ('+str(Ele[2])+')')
+            Eg.append(str(Ele[1]))#+' ('+str(Ele[2])+')')
             Ig.append(round(Ele[3],2)) 
             Decay.append(Ele[5])
             x=halfLifeUnit(Ele)

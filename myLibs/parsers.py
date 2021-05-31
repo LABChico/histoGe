@@ -168,7 +168,7 @@ def getDictFromMCA(mcaFilename,noCalFlag=False):
     internDict["theList"]=totalList
 
     if (noCalFlag == False) and (Calibrated == False):
-            internDict["noCalFlag"] = True
+            internDict["noCalFlag"] = False
 
     return internDict
 
@@ -423,7 +423,10 @@ def getDictFromMCAAdv(mcaFilename,noCalFlag=False):
     internDict['calBoolean']=False
     calBool = False
     Calibrated = False
-    internDict["noCalFlag"] = False
+    if noCalFlag == False:
+        internDict["noCalFlag"] = False
+    else:
+        internDict["noCalFlag"] = True
 
     x4cal=[]
     y4cal=[]

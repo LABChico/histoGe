@@ -64,11 +64,11 @@ def SubFun(ListOpt):
         return 65
 
     if noCalFlag:
-        File1Dict = functionDict[File1Ext](FileName1,False)
-        File2Dict = functionDict[File2Ext](FileName2,False)
+        File1Dict = functionDict[File1Ext](FileName1,True)
+        File2Dict = functionDict[File2Ext](FileName2,True)
     else:
-        File1Dict = functionDict[File1Ext](FileName1)
-        File2Dict = functionDict[File2Ext](FileName2)
+        File1Dict = functionDict[File1Ext](FileName1, False)
+        File2Dict = functionDict[File2Ext](FileName2, False)
 
     if rebinFlag:
         File1Dict["theRebinedList"]=getRebinedList(File1Dict["theList"],rebinNum)
@@ -82,19 +82,35 @@ def SubFun(ListOpt):
     if myLen1 != myLen2:
         sys.stderr.write("ERROR: histograms do not have the same length and histoGe cannot continue.\n")
         return 63
-
+    
     time1=File1Dict["expoTime"]
     time2=File2Dict["expoTime"]
     tRatio=time1/time2
     rescaledList=getRescaledList(File2Dict['theList'],tRatio)
-    subsTractedL=getSubstractedList(File1Dict['theList'],rescaledList)
+    
+    if File1Dict['calBoolean'] == File2Dict['calBoolean']:
+        subsTractedL=getSubstractedList(File1Dict['theList'],rescaledList)
+    else:
+        print('--------------------------------------------')
+        sys.stderr.write('ERROR: All files must be calibrated or non-calibrated.\n')
+        print('Sub cannot be performed between different types of files')
+        print('--------------------------------------------')
+        exit(43)
+        pass
 
+    
+    allData=subsTractedL
+    allData.append(rescaledList[1])
+    allData.append(File1Dict['theList'][1])
     Title = FileName1.split('/')[-1].rstrip('.' + File1Ext) + '-' +FileName2.split('/')[-1].rstrip('.' + File2Ext)
     IdFile = FileName1.rfind('/')
     myOutFile = FileName1[:IdFile+1] + Title + '.txt'
     
+    Labels=[FileName1.split('/')[-1].rstrip('.' + File1Ext),FileName2.split('/')[-1].rstrip('.' + File1Ext),Title]
+    
+    
     if not noPlotFlag:
-        simplePlot(subsTractedL,logFlag,noCalFlag,Label=None,show=True,Title=Title)
+        simplePlot(allData,logFlag,File1Dict['calBoolean'] and File2Dict['calBoolean'],Label=Labels,show=True,Title=Title,figTitle=Title) #simple plot of subtracted
     if wofFlag:
         try:
             WritehgeFile(myOutFile,subsTractedL)
