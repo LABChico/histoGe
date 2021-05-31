@@ -44,8 +44,8 @@ def main(argv):
     for ps,Command in enumerate(Commands):
     #------------------------------------------------------
         if 'shorthelp' in Command:
-        #if Command == 'shorthelp':
-            exitcode = helpFun(argv,['.Txt','.SPE', '.spe','.mca','.info'],extBool=False)
+            if Command == 'shorthelp':
+                exitcode = helpFun(argv,['.Txt','.SPE', '.spe','.mca','.info'],extBool=False)
             if  ps == lenCommands:
                 return exitcode
 
@@ -83,35 +83,35 @@ def main(argv):
                 return exitcode
 
         elif Command[0] in MainOptD['sum']:
-            # pid = TryFork()
-            # if pid == 0:
-            exitcode = SumFun(Command)
-            # else:
-            #     exitcode = 0
-            # if  ps == lenCommands:
-            return exitcode
+            pid = TryFork()
+            if pid == 0:
+                exitcode = SumFun(Command)
+            else:
+                exitcode = 0
+            if  ps == lenCommands:
+                return exitcode
 
         elif Command[0] in MainOptD['rank']:
-            #exitcode = rankFun(Command)
+            exitcode = rankFun(Command)
             exitcode = rankImp(Command)
             return exitcode
 
         elif Command[0] in MainOptD['sub']:
-            # pid = TryFork()
-            # if pid == 0:
-            exitcode = SubFun(Command)
-            # else:
-            #    exitcode = 0
-            # if  ps == lenCommands:
+            pid = TryFork()
+            if pid == 0:
+               exitcode = SubFun(Command)
+            else:
+               exitcode = 0
+            if  ps == lenCommands:
             return exitcode
 
         elif Command[0] in MainOptD['stats']:
-            # pid = TryFork()
-            # if pid == 0:
-            exitcode = statsFun(Command)
-            # else:
-            #     exitcode = 0
-            # if  ps == lenCommands:
+            pid = TryFork()
+            if pid == 0:
+                exitcode = statsFun(Command)
+            else:
+                exitcode = 0
+            if  ps == lenCommands:
             return exitcode
 
         elif Command[0] in MainOptD['energy']:
@@ -168,13 +168,13 @@ def main(argv):
             return exitcode
 
         else:
-            # pid = TryFork()
-            # if pid == 0:
-            exitcode = noOption(Command)
-            # else:
-            #     exitcode = 0
-            # if  ps == lenCommands:
-            #     return exitcode
+            pid = TryFork()
+            if pid == 0:
+                exitcode = noOption(Command)
+            else:
+                exitcode = 0
+            if  ps == lenCommands:
+                return exitcode
 
 if __name__ == "__main__":
     argv = sys.argv
