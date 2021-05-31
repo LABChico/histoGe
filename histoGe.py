@@ -103,7 +103,7 @@ def main(argv):
             else:
                exitcode = 0
             if  ps == lenCommands:
-            return exitcode
+                return exitcode
 
         elif Command[0] in MainOptD['stats']:
             pid = TryFork()
@@ -112,7 +112,7 @@ def main(argv):
             else:
                 exitcode = 0
             if  ps == lenCommands:
-            return exitcode
+                return exitcode
 
         elif Command[0] in MainOptD['energy']:
             exitcode = energyFun(Command)
