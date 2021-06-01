@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 
 import sys
-from os import fork
 
 from myLibs.parsers import MultiCommandParser,MainOptD
 from myLibs.miscellaneus import TryFork

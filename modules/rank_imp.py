@@ -4,7 +4,7 @@ import pandas as pd
 from myLibs.miscellaneus import WriteOutputFileRR
 from math import sqrt
 from myLibs.parsers import getDictFromInfoFile, getMyFileDictRankAdv, functionDictAdv, findRangeInfoDict
-from myLibs.miscellaneus import getIdxRangeVals, removeDuplicates
+from myLibs.miscellaneus import getIdxRangeVals, removeDuplicates, operatingSystem
 from myLibs.QueryDB import OpenDatabase, CloseDatabase, EnergyRange, halfLifeUnit, GetIntensities
 from myLibs.fitting import doFittingStuff
 from myLibs.gilmoreStats import doGilmoreStuff
@@ -94,7 +94,11 @@ def rankImp(ListOpt):
 
     DBInfoL = []
     pathfile = os.path.realpath(__file__)
-    pathfile = pathfile.replace('/modules/rank_imp.py','')
+    if operatingSystem == 'Linux' or operatingSystem == 'Darwin':
+        pathfile = pathfile.replace('/modules/rank_imp.py','')
+    elif operatingSystem == 'Windows':
+        pathfile = pathfile.replace('\\modules\\rank_imp.py','')
+        
     conexion = OpenDatabase(pathfile)
 
     memoLenDict={}

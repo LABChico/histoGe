@@ -2,7 +2,7 @@ import sys
 import os.path
 import pandas as pd 
 from myLibs.QueryDB import OpenDatabase, CloseDatabase, GetChainAndChild, GetMainChain
-
+from myLibs.miscellaneus import operatingSystem
 def Parent(ListOpt):
     List = ListOpt.copy()
     List.pop(0)  
@@ -12,7 +12,11 @@ def Parent(ListOpt):
         return 400
     
     pathfile = os.path.realpath(__file__)
-    pathfile = pathfile.replace('/modules/isoparent.py','')
+    if operatingSystem == 'Linux' or operatingSystem == 'Darwin':
+        pathfile = pathfile.replace('/modules/isoparent.py','')
+    elif operatingSystem == 'Windows':
+        pathfile = pathfile.replace('\\modules\\isoparent.py','')
+
     conexion = OpenDatabase(pathfile)
 
     for Isotope in List:

@@ -2,7 +2,7 @@ from os.path import basename
 
 def helpFun(argv, functionDict, extBool=False):
     if not extBool:
-        print("\n----------------------------------------------------------------------\nSINTAXIS OF histoGe\n----------------------------------------------------------------------\n")
+        print("\n----------------------------------------------------------------------\nhistoGe's SYNTAX\n----------------------------------------------------------------------\n")
         print("usage:\t%s (-h|--help) #for extended help"%(basename(argv[0])))
         print("\t%s file1.ext [file2.ext ...] #Multifile plot or query database depending of ext"%(basename(argv[0])))
         print("\t%s (-q|--query) iEner fEner #Gammas in range iEner to fEner"%(basename(argv[0])))
