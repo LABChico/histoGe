@@ -92,7 +92,6 @@ def main(argv):
                 return exitcode
 
         elif Command[0] in MainOptD['rank']:
-            exitcode = rankFun(Command)
             exitcode = rankImp(Command)
             return exitcode
 

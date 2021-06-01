@@ -72,7 +72,10 @@ def energyFun(ListOpt):
         if wofFlag:
             try:
                 myfilename = infoFile.strip('.info') + '_energyRanges.txt'
-                WriteOutputFileRR(myfilename,df,iEner,fEner)
+                if allFlag:
+                    WriteOutputFileRR(myfilename,df,iEner,fEner)
+                else:
+                    WriteOutputFileRR(myfilename,df.head(10),iEner,fEner)
                 print('-----------------------------------------')
                 print('The file was saved as:')
                 print(myfilename)

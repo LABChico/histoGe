@@ -260,8 +260,13 @@ def rankAdvFun(ListOpt):
                     myfilename = infoFile.strip('.info') + '_rank_G_filter.txt'
                 else:
                     myfilename = infoFile.strip('.info') + '_rank_G.txt'
-
-                WriteOutputFileRR(myfilename,df,iEner,fEner)
+                
+                if allFlag:
+                    WriteOutputFileRR(myfilename,df,iEner,fEner)
+                    
+                else:
+                    WriteOutputFileRR(myfilename,df.head(10),iEner,fEner)
+                 
                 print('-----------------------------------------')
                 print('The file was saved as:')
                 print(myfilename)

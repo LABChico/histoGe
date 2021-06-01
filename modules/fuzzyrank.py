@@ -262,7 +262,10 @@ def fuzzyrankFun(ListOpt):
                 else:
                     myfilename = infoFile.strip('.info') + '_rank_H.txt'
                 
-                WriteOutputFileRR(myfilename,df,iEner,fEner)
+                if allFlag:
+                    WriteOutputFileRR(myfilename,df,iEner,fEner)
+                else:
+                    WriteOutputFileRR(myfilename,df.head(10),iEner,fEner)
                 print('-----------------------------------------')
                 print('The file was saved as:')
                 print(myfilename)

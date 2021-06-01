@@ -238,7 +238,7 @@ def rankProb(ListOpt):
         else:
             pd.set_option('display.max_rows', len(Ele))
             df = pd.DataFrame(list(zip(Eg,Ig,Decay,Half,Parent,rank3,ProbRank,DiffRank)),columns=['Eg [keV]','Ig (%)','Decay mode','Half Life','Parent','Rank F','Probability','Distance'])#crea  la tabla
-            print(df)
+            print(df.head(10))
             
         if wofFlag:
             try:
